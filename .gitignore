@@ -1,0 +1,5 @@
+node_modules/
+dist/
+public/extracted_logos/
+*.timestamp-*.mjs
+.DS_Store
