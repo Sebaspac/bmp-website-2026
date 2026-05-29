@@ -1,0 +1,104 @@
+/* ===================================
+   BMP Design System – CSS Variables
+   Bayerischer Mittelstandspreis
+   =================================== */
+
+:root {
+  /* ── Brand Colors (Refined Premium Palette) ── */
+  --color-primary: #0A192F; /* Deep Midnight Navy */
+  --color-primary-dark: #060E1B;
+  --color-primary-light: #112240;
+  --color-secondary: #172A45;
+  --color-secondary-light: #6FB6E9;
+  --color-secondary-pale: #F0F7FF;
+  
+  --color-accent: #C9A227; /* Classic Gold */
+  --color-accent-light: #D4AF37; /* Metallic Gold */
+  --color-accent-soft: rgba(201, 162, 39, 0.15);
+  --color-accent-text: #8A6D15;
+  
+  --color-dark: #020617;
+  --color-dark-soft: #1E293B;
+  --color-gray: #94A3B8;
+  --color-gray-light: #E2E8F0;
+  --color-gray-lighter: #F8FAFC;
+  --color-gray-dark: #475569;
+  
+  --color-white: #FFFFFF;
+  --color-off-white: #F8FAFC;
+  --color-glass-bg: rgba(255, 255, 255, 0.85);
+  --color-glass-border: rgba(255, 255, 255, 0.2);
+
+  /* ── Typography (Editorial Scale) ── */
+  --font-display: 'IBM Plex Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --fs-hero: clamp(2.5rem, 5vw + 1rem, 4.5rem); /* Adjusted for modern clean look */
+  --fs-h1: clamp(2.25rem, 5vw + 0.5rem, 3.5rem);
+  --fs-h2: clamp(1.75rem, 3.5vw + 0.25rem, 2.75rem);
+  --fs-h3: clamp(1.25rem, 2vw + 0.25rem, 1.75rem);
+  --fs-h4: 1.25rem;
+  --fs-body: 1.0625rem; /* Slightly larger base for readability */
+  --fs-body-lg: 1.25rem;
+  --fs-small: 0.9375rem;
+  --fs-xs: 0.8125rem;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-black: 900;
+
+  --lh-tight: 1.1;
+  --lh-normal: 1.6;
+  --lh-relaxed: 1.8;
+
+  --ls-tight: -0.03em;
+  --ls-normal: 0;
+  --ls-wide: 0.05em;
+  --ls-wider: 0.15em;
+
+  /* ── Spacing ── */
+  --space-2xs: 0.4rem;
+  --space-xs: 0.75rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4.5rem;
+  --space-3xl: 6rem;
+  --space-4xl: 8rem;
+  --space-5xl: 12rem;
+
+  /* ── Layout ── */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-max: 1440px;
+  --nav-height: 90px;
+
+  /* ── Borders & Radius (Modern & Sharp) ── */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+
+  /* ── Shadows (Layered & Soft) ── */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-gold: 0 10px 30px -10px rgba(201, 162, 39, 0.4);
+  --shadow-blue: 0 10px 30px -10px rgba(10, 25, 47, 0.3);
+
+  /* ── Transitions ── */
+  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 700ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Z-Index ── */
+  --z-base: 1;
+  --z-nav: 1000;
+}
+

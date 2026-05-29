@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>BMP Navigation</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:#101828;
+  --gold:#C9A227;
+  --muted:#D0D5DD;
+  --blue:#0B4DA2;
+  --blue-h:#6FB6E9;
+  --sep:rgba(201,162,39,0.2);
+  --line:rgba(201,162,39,0.35);
+}
+
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+body{background:#0B4DA2;overflow-x:hidden}
+body.no-scroll{overflow:hidden}
+
+/* ═══ SIDEBAR ═══════════════════════════════════════════ */
+#sidebar{
+  position:fixed;top:0;left:0;
+  width:60px;height:100vh;
+  background:var(--navy);
+  z-index:200;
+  display:flex;flex-direction:column;align-items:center;
+  padding:20px 0;
+  user-select:none;
+}
+
+.s-logo{
+  display:flex;flex-direction:column;align-items:center;
+  text-decoration:none;flex-shrink:0;
+  gap:2px;
+}
+.s-logo-bmp{font-size:13px;font-weight:900;letter-spacing:.06em;color:var(--gold)}
+.s-logo-sub{font-size:6.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(201,162,39,.45);text-align:center;line-height:1.45}
+
+/* vertical line */
+.s-vline{
+  width:1px;background:var(--line);
+  margin:14px 0;
+  flex:1;min-height:40px;max-height:calc(100% - 220px);
+}
+
+/* hamburger */
+.s-hamburger{
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  background:none;border:none;cursor:pointer;padding:8px 0;flex-shrink:0;
+}
+.s-bars{display:flex;flex-direction:column;gap:4.5px;width:20px}
+.s-bars span{
+  display:block;height:1.5px;background:var(--muted);
+  transition:transform .3s ease,opacity .3s ease,background .2s;
+  transform-origin:center;
+}
+.s-hamburger.open .s-bars span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.s-hamburger.open .s-bars span:nth-child(2){opacity:0}
+.s-hamburger.open .s-bars span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.s-menu-label{
+  font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.22em;
+  color:var(--muted);line-height:1;
+  transition:opacity .25s;
+}
+.s-hamburger.open .s-menu-label{opacity:0}
+
+/* social */
+.s-social{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:auto;flex-shrink:0}
+.s-social a{color:var(--muted);display:flex;transition:color .2s;text-decoration:none}
+.s-social a:hover{color:var(--gold)}
+.s-social svg{width:17px;height:17px}
+
+/* lang */
+.s-lang{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:18px;flex-shrink:0}
+.s-lang button{
+  font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  background:none;border:none;cursor:pointer;color:var(--muted);
+  padding:1px 0;line-height:1;transition:color .2s;
+}
+.s-lang button.active{color:var(--gold)}
+.s-lang button:hover:not(.active){color:#fff}
+.s-lang-pipe{width:1px;height:9px;background:var(--line)}
+
+/* ═══ OVERLAY ═══════════════════════════════════════════ */
+#overlay{
+  position:fixed;inset:0;
+  background:var(--navy);
+  z-index:300;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  grid-template-rows:1fr;
+  padding:0;
+  overflow:hidden;
+
+  /* closed */
+  opacity:0;pointer-events:none;
+  transition:opacity .25s ease;
+}
+#overlay.open{opacity:1;pointer-events:all}
+
+/* Tagline background text */
+.ov-tagline{
+  position:absolute;
+  bottom:-20px;left:60px;right:0;
+  font-size:clamp(60px,9vw,110px);font-weight:900;text-transform:uppercase;
+  letter-spacing:-.02em;line-height:1;
+  color:rgba(255,255,255,.055);
+  white-space:nowrap;overflow:hidden;
+  pointer-events:none;user-select:none;
+}
+
+/* Left column — main nav */
+.ov-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 0 60px 80px;
+  border-right:1px solid var(--sep);
+  position:relative;z-index:1;
+}
+.ov-nav{list-style:none}
+.ov-nav li{border-top:1px solid var(--sep)}
+.ov-nav li:last-child{border-bottom:1px solid var(--sep)}
+.ov-nav a{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 32px 16px 0;
+  text-decoration:none;
+  color:#fff;
+  font-size:clamp(17px,1.6vw,22px);font-weight:600;text-transform:uppercase;letter-spacing:.03em;
+  transition:color .15s,transform .15s;
+  opacity:0;transform:translateX(-16px);
+}
+#overlay.open .ov-nav a{
+  opacity:1;transform:translateX(0);
+}
+/* stagger */
+#overlay.open .ov-nav li:nth-child(1) a{transition:color .15s,transform .15s,opacity .28s .04s ease-out,transform .28s .04s ease-out}
+#overlay.open .ov-nav li:nth-child(2) a{transition:color .15s,transform .15s,opacity .28s .10s ease-out,transform .28s .10s ease-out}
+#overlay.open .ov-nav li:nth-child(3) a{transition:color .15s,transform .15s,opacity .28s .16s ease-out,transform .28s .16s ease-out}
+#overlay.open .ov-nav li:nth-child(4) a{transition:color .15s,transform .15s,opacity .28s .22s ease-out,transform .28s .22s ease-out}
+#overlay.open .ov-nav li:nth-child(5) a{transition:color .15s,transform .15s,opacity .28s .28s ease-out,transform .28s .28s ease-out}
+#overlay.open .ov-nav li:nth-child(6) a{transition:color .15s,transform .15s,opacity .28s .34s ease-out,transform .28s .34s ease-out}
+
+.ov-nav a:hover,.ov-nav a.active{color:var(--gold);transform:translateX(6px) !important}
+.ov-arrow{color:var(--gold);font-size:1.1em;flex-shrink:0;margin-left:12px}
+
+/* Middle column — subnav */
+.ov-middle{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 40px 60px 48px;
+  position:relative;z-index:1;
+  border-right:1px solid var(--sep);
+}
+.subnav-panel{
+  opacity:0;transform:translateY(8px);
+  transition:opacity .2s ease,transform .2s ease;
+  pointer-events:none;
+  position:absolute;
+}
+.subnav-panel.visible{
+  opacity:1;transform:translateY(0);
+  pointer-events:all;
+  position:relative;
+}
+.subnav-label{
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.22em;
+  color:var(--blue-h);margin-bottom:20px;
+}
+.subnav-links{list-style:none;display:flex;flex-direction:column;gap:0}
+.subnav-links li{border-top:1px solid rgba(201,162,39,.12)}
+.subnav-links li:last-child{border-bottom:1px solid rgba(201,162,39,.12)}
+.subnav-links a{
+  display:block;padding:10px 0;
+  text-decoration:none;color:var(--muted);font-size:14px;
+  transition:color .15s,padding-left .15s;
+}
+.subnav-links a:hover{color:#fff;padding-left:8px}
+
+/* Right column */
+.ov-right{
+  display:flex;flex-direction:column;
+  padding:48px 60px 48px 48px;
+  position:relative;z-index:1;
+}
+.ov-logo-wrap{text-align:right;margin-bottom:auto}
+.ov-logo-bmp{font-size:14px;font-weight:900;letter-spacing:.08em;color:var(--gold);display:block}
+.ov-logo-sub{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,162,39,.45);margin-top:2px;display:block}
+
+/* Close button */
+.ov-close{
+  display:flex;align-items:center;gap:10px;
+  background:none;border:none;cursor:pointer;padding:0;
+  margin-bottom:auto;
+}
+.ov-close-x{
+  width:28px;height:28px;position:relative;display:flex;align-items:center;justify-content:center;
+}
+.ov-close-x::before,.ov-close-x::after{
+  content:'';position:absolute;width:20px;height:1.5px;background:var(--muted);
+  transition:background .2s;
+}
+.ov-close-x::before{transform:rotate(45deg)}
+.ov-close-x::after{transform:rotate(-45deg)}
+.ov-close:hover .ov-close-x::before,
+.ov-close:hover .ov-close-x::after{background:#fff}
+.ov-close-label{
+  font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.22em;
+  color:var(--muted);transition:color .2s;
+}
+.ov-close:hover .ov-close-label{color:#fff}
+
+/* Top row: close + logo */
+.ov-top-row{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:auto;
+}
+
+/* Right bottom section */
+.ov-right-bottom{
+  display:flex;flex-direction:column;gap:28px;
+  margin-top:auto;
+}
+.ov-lang-row{display:flex;align-items:center;gap:10px}
+.ov-lang-row button{
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  background:none;border:none;cursor:pointer;color:var(--muted);transition:color .2s;padding:0;
+}
+.ov-lang-row button.active{color:var(--gold)}
+.ov-lang-row button:hover:not(.active){color:#fff}
+.ov-lang-pipe{color:var(--line);font-size:13px}
+
+.ov-social-row{display:flex;gap:18px}
+.ov-social-row a{color:var(--muted);display:flex;text-decoration:none;transition:color .2s}
+.ov-social-row a:hover{color:var(--gold)}
+.ov-social-row svg{width:17px;height:17px}
+
+.ov-secondary{display:flex;flex-direction:column;gap:8px}
+.ov-secondary a{
+  font-size:13px;color:var(--muted);text-decoration:none;
+  transition:color .15s;width:fit-content;
+}
+.ov-secondary a:hover{color:var(--gold)}
+
+.ov-cta{
+  display:inline-block;
+  background:var(--blue);color:#fff;
+  font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
+  border:none;border-radius:0;padding:13px 28px;
+  text-decoration:none;cursor:pointer;
+  transition:background .2s,color .2s;width:fit-content;
+}
+.ov-cta:hover{background:var(--blue-h);color:var(--navy)}
+
+/* ═══ DEMO CONTENT ══════════════════════════════════════ */
+#demo{
+  margin-left:60px;min-height:100vh;
+  background:#0B4DA2;
+  display:flex;align-items:center;justify-content:center;
+}
+#demo h1{
+  font-size:clamp(28px,5vw,64px);font-weight:900;text-transform:uppercase;
+  letter-spacing:.06em;color:rgba(255,255,255,.1);text-align:center;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ SIDEBAR ═══════════════════════════════ -->
+<aside id="sidebar">
+  <a href="/" class="s-logo">
+    <span class="s-logo-bmp">BMP</span>
+    <span class="s-logo-sub">BAY.<br>MITTEL<br>STANDS<br>PREIS</span>
+  </a>
+
+  <div class="s-vline"></div>
+
+  <button class="s-hamburger" id="hamburger" aria-expanded="false" aria-label="Navigation öffnen">
+    <div class="s-bars">
+      <span></span><span></span><span></span>
+    </div>
+    <span class="s-menu-label">Menü</span>
+  </button>
+
+  <div class="s-social">
+    <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+    <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
+        <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+    </a>
+    <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="s-lang">
+    <button class="active" onclick="setLang('DE')">DE</button>
+    <div class="s-lang-pipe"></div>
+    <button onclick="setLang('EN')">EN</button>
+  </div>
+</aside>
+
+
+<!-- ═══════════════ OVERLAY ═══════════════════════════════ -->
+<div id="overlay" role="dialog" aria-modal="true" aria-label="Hauptnavigation">
+
+  <!-- Background tagline -->
+  <div class="ov-tagline">EXZELLENZ HAT EINEN NAMEN.</div>
+
+  <!-- LEFT: main nav -->
+  <div class="ov-left">
+    <ul class="ov-nav" id="mainNav">
+      <li><a href="/" data-nav="start">Startseite <span class="ov-arrow">›</span></a></li>
+      <li><a href="/teilnahme" data-nav="teilnahme">Ihr Weg zum Preis <span class="ov-arrow">›</span></a></li>
+      <li><a href="/preistraeger" data-nav="bmp">Der BMP &amp; Preisträger <span class="ov-arrow">›</span></a></li>
+      <li><a href="/jury" data-nav="jury">Jury &amp; Partner <span class="ov-arrow">›</span></a></li>
+      <li><a href="/presse" data-nav="presse">Presse <span class="ov-arrow">›</span></a></li>
+      <li><a href="/kontakt" data-nav="kontakt">Kontakt &amp; FAQ <span class="ov-arrow">›</span></a></li>
+    </ul>
+  </div>
+
+  <!-- MIDDLE: subnav panels -->
+  <div class="ov-middle" id="subnavArea">
+
+    <div class="subnav-panel" data-panel="teilnahme">
+      <div class="subnav-label">Ihr Weg zum Preis</div>
+      <ul class="subnav-links">
+        <li><a href="/teilnahme#voraussetzungen">Teilnahmevoraussetzungen</a></li>
+        <li><a href="/teilnahme#kriterien">Kriterien &amp; Bewertung</a></li>
+        <li><a href="/teilnahme#prozess">Bewerbungsprozess Schritt für Schritt</a></li>
+        <li><a href="/teilnahme#termine">Fristen &amp; Termine</a></li>
+        <li><a href="/teilnahme#formular">Bewerbungsformular</a></li>
+        <li><a href="/kontakt">Kontakt &amp; FAQ</a></li>
+      </ul>
+    </div>
+
+    <div class="subnav-panel" data-panel="bmp">
+      <div class="subnav-label">Der BMP &amp; Preisträger</div>
+      <ul class="subnav-links">
+        <li><a href="/preistraeger#preis">Was ist der Preis?</a></li>
+        <li><a href="/preistraeger#highlights">Preisträger-Highlights</a></li>
+        <li><a href="/preistraeger#geschichte">Geschichte &amp; Zielsetzung</a></li>
+        <li><a href="/preistraeger#bedeutung">Bedeutung für den Mittelstand</a></li>
+        <li><a href="/preistraeger#vorteile">Vorteile &amp; Werte</a></li>
+        <li><a href="/teilnahme">Jetzt bewerben →</a></li>
+      </ul>
+    </div>
+
+    <div class="subnav-panel" data-panel="jury">
+      <div class="subnav-label">Jury &amp; Partner</div>
+      <ul class="subnav-links">
+        <li><a href="/jury#intro">Wer entscheidet?</a></li>
+        <li><a href="/jury#mitglieder">Jury-Mitglieder</a></li>
+        <li><a href="/jury#partner">Partner &amp; Sponsoren</a></li>
+        <li><a href="/jury#sponsoring">Sponsoring-Anfrage</a></li>
+      </ul>
+    </div>
+
+    <div class="subnav-panel" data-panel="presse">
+      <div class="subnav-label">Presse</div>
+      <ul class="subnav-links">
+        <li><a href="/presse#events">Events-Übersicht</a></li>
+        <li><a href="/presse#news">Blog &amp; News</a></li>
+        <li><a href="/presse#downloads">Downloads &amp; Impressionen</a></li>
+      </ul>
+    </div>
+
+    <div class="subnav-panel" data-panel="kontakt">
+      <div class="subnav-label">Kontakt &amp; FAQ</div>
+      <ul class="subnav-links">
+        <li><a href="/kontakt#kontakt">Kontaktmöglichkeiten</a></li>
+        <li><a href="/kontakt#faq">FAQ (Kosten, Kriterien, Ablauf)</a></li>
+        <li><a href="/kontakt#fristen">Fristen</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: logo + secondary + CTA -->
+  <div class="ov-right">
+    <div class="ov-top-row">
+      <button class="ov-close" id="overlayClose" aria-label="Menü schließen">
+        <div class="ov-close-x"></div>
+        <span class="ov-close-label">Menü</span>
+      </button>
+      <div class="ov-logo-wrap">
+        <span class="ov-logo-bmp">BMP</span>
+        <span class="ov-logo-sub">Bayerischer Mittelstandspreis</span>
+      </div>
+    </div>
+
+    <div class="ov-right-bottom">
+      <div class="ov-lang-row">
+        <button class="active" onclick="setLang('DE')">DE</button>
+        <span class="ov-lang-pipe">|</span>
+        <button onclick="setLang('EN')">EN</button>
+      </div>
+
+      <div class="ov-social-row">
+        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
+            <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+        <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="ov-secondary">
+        <a href="/">Startseite</a>
+        <a href="/kontakt">Kontakt</a>
+        <a href="/impressum">Impressum</a>
+        <a href="/datenschutz">Datenschutz</a>
+      </div>
+
+      <a href="/teilnahme" class="ov-cta">Jetzt Bewerben</a>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════ DEMO CONTENT ══════════════════════════ -->
+<main id="demo">
+  <h1>Bayerischer<br>Mittelstandspreis</h1>
+</main>
+
+
+<script>
+const hamburger   = document.getElementById('hamburger');
+const overlay     = document.getElementById('overlay');
+const closeBtn    = document.getElementById('overlayClose');
+const mainLinks   = document.querySelectorAll('.ov-nav a[data-nav]');
+const panels      = document.querySelectorAll('.subnav-panel');
+let currentPanel  = null;
+let currentLang   = 'DE';
+
+function openOverlay() {
+  overlay.classList.add('open');
+  hamburger.classList.add('open');
+  document.body.classList.add('no-scroll');
+  hamburger.setAttribute('aria-expanded', 'true');
+  // focus first nav link after animation
+  setTimeout(() => mainLinks[0]?.focus(), 300);
+}
+
+function closeOverlay() {
+  overlay.classList.remove('open');
+  hamburger.classList.remove('open');
+  document.body.classList.remove('no-scroll');
+  hamburger.setAttribute('aria-expanded', 'false');
+  hideAllPanels();
+  hamburger.focus();
+}
+
+function hideAllPanels() {
+  panels.forEach(p => p.classList.remove('visible'));
+  mainLinks.forEach(a => a.classList.remove('active'));
+  currentPanel = null;
+}
+
+function showPanel(key) {
+  if (key === currentPanel) return;
+  panels.forEach(p => {
+    if (p.dataset.panel === key) {
+      p.classList.add('visible');
+    } else {
+      p.classList.remove('visible');
+    }
+  });
+  mainLinks.forEach(a => {
+    a.classList.toggle('active', a.dataset.nav === key);
+  });
+  currentPanel = key;
+}
+
+hamburger.addEventListener('click', () => {
+  overlay.classList.contains('open') ? closeOverlay() : openOverlay();
+});
+
+closeBtn.addEventListener('click', closeOverlay);
+
+// Hover on main nav links → show subnav
+mainLinks.forEach(link => {
+  link.addEventListener('mouseenter', () => {
+    const key = link.dataset.nav;
+    if (key === 'start') { hideAllPanels(); return; }
+    showPanel(key);
+  });
+  // Click on links with subnav: prevent navigation, they're just trigger
+  // (real site would navigate, here we just keep overlay behavior)
+});
+
+// Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && overlay.classList.contains('open')) closeOverlay();
+});
+
+// Language switcher
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.s-lang button, .ov-lang-row button').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.trim() === lang);
+  });
+}
+</script>
+</body>
+</html>
