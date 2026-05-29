@@ -16,7 +16,6 @@ import Netzwerk from '@/pages/Netzwerk';
 import MitgliedWerden from '@/pages/MitgliedWerden';
 import Datenschutz from '@/pages/Datenschutz';
 import Impressum from '@/pages/Impressum';
-import LoginGate from '@/components/LoginGate';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -47,7 +46,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <LoginGate>
+    <>
       <ScrollToTop />
       <Layout>
         <Routes>
@@ -69,7 +68,7 @@ const App: React.FC = () => {
           <Route path="*" element={<Home />} />
         </Routes>
       </Layout>
-    </LoginGate>
+    </>
   );
 };
 
