@@ -194,9 +194,9 @@ const Participation: React.FC = () => {
 
       {/* ── FORM SECTION ─────────────────────────────────────────────────────── */}
       <section style={{ background: NAVY, position: 'relative', overflow: 'hidden', height: isMobile ? 'auto' : 'calc(100vh - 60px)', display: 'flex', flexDirection: 'column' }} id="bewerben">
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr', flex: 1, minHeight: 0, overflow: 'hidden' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr', flex: 1, minHeight: 0, overflow: isMobile ? 'visible' : 'hidden' }}>
           {/* Left — copy */}
-          <div style={{ padding: isMobile ? '32px 24px 24px' : '36px 36px 32px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
+          <div style={{ padding: isMobile ? '32px 24px 24px' : '36px 36px 32px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: isMobile ? 'visible' : 'hidden' }}>
             <span style={{ fontFamily: FF, fontSize: 10, color: '#EFBF04', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 20 }}>Direktbewerbung</span>
             <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3.2vw, 2.8rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.04, margin: '0 0 20px' }}>
               BEWERBEN ODER<br />VORSCHLAGEN.
@@ -226,7 +226,7 @@ const Participation: React.FC = () => {
           {!isMobile && <div style={{ background: 'rgba(255,255,255,0.07)' }} />}
 
           {/* Right — gold form panel */}
-          <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0, position: 'relative', background: 'linear-gradient(160deg,#DDB84A 0%,#C9A227 52%,#A87800 100%)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', overflow: isMobile ? 'visible' : 'hidden', minHeight: 0, position: 'relative', background: 'linear-gradient(160deg,#DDB84A 0%,#C9A227 52%,#A87800 100%)' }}>
             <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} aria-hidden="true">
               <defs>
                 <pattern id="participationCross" width="18" height="18" patternUnits="userSpaceOnUse">
@@ -252,7 +252,7 @@ const Participation: React.FC = () => {
                 </div>
               </div>
             )}
-            <div style={{ padding: isMobile ? '32px 24px' : '24px 48px 32px 40px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, position: 'relative', zIndex: 1 }}>
+            <div style={{ padding: isMobile ? '28px 20px' : '24px 48px 32px 40px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: isMobile ? 560 : 0, position: 'relative', zIndex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginBottom: 24 }}>
                 <span style={{ fontFamily: FF, fontSize: 10, color: 'rgba(17,29,85,0.5)', textTransform: 'uppercase', letterSpacing: '0.28em', fontWeight: 700 }}>Bewerbung 2026</span>
                 <Link
@@ -270,7 +270,7 @@ const Participation: React.FC = () => {
           </div>
         </div>
 
-        <div style={{ position: 'relative', zIndex: 1, padding: '14px 56px 18px', display: 'flex', justifyContent: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
+        <div style={{ position: 'relative', zIndex: 1, padding: isMobile ? '16px 20px 20px' : '14px 56px 18px', display: 'flex', justifyContent: 'center', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
           <Link to="/formular-hochladen" style={{ fontFamily: FF, fontSize: 15, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(239,191,4,0.7)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6, borderBottom: '1px solid rgba(239,191,4,0.3)', paddingBottom: 1 }}>
             Formular hochladen →
           </Link>
@@ -315,9 +315,10 @@ function QualRow({ item, Icon, last }: { item: { num: string; title: string; bod
 
 function CriteriaCell({ crit, idx }: { crit: { percentage: string; title: string; desc: string }; idx: number }) {
   const [hovered, setHovered] = React.useState(false);
+  const isMobileCell = useIsMobile();
   return (
     <div
-      style={{ padding: '56px 40px', borderLeft: idx > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none', display: 'flex', flexDirection: 'column', gap: 0, cursor: 'default', transition: 'background 0.2s', background: hovered ? 'rgba(255,255,255,0.03)' : 'transparent' }}
+      style={{ padding: isMobileCell ? '32px 24px' : '56px 40px', borderLeft: !isMobileCell && idx > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none', borderTop: isMobileCell && idx > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none', display: 'flex', flexDirection: 'column', gap: 0, cursor: 'default', transition: 'background 0.2s', background: hovered ? 'rgba(255,255,255,0.03)' : 'transparent' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

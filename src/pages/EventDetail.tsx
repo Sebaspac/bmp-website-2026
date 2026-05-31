@@ -97,7 +97,7 @@ export default function EventDetail() {
     <div style={{ paddingTop: 60, background: CREAM, minHeight: '100vh', fontFamily: '"Inter", sans-serif' }}>
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section style={{ position: 'relative', height: '65vh', minHeight: 480, overflow: 'hidden' }}>
+      <section style={{ position: 'relative', height: isMobile ? 'auto' : '65vh', minHeight: isMobile ? 520 : 480, overflow: 'hidden' }}>
         <img
           src={event.img}
           alt={event.title}
@@ -116,7 +116,7 @@ export default function EventDetail() {
         </div>
 
         {/* Hero content */}
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: isMobile ? '0 24px 48px' : '40px 80px', zIndex: 10, display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'flex-end', gap: isMobile ? 20 : 40 }}>
+        <div style={{ position: isMobile ? 'relative' : 'absolute', bottom: 0, left: 0, right: 0, padding: isMobile ? '88px 24px 48px' : '40px 80px', zIndex: 10, display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: isMobile ? 'flex-end' : 'space-between', alignItems: isMobile ? 'flex-start' : 'flex-end', gap: isMobile ? 20 : 40, minHeight: isMobile ? 520 : undefined, boxSizing: 'border-box' }}>
           {/* Left */}
           <div style={{ flex: 1 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
@@ -136,15 +136,15 @@ export default function EventDetail() {
           </div>
 
           {/* Right — key facts */}
-          <div style={{ display: 'flex', flexDirection: isMobile ? 'row' : 'column', flexWrap: isMobile ? 'wrap' : undefined, gap: 12, flexShrink: 0, background: 'rgba(3,9,58,0.55)', backdropFilter: 'blur(12px)', borderRadius: 16, padding: isMobile ? '16px 20px' : '24px 28px', border: '1px solid rgba(255,255,255,0.1)', width: isMobile ? '100%' : undefined }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, flexShrink: 0, background: 'rgba(3,9,58,0.55)', backdropFilter: 'blur(12px)', borderRadius: 16, padding: isMobile ? '16px 20px' : '24px 28px', border: '1px solid rgba(255,255,255,0.1)', width: isMobile ? '100%' : undefined, boxSizing: 'border-box' }}>
             {[
               { icon: Calendar, label: event.date },
               { icon: Clock,    label: event.time },
               { icon: MapPin,   label: `${event.venue}, ${event.location}` },
             ].map(({ icon: Icon, label }, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: isMobile ? 'auto' : undefined }}>
-                <Icon size={15} color={GOLD} />
-                <span style={{ fontSize: 14, color: '#fff', fontWeight: 500 }}>{label}</span>
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+                <Icon size={15} color={GOLD} style={{ flexShrink: 0 }} />
+                <span style={{ fontSize: 14, color: '#fff', fontWeight: 500, overflowWrap: 'anywhere' }}>{label}</span>
               </div>
             ))}
           </div>
@@ -180,7 +180,13 @@ export default function EventDetail() {
                   <div key={i} style={{
                     padding: '20px 24px',
                     background: i % 2 === 0 ? '#fff' : 'rgba(255,255,255,0.6)',
-                    borderRadius: i === 0 ? '12px 0 0 0' : i === 1 ? '0 12px 0 0' : i === event.eckdaten.length - 2 ? '0 0 0 12px' : i === event.eckdaten.length - 1 ? '0 0 12px 0' : '0',
+                    borderRadius: isMobile
+                      ? (i === 0
+                          ? '12px 12px 0 0'
+                          : i === event.eckdaten.length - 1
+                            ? '0 0 12px 12px'
+                            : '0')
+                      : (i === 0 ? '12px 0 0 0' : i === 1 ? '0 12px 0 0' : i === event.eckdaten.length - 2 ? '0 0 0 12px' : i === event.eckdaten.length - 1 ? '0 0 12px 0' : '0'),
                     border: '1px solid rgba(3,9,58,0.06)',
                   }}>
                     <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'rgba(58,58,58,0.4)', marginBottom: 6 }}>
@@ -195,7 +201,7 @@ export default function EventDetail() {
             </div>
 
             {/* CTA */}
-            <div style={{ marginTop: 40, display: 'flex', gap: 12 }}>
+            <div style={{ marginTop: 40, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               {event.status === 'anmeldung-offen' && (
                 <Link to="/teilnahme" style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
@@ -258,7 +264,7 @@ export default function EventDetail() {
             )}
 
             {/* Timeline */}
-            <div style={{ maxHeight: 560, overflowY: 'auto', paddingRight: 4 }}>
+            <div style={{ maxHeight: isMobile ? 'none' : 560, overflowY: isMobile ? 'visible' : 'auto', paddingRight: 4 }}>
               {event.updates.map((update, i) => (
                 <UpdateCard key={update.id} update={update} index={i} />
               ))}

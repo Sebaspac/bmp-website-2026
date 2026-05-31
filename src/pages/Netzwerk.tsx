@@ -33,9 +33,10 @@ interface PersonCardProps {
 
 function PersonCard({ imgSrc, imgAlt, name, titleLine1, titleLine2, institution, borderRight }: PersonCardProps) {
   const [hovered, setHovered] = useState(false);
+  const isMobileCard = useIsMobile();
   return (
     <div
-      style={{ borderRight: borderRight ? '1px solid rgba(255,255,255,0.08)' : 'none', display: 'flex', flexDirection: 'column' }}
+      style={{ borderRight: borderRight && !isMobileCard ? '1px solid rgba(255,255,255,0.08)' : 'none', borderBottom: borderRight && isMobileCard ? '1px solid rgba(255,255,255,0.08)' : 'none', display: 'flex', flexDirection: 'column' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -48,7 +49,7 @@ function PersonCard({ imgSrc, imgAlt, name, titleLine1, titleLine2, institution,
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(3,9,58,0.8) 0%, transparent 60%)', pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: GOLD }} />
       </div>
-      <div style={{ padding: '36px 40px', background: NAVY, flex: 1 }}>
+      <div style={{ padding: isMobileCard ? '28px 24px' : '36px 40px', background: NAVY, flex: 1 }}>
         <div style={{ fontFamily: FF, fontSize: 20, fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: 10 }}>{name}</div>
         <div style={{ fontFamily: FF, fontSize: 17, fontWeight: 400, color: `${GOLD}CC`, lineHeight: 1.6, marginBottom: 2 }}>{titleLine1}</div>
         <div style={{ fontFamily: FF, fontSize: 17, fontWeight: 400, color: 'rgba(255,255,255,0.5)', lineHeight: 1.6 }}>{titleLine2}</div>
@@ -69,11 +70,12 @@ interface JuryMember {
 
 const JuryCard: React.FC<{ member: JuryMember; idx: number }> = ({ member, idx }) => {
   const [hovered, setHovered] = useState(false);
+  const isMobileCard = useIsMobile();
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ borderLeft: idx > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none', display: 'flex', flexDirection: 'column', cursor: 'default', background: hovered ? 'rgba(255,255,255,0.03)' : 'transparent', transition: 'background 0.2s' }}
+      style={{ borderLeft: !isMobileCard && idx > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none', borderTop: isMobileCard && idx > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none', display: 'flex', flexDirection: 'column', cursor: 'default', background: hovered ? 'rgba(255,255,255,0.03)' : 'transparent', transition: 'background 0.2s' }}
     >
       <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '3/4' }}>
         <img src={member.img} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: hovered ? 'none' : 'grayscale(100%)', transition: 'filter 0.5s', display: 'block' }} />
@@ -105,16 +107,17 @@ interface Partner {
   linkedin?: string;
 }
 
-const PartnerCell: React.FC<{ partner: Partner; idx: number; onClick: () => void }> = ({ partner, idx, onClick }) => {
+const PartnerCell: React.FC<{ partner: Partner; idx: number; total: number; onClick: () => void }> = ({ partner, idx, total, onClick }) => {
   const [hovered, setHovered] = useState(false);
   const isMobileCell = useIsMobile();
-  const borderLeft = isMobileCell ? (idx % 2 === 0 ? 'none' : '1px solid rgba(3,9,58,0.08)') : (idx % 4 === 0 ? 'none' : '1px solid rgba(3,9,58,0.08)');
+  const borderLeft = isMobileCell ? 'none' : (idx % 4 === 0 ? 'none' : '1px solid rgba(3,9,58,0.08)');
+  const showBottom = isMobileCell ? idx < total - 1 : idx < 8;
   return (
     <div
       onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ padding: isMobileCell ? '24px 20px' : '36px 32px', borderLeft, borderBottom: (isMobileCell ? idx < 10 : idx < 8) ? '1px solid rgba(3,9,58,0.08)' : 'none', display: 'flex', flexDirection: 'column', gap: 16, cursor: 'pointer', background: hovered ? '#E8E5E4' : 'transparent', transition: 'background 0.15s' }}
+      style={{ padding: isMobileCell ? '24px 20px' : '36px 32px', borderLeft, borderBottom: showBottom ? '1px solid rgba(3,9,58,0.08)' : 'none', display: 'flex', flexDirection: 'column', gap: 16, cursor: 'pointer', background: hovered ? '#E8E5E4' : 'transparent', transition: 'background 0.15s' }}
     >
       <div style={{ height: 48, display: 'flex', alignItems: 'center' }}>{partner.logo}</div>
       <div style={{ width: hovered ? 48 : 20, height: 1, background: GOLD, transition: 'width 0.3s ease' }} />
@@ -613,9 +616,9 @@ const Netzwerk: React.FC = () => {
             Ein starkes Netzwerk für einen starken Mittelstand. Klicken für Details.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)' }}>
           {partners.map((partner, idx) => (
-            <PartnerCell key={partner.id} partner={partner} idx={idx} onClick={() => setSelectedPartner(partner)} />
+            <PartnerCell key={partner.id} partner={partner} idx={idx} total={partners.length} onClick={() => setSelectedPartner(partner)} />
           ))}
         </div>
       </section>
@@ -627,9 +630,9 @@ const Netzwerk: React.FC = () => {
         height: isMobile ? 'auto' : 'calc(100vh - 60px)',
         display: 'flex', flexDirection: 'column',
       }}>
-        <div style={{ flex: 1, position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr', minHeight: 0, overflow: 'hidden' }}>
+        <div style={{ flex: 1, position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr', minHeight: 0, overflow: isMobile ? 'visible' : 'hidden' }}>
           {/* Left — pitch */}
-          <div style={{ padding: isMobile ? '32px 24px 24px' : '36px 36px 32px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
+          <div style={{ padding: isMobile ? '32px 24px 24px' : '36px 36px 32px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: isMobile ? 'visible' : 'hidden' }}>
             <span style={{ fontFamily: FF, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, color: GOLD, display: 'block', marginBottom: 8 }}>Wachstum durch Partnerschaft</span>
             <h2 style={{ fontFamily: FF, fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', fontSize: 'clamp(1.6rem, 2.4vw, 2.4rem)', lineHeight: 1.0, margin: '0 0 12px' }}>WIR FREUEN UNS ÜBER NEUE SPONSOREN.</h2>
             <div style={{ width: 36, height: 2, background: GOLD, margin: '0 0 14px', flexShrink: 0 }} />
@@ -653,7 +656,7 @@ const Netzwerk: React.FC = () => {
           {/* Center divider */}
           {!isMobile && <div style={{ background: 'rgba(255,255,255,0.07)' }} />}
           {/* Right — gold form panel */}
-          <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0, position: 'relative', background: 'linear-gradient(160deg,#DDB84A 0%,#C9A227 52%,#A87800 100%)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', overflow: isMobile ? 'visible' : 'hidden', minHeight: 0, position: 'relative', background: 'linear-gradient(160deg,#DDB84A 0%,#C9A227 52%,#A87800 100%)' }}>
             <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} aria-hidden="true">
               <defs>
                 <pattern id="sponsoringCross" width="18" height="18" patternUnits="userSpaceOnUse">
@@ -679,14 +682,14 @@ const Netzwerk: React.FC = () => {
                 </div>
               </div>
             )}
-            <div style={{ padding: isMobile ? '32px 24px' : '24px 48px 32px 40px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, position: 'relative', zIndex: 1 }}>
+            <div style={{ padding: isMobile ? '28px 20px' : '24px 48px 32px 40px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: isMobile ? 560 : 0, position: 'relative', zIndex: 1 }}>
               <span style={{ fontFamily: FF, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, color: 'rgba(17,29,85,0.5)', display: 'block', marginBottom: 8 }}>Sponsoring 2026</span>
               <SponsoringForm theme="gold" />
             </div>
           </div>
         </div>
         {/* Footnote */}
-        <div style={{ position: 'relative', zIndex: 1, padding: '14px 56px 18px', display: 'flex', justifyContent: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
+        <div style={{ position: 'relative', zIndex: 1, padding: isMobile ? '16px 20px 20px' : '14px 56px 18px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
           <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 15, color: 'rgba(255,255,255,0.45)', marginRight: 10 }}>Oder:</span>
           <Link
             to="/mitglied-werden"

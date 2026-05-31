@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import MunichSkylineBg from '@/components/ui/munich-skyline-bg';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 const FF = '"IBM Plex Sans", sans-serif';
 
@@ -15,6 +16,7 @@ export const TESTIMONIALS = [
 export default function TestimonialsSection() {
   const [active, setActive] = useState(0);
   const t = TESTIMONIALS[active];
+  const isMobile = useIsMobile();
 
   const prev = () => setActive(i => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
   const next = () => setActive(i => (i + 1) % TESTIMONIALS.length);
@@ -22,20 +24,20 @@ export default function TestimonialsSection() {
   return (
     <section style={{ background: '#fff', overflow: 'hidden', position: 'relative', isolation: 'isolate' }}>
       <MunichSkylineBg />
-      <div style={{ display: 'grid', gridTemplateColumns: '42% 58%', height: 560, position: 'relative', zIndex: 1 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '42% 58%', height: isMobile ? 'auto' : 560, position: 'relative', zIndex: 1 }}>
         {/* Left — portrait photo */}
-        <div style={{ position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'relative', overflow: 'hidden', height: isMobile ? 280 : 'auto' }}>
           <img
             key={t.img}
             src={t.img}
             alt={t.name}
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block', transition: 'opacity 0.4s' }}
           />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, transparent 60%, #fff 100%)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: isMobile ? 'linear-gradient(to bottom, transparent 70%, #fff 100%)' : 'linear-gradient(to right, transparent 60%, #fff 100%)' }} />
         </div>
 
         {/* Right — quote */}
-        <div style={{ padding: '80px 72px 80px 56px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div style={{ padding: isMobile ? '40px 22px 56px' : '80px 72px 80px 56px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 32 }}>Stimmen der Preisträger</span>
 
           <p style={{ fontFamily: FF, fontSize: 'clamp(1.4rem, 2.2vw, 2rem)', fontWeight: 300, color: '#101828', lineHeight: 1.55, margin: '0 0 40px' }}>
@@ -50,13 +52,13 @@ export default function TestimonialsSection() {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 40 }}>
-            <button onClick={prev} style={{ width: 40, height: 40, border: '1.5px solid #D0D5DD', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s' }}
+            <button onClick={prev} style={{ width: isMobile ? 44 : 40, height: isMobile ? 44 : 40, border: '1.5px solid #D0D5DD', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s' }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = '#111D55'; (e.currentTarget as HTMLElement).style.background = '#111D55'; (e.currentTarget as HTMLElement).style.color = '#fff'; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = '#D0D5DD'; (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = 'inherit'; }}
             >
               <ChevronRight size={16} style={{ transform: 'rotate(180deg)' }} />
             </button>
-            <button onClick={next} style={{ width: 40, height: 40, border: '1.5px solid #111D55', background: '#111D55', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s', color: '#fff' }}
+            <button onClick={next} style={{ width: isMobile ? 44 : 40, height: isMobile ? 44 : 40, border: '1.5px solid #111D55', background: '#111D55', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s', color: '#fff' }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#EFBF04'; (e.currentTarget as HTMLElement).style.borderColor = '#EFBF04'; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#111D55'; (e.currentTarget as HTMLElement).style.borderColor = '#111D55'; }}
             >

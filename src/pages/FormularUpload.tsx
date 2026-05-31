@@ -193,8 +193,8 @@ export default function FormularUpload() {
                       <span style={{ fontFamily: FF, fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>{formatBytes(f.size)}</span>
                       {f.status === 'uploading' && <div style={{ width: 14, height: 14, border: '2px solid rgba(255,255,255,0.2)', borderTopColor: GOLD, borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />}
                       {f.status !== 'uploading' && f.status !== 'done' && (
-                        <button onClick={() => remove(i)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.3)', padding: 0, display: 'flex' }}>
-                          <X size={14} />
+                        <button onClick={() => remove(i)} aria-label="Datei entfernen" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.3)', padding: isMobile ? 12 : 0, margin: isMobile ? -12 : 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                          <X size={isMobile ? 18 : 14} />
                         </button>
                       )}
                     </div>

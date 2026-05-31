@@ -42,7 +42,7 @@ export default function BlogDetail() {
     <div>
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section style={{ position: 'relative', height: '70vh', minHeight: 520, overflow: 'hidden', display: 'flex', alignItems: 'flex-end' }}>
+      <section style={{ position: 'relative', height: isMobile ? 'auto' : '70vh', minHeight: 520, overflow: 'hidden', display: 'flex', alignItems: 'flex-end' }}>
         <img
           src={article.img}
           alt={article.title}

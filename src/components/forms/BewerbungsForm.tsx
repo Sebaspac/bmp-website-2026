@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, Check, Trophy, User, Send, Building2, AlertCircle } from 'lucide-react';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 const FF = '"IBM Plex Sans", sans-serif';
 
@@ -183,14 +184,15 @@ function Field({ label, error, children, optional, c }: {
 
 function StyledInput({ c, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { c: C }) {
   const [focused, setFocused] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <input
       {...props}
       onFocus={e => { setFocused(true);  props.onFocus?.(e); }}
       onBlur ={e => { setFocused(false); props.onBlur?.(e);  }}
       style={{
-        width: '100%', height: 38, padding: '0 12px',
-        fontFamily: FF, fontSize: 13, color: c.inputText,
+        width: '100%', height: isMobile ? 44 : 38, padding: isMobile ? '0 14px' : '0 12px',
+        fontFamily: FF, fontSize: isMobile ? 16 : 13, color: c.inputText,
         border: `1px solid ${focused ? c.borderActive : c.inputBorder}`,
         background: focused ? c.inputBgFocus : c.inputBg,
         outline: 'none', boxSizing: 'border-box',
@@ -221,16 +223,19 @@ function TypeCard({ selected, onClick, title, desc, c }: {
   );
 }
 
-function OptionButton({ selected, onClick, label, c }: {
-  selected: boolean; onClick: () => void; label: string; c: C;
+function OptionButton({ selected, onClick, label, c, style }: {
+  selected: boolean; onClick: () => void; label: string; c: C; style?: React.CSSProperties;
 }) {
+  const isMobile = useIsMobile();
   return (
     <button type="button" onClick={onClick} style={{
-      padding: '8px 16px', fontFamily: FF, fontSize: 12, fontWeight: 600, cursor: 'pointer',
+      padding: isMobile ? '12px 18px' : '8px 16px', minHeight: isMobile ? 44 : undefined,
+      fontFamily: FF, fontSize: isMobile ? 14 : 12, fontWeight: 600, cursor: 'pointer',
       border: `1.5px solid ${selected ? c.optBorderSel : c.optBorder}`,
       background: selected ? c.optBgSel : c.optBg,
       color: selected ? c.optTextSel : c.optText,
       transition: 'all 0.15s',
+      ...style,
     }}>
       {label}
     </button>
@@ -240,10 +245,12 @@ function OptionButton({ selected, onClick, label, c }: {
 function YesNo({ value, onChange, c }: {
   value: 'ja' | 'nein' | ''; onChange: (v: 'ja' | 'nein') => void; c: C;
 }) {
+  const isMobile = useIsMobile();
+  const flexStyle = isMobile ? { flex: 1 } : undefined;
   return (
     <div style={{ display: 'flex', gap: 8 }}>
-      <OptionButton selected={value === 'ja'}   onClick={() => onChange('ja')}   label="Ja"   c={c} />
-      <OptionButton selected={value === 'nein'} onClick={() => onChange('nein')} label="Nein" c={c} />
+      <OptionButton selected={value === 'ja'}   onClick={() => onChange('ja')}   label="Ja"   c={c} style={flexStyle} />
+      <OptionButton selected={value === 'nein'} onClick={() => onChange('nein')} label="Nein" c={c} style={flexStyle} />
     </div>
   );
 }
@@ -256,6 +263,7 @@ function isEligible(data: FormData) {
 
 export default function BewerbungsForm({ theme = 'dark' }: { theme?: 'dark' | 'gold' }) {
   const c = theme === 'gold' ? GOLD : DARK;
+  const isMobile = useIsMobile();
 
   const [step, setStep]       = useState(0);
   const [dir,  setDir]        = useState(1);
@@ -362,7 +370,7 @@ export default function BewerbungsForm({ theme = 'dark' }: { theme?: 'dark' | 'g
       </div>
 
       {/* Content */}
-      <div style={{ padding: '20px 28px', flex: 1, minHeight: 0, overflowX: 'hidden', overflowY: 'auto' }}>
+      <div style={{ padding: isMobile ? '18px 20px' : '20px 28px', flex: 1, minHeight: 0, overflowX: 'hidden', overflowY: 'auto' }}>
         <AnimatePresence mode="wait" custom={dir}>
           <motion.div key={`${step}-${data.type}`} custom={dir} variants={variants}
             initial="enter" animate="center" exit="exit"
@@ -373,7 +381,7 @@ export default function BewerbungsForm({ theme = 'dark' }: { theme?: 'dark' | 'g
               <div>
                 <p style={{ fontFamily: FF, fontSize: 10, color: c.accentLabel, textTransform: 'uppercase', letterSpacing: '0.25em', fontWeight: 700, marginBottom: 8 }}>Schritt 1</p>
                 <h3 style={{ fontFamily: FF, fontSize: 16, fontWeight: 900, color: c.heading, textTransform: 'uppercase', letterSpacing: '-0.01em', marginBottom: 14 }}>Art der Einreichung</h3>
-                <div style={{ display: 'flex', gap: 8 }}>
+                <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 8 }}>
                   <TypeCard c={c} selected={data.type === 'selbst'} title="Eigenbewerbung"
                     desc="Ich bewerbe mein eigenes Unternehmen für den Bayerischen Mittelstandspreis."
                     onClick={() => { set('type', 'selbst'); setDir(1); setStep(1); }} />
@@ -437,7 +445,7 @@ export default function BewerbungsForm({ theme = 'dark' }: { theme?: 'dark' | 'g
                     <p style={{ fontFamily: FF, fontSize: 10, color: c.accentLabel, textTransform: 'uppercase', letterSpacing: '0.25em', fontWeight: 700, marginBottom: 6 }}>Kontakt</p>
                     <h3 style={{ fontFamily: FF, fontSize: 16, fontWeight: 900, color: c.heading, textTransform: 'uppercase', letterSpacing: '-0.01em' }}>Ihre Kontaktdaten</h3>
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 14 }}>
                     <Field c={c} label="Firmenname" error={errors.firmenname}>
                       <StyledInput c={c} value={data.firmenname} onChange={e => set('firmenname', e.target.value)} placeholder="Muster GmbH" />
                     </Field>
@@ -474,7 +482,7 @@ export default function BewerbungsForm({ theme = 'dark' }: { theme?: 'dark' | 'g
                   ].map(row => (
                     <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '90px 1fr', gap: 12, padding: '10px 0', borderBottom: `1px solid ${c.border}`, alignItems: 'baseline' }}>
                       <span style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, color: c.rowLabel, textTransform: 'uppercase', letterSpacing: '0.12em' }}>{row.label}</span>
-                      <span style={{ fontFamily: FF, fontSize: 13, color: c.rowValue }}>{row.value}</span>
+                      <span style={{ fontFamily: FF, fontSize: 13, color: c.rowValue, overflowWrap: 'anywhere' }}>{row.value}</span>
                     </div>
                   ))}
                 </div>
@@ -488,7 +496,7 @@ export default function BewerbungsForm({ theme = 'dark' }: { theme?: 'dark' | 'g
                   <p style={{ fontFamily: FF, fontSize: 10, color: c.accentLabel, textTransform: 'uppercase', letterSpacing: '0.25em', fontWeight: 700, marginBottom: 6 }}>Nominierung</p>
                   <h3 style={{ fontFamily: FF, fontSize: 16, fontWeight: 900, color: c.heading, textTransform: 'uppercase', letterSpacing: '-0.01em' }}>Nominiertes Unternehmen</h3>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 14 }}>
                   <Field c={c} label="Firmenname" error={errors.nomFirma}>
                     <StyledInput c={c} value={data.nomFirma} onChange={e => set('nomFirma', e.target.value)} placeholder="Muster GmbH" />
                   </Field>
@@ -509,7 +517,7 @@ export default function BewerbungsForm({ theme = 'dark' }: { theme?: 'dark' | 'g
                   <p style={{ fontFamily: FF, fontSize: 10, color: c.accentLabel, textTransform: 'uppercase', letterSpacing: '0.25em', fontWeight: 700, marginBottom: 6 }}>Nominierender</p>
                   <h3 style={{ fontFamily: FF, fontSize: 16, fontWeight: 900, color: c.heading, textTransform: 'uppercase', letterSpacing: '-0.01em' }}>Ihre Angaben</h3>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 14 }}>
                   <Field c={c} label="Ihr Name" error={errors.nomName}>
                     <StyledInput c={c} value={data.nomName} onChange={e => set('nomName', e.target.value)} placeholder="Vor- und Nachname" />
                   </Field>
@@ -542,7 +550,7 @@ export default function BewerbungsForm({ theme = 'dark' }: { theme?: 'dark' | 'g
                   ].map(row => (
                     <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: 12, padding: '10px 0', borderBottom: `1px solid ${c.border}`, alignItems: 'baseline' }}>
                       <span style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, color: c.rowLabel, textTransform: 'uppercase', letterSpacing: '0.12em' }}>{row.label}</span>
-                      <span style={{ fontFamily: FF, fontSize: 13, color: c.rowValue }}>{row.value}</span>
+                      <span style={{ fontFamily: FF, fontSize: 13, color: c.rowValue, overflowWrap: 'anywhere' }}>{row.value}</span>
                     </div>
                   ))}
                 </div>
@@ -555,12 +563,13 @@ export default function BewerbungsForm({ theme = 'dark' }: { theme?: 'dark' | 'g
 
       {/* Navigation */}
       {step > 0 && (
-        <div style={{ padding: '12px 28px', borderTop: `1px solid ${c.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
+        <div style={{ padding: isMobile ? '12px 20px' : '12px 28px', borderTop: `1px solid ${c.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
           <button type="button" onClick={prev} style={{
             fontFamily: FF, fontSize: 12, fontWeight: 700, textTransform: 'uppercase',
             letterSpacing: '0.1em', color: c.backText, background: 'none',
             border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5,
-            padding: 0, transition: 'color 0.15s',
+            padding: isMobile ? '12px 4px' : 0, minHeight: isMobile ? 44 : undefined,
+            transition: 'color 0.15s',
           }}
             onMouseEnter={e => (e.currentTarget.style.color = c.backTextHover)}
             onMouseLeave={e => (e.currentTarget.style.color = c.backText)}
@@ -573,7 +582,7 @@ export default function BewerbungsForm({ theme = 'dark' }: { theme?: 'dark' | 'g
             <button type="button" onClick={next} style={{
               fontFamily: FF, fontSize: 12, fontWeight: 700, textTransform: 'uppercase',
               letterSpacing: '0.1em', color: c.btnText, background: c.btnBg,
-              border: 'none', cursor: 'pointer', padding: '10px 22px',
+              border: 'none', cursor: 'pointer', padding: isMobile ? '13px 24px' : '10px 22px',
               display: 'flex', alignItems: 'center', gap: 6, transition: 'background 0.15s',
             }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = c.btnBgHover; }}
@@ -585,7 +594,7 @@ export default function BewerbungsForm({ theme = 'dark' }: { theme?: 'dark' | 'g
             <button type="button" onClick={submit} style={{
               fontFamily: FF, fontSize: 12, fontWeight: 700, textTransform: 'uppercase',
               letterSpacing: '0.1em', color: c.btnText, background: c.btnBg,
-              border: 'none', cursor: 'pointer', padding: '10px 22px',
+              border: 'none', cursor: 'pointer', padding: isMobile ? '13px 24px' : '10px 22px',
               display: 'flex', alignItems: 'center', gap: 6, transition: 'background 0.15s',
             }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = c.btnBgHover; }}

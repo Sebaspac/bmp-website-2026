@@ -45,7 +45,7 @@ export default function PreistraegerDetail() {
 
       {/* Header block */}
       <div style={{ padding: isMobile ? '32px 24px 28px' : '48px 80px 40px', borderBottom: `1px solid ${BORDER}` }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16, flexWrap: 'wrap' }}>
           <span style={{
             fontFamily: FF, fontSize: 11, fontWeight: 700, color: '#fff',
             background: NAVY, padding: '4px 14px', borderRadius: 999,
@@ -121,7 +121,7 @@ export default function PreistraegerDetail() {
               ].map(row => (
                 <div key={row.label} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                   <span style={{ fontFamily: FF, fontSize: 11, color: GRAY, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{row.label}</span>
-                  <span style={{ fontFamily: FF, fontSize: 17, fontWeight: 700, color: '#101828' }}>{row.value}</span>
+                  <span style={{ fontFamily: FF, fontSize: 17, fontWeight: 700, color: '#101828', overflowWrap: 'anywhere' }}>{row.value}</span>
                 </div>
               ))}
             </div>
@@ -138,7 +138,7 @@ export default function PreistraegerDetail() {
               color: '#101828', border: `2px solid ${NAVY}`,
               padding: '12px 20px', textDecoration: 'none',
               textTransform: 'uppercase', letterSpacing: '0.08em',
-              transition: 'all 0.2s', borderRadius: 0,
+              transition: 'all 0.2s', borderRadius: 0, overflowWrap: 'anywhere',
             }}
             onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = NAVY; el.style.color = '#fff'; }}
             onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'transparent'; el.style.color = NAVY; }}

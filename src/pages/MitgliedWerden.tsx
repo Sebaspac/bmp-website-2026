@@ -240,20 +240,20 @@ function BeitragsrechnerSection({ isMobile }: { isMobile: boolean }) {
             </button>
             {tableOpen && (
               <div style={{ background: '#fff', border: '1px solid rgba(16,24,40,0.12)', borderTop: 'none', borderRadius: '0 0 8px 8px', overflow: 'hidden' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: FF }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: FF, tableLayout: isMobile ? 'fixed' : 'auto' }}>
                   <thead>
                     <tr style={{ background: NAVY }}>
-                      <th style={{ padding: '12px 18px', textAlign: 'left', fontSize: 10, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: GOLD }}>Mitarbeiter</th>
-                      <th style={{ padding: '12px 18px', textAlign: 'right', fontSize: 10, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: GOLD }}>Netto / Jahr</th>
-                      <th style={{ padding: '12px 18px', textAlign: 'right', fontSize: 10, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: GOLD }}>Brutto / Jahr</th>
+                      <th style={{ padding: isMobile ? '10px 10px' : '12px 18px', textAlign: 'left', fontSize: 10, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: GOLD }}>Mitarbeiter</th>
+                      <th style={{ padding: isMobile ? '10px 10px' : '12px 18px', textAlign: 'right', fontSize: 10, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: GOLD }}>Netto / Jahr</th>
+                      <th style={{ padding: isMobile ? '10px 10px' : '12px 18px', textAlign: 'right', fontSize: 10, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: GOLD }}>Brutto / Jahr</th>
                     </tr>
                   </thead>
                   <tbody>
                     {BEITRAGS_TIERS.map((t, i) => (
                       <tr key={t.label} style={{ background: i % 2 === 0 ? 'rgba(239,191,4,0.04)' : '#fff', borderBottom: '1px solid rgba(16,24,40,0.06)' }}>
-                        <td style={{ padding: '12px 18px', fontSize: 14, color: '#101828', fontWeight: selected === t.label ? 700 : 400 }}>{t.label}</td>
-                        <td style={{ padding: '12px 18px', fontSize: 14, textAlign: 'right', color: 'rgba(16,24,40,0.6)' }}>{formatEurLocal(t.annual)}</td>
-                        <td style={{ padding: '12px 18px', fontSize: 14, textAlign: 'right', fontWeight: 600, color: selected === t.label ? NAVY : '#101828' }}>{formatEurLocal(t.annual * (1 + BEITRAGS_VAT))}</td>
+                        <td style={{ padding: isMobile ? '10px 10px' : '12px 18px', fontSize: isMobile ? 13 : 14, color: '#101828', fontWeight: selected === t.label ? 700 : 400 }}>{t.label}</td>
+                        <td style={{ padding: isMobile ? '10px 10px' : '12px 18px', fontSize: isMobile ? 13 : 14, textAlign: 'right', color: 'rgba(16,24,40,0.6)' }}>{formatEurLocal(t.annual)}</td>
+                        <td style={{ padding: isMobile ? '10px 10px' : '12px 18px', fontSize: isMobile ? 13 : 14, textAlign: 'right', fontWeight: 600, color: selected === t.label ? NAVY : '#101828' }}>{formatEurLocal(t.annual * (1 + BEITRAGS_VAT))}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -745,7 +745,7 @@ const MitgliedWerden: React.FC = () => {
             <h1
               style={{
                 fontFamily: FF,
-                fontSize: 'clamp(2.8rem, 6vw, 5rem)',
+                fontSize: isMobile ? 'clamp(2rem, 9vw, 2.6rem)' : 'clamp(2.8rem, 6vw, 5rem)',
                 fontWeight: 900,
                 color: '#fff',
                 textTransform: 'uppercase',
@@ -1157,7 +1157,7 @@ const MitgliedWerden: React.FC = () => {
             gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr',
             flex: 1,
             minHeight: 0,
-            overflow: 'hidden',
+            overflow: isMobile ? 'visible' : 'hidden',
           }}
         >
           {/* Left — pitch */}
@@ -1167,7 +1167,7 @@ const MitgliedWerden: React.FC = () => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              overflow: 'hidden',
+              overflow: isMobile ? 'visible' : 'hidden',
             }}
           >
             <span
@@ -1255,8 +1255,10 @@ const MitgliedWerden: React.FC = () => {
                   <div
                     style={{
                       display: 'flex',
+                      flexDirection: isMobile ? 'column' : 'row',
                       justifyContent: 'space-between',
-                      alignItems: 'baseline',
+                      alignItems: isMobile ? 'flex-start' : 'baseline',
+                      gap: isMobile ? 4 : 0,
                     }}
                   >
                     <span
@@ -1274,7 +1276,7 @@ const MitgliedWerden: React.FC = () => {
                     <span
                       style={{
                         fontFamily: FB,
-                        fontSize: 17,
+                        fontSize: isMobile ? 15 : 17,
                         color: 'rgba(255,255,255,0.3)',
                       }}
                     >
@@ -1295,7 +1297,7 @@ const MitgliedWerden: React.FC = () => {
           />
 
           {/* Right — wizard */}
-          <div style={{ display: 'flex', flexDirection: 'column', background: 'rgba(0,0,0,0.18)', overflowY: 'auto', minHeight: 0 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', background: 'rgba(0,0,0,0.18)', overflowY: isMobile ? 'visible' : 'auto', minHeight: 0 }}>
             {!isMobile && (
               <div style={{ height: 180, position: 'relative', overflow: 'hidden', flexShrink: 0 }}>
                 <img src="/images/gewinner-gruppenfoto.jpg" alt="BMP Mitglieder" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%' }} />
@@ -1307,7 +1309,7 @@ const MitgliedWerden: React.FC = () => {
                 </div>
               </div>
             )}
-            <div style={{ padding: isMobile ? '24px' : '28px 40px 32px', flex: 1, overflowY: 'auto' }}>
+            <div style={{ padding: isMobile ? '24px' : '28px 40px 32px', flex: 1, overflowY: isMobile ? 'visible' : 'auto' }}>
               <MembershipWizard />
             </div>
           </div>

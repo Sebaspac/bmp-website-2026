@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, Check, Layers, Building2, Mail } from 'lucide-react';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 const FF = '"IBM Plex Sans", sans-serif';
 
@@ -122,14 +123,15 @@ function Field({ c, label, error, children }: { c: C; label: string; error?: str
 
 function StyledInput({ c, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { c: C }) {
   const [focused, setFocused] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <input
       {...props}
       onFocus={e => { setFocused(true);  props.onFocus?.(e); }}
       onBlur ={e => { setFocused(false); props.onBlur?.(e);  }}
       style={{
-        width: '100%', height: 44, padding: '0 14px',
-        fontFamily: FF, fontSize: 14, color: c.inputText,
+        width: '100%', height: isMobile ? 46 : 44, padding: '0 14px',
+        fontFamily: FF, fontSize: isMobile ? 16 : 14, color: c.inputText,
         border: `1px solid ${focused ? c.inputBorderFoc : c.inputBorder}`,
         background: focused ? c.inputBgFocus : c.inputBg,
         outline: 'none', boxSizing: 'border-box',
@@ -165,6 +167,7 @@ function PaketCard({ c, pkg, selected, onClick }: { c: C; pkg: typeof PAKETE[0];
 
 export default function SponsoringForm({ theme = 'dark' }: { theme?: 'dark' | 'gold' }) {
   const c = theme === 'gold' ? GOLD : DARK;
+  const isMobile = useIsMobile();
   const [step, setStep]           = useState(0);
   const [dir,  setDir]            = useState(1);
   const [submitted, setSubmitted] = useState(false);
@@ -301,7 +304,9 @@ export default function SponsoringForm({ theme = 'dark' }: { theme?: 'dark' | 'g
           <button type="button" onClick={prev} style={{
             fontFamily: FF, fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em',
             color: c.backText, background: 'none', border: 'none', cursor: 'pointer',
-            display: 'flex', alignItems: 'center', gap: 6, padding: 0, transition: 'color 0.15s',
+            display: 'flex', alignItems: 'center', gap: 6,
+            padding: isMobile ? '12px 4px' : 0, minHeight: isMobile ? 44 : undefined,
+            transition: 'color 0.15s',
           }}
             onMouseEnter={e => (e.currentTarget.style.color = c.backTextHover)}
             onMouseLeave={e => (e.currentTarget.style.color = c.backText)}
@@ -314,7 +319,8 @@ export default function SponsoringForm({ theme = 'dark' }: { theme?: 'dark' | 'g
           <button type="button" onClick={next} style={{
             fontFamily: FF, fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em',
             color: c.btnText, background: c.btnBg, border: 'none', cursor: 'pointer',
-            padding: '12px 24px', display: 'flex', alignItems: 'center', gap: 7, transition: 'background 0.15s',
+            padding: isMobile ? '14px 24px' : '12px 24px', minHeight: isMobile ? 44 : undefined,
+            display: 'flex', alignItems: 'center', gap: 7, transition: 'background 0.15s',
           }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = c.btnBgHover; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = c.btnBg; }}
@@ -325,7 +331,8 @@ export default function SponsoringForm({ theme = 'dark' }: { theme?: 'dark' | 'g
           <button type="button" onClick={submit} style={{
             fontFamily: FF, fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em',
             color: c.btnText, background: c.btnBg, border: 'none', cursor: 'pointer',
-            padding: '12px 24px', display: 'flex', alignItems: 'center', gap: 7, transition: 'background 0.15s',
+            padding: isMobile ? '14px 24px' : '12px 24px', minHeight: isMobile ? 44 : undefined,
+            display: 'flex', alignItems: 'center', gap: 7, transition: 'background 0.15s',
           }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = c.btnBgHover; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = c.btnBg; }}

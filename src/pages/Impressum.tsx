@@ -216,6 +216,7 @@ const body: React.CSSProperties = {
   color: 'rgba(58,58,58,0.82)',
   lineHeight: 1.85,
   margin: '0 0 16px',
+  overflowWrap: 'anywhere',
 };
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
@@ -226,7 +227,7 @@ function Section({ id, title, children }: { id: string; title: string; children:
           {title}
         </h2>
       </div>
-      <div style={{ background: '#fff', padding: '28px 32px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+      <div style={{ background: '#fff', padding: 'clamp(20px, 5vw, 28px) clamp(20px, 5vw, 32px)', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
         {children}
       </div>
     </div>
@@ -246,16 +247,18 @@ function SubSection({ num, title, children }: { num: string; title: string; chil
 }
 
 function AddressBlock({ children }: { children: React.ReactNode }) {
+  const isMobile = useIsMobile();
   return (
-    <address style={{ fontFamily: '"Inter", sans-serif', fontSize: 14, color: 'rgba(58,58,58,0.75)', lineHeight: 1.9, fontStyle: 'normal', background: 'rgba(17,29,85,0.04)', padding: '16px 20px', borderLeft: '2px solid rgba(239,191,4,0.4)', marginBottom: 16 }}>
+    <address style={{ fontFamily: '"Inter", sans-serif', fontSize: isMobile ? 15 : 14, color: 'rgba(58,58,58,0.75)', lineHeight: 1.9, fontStyle: 'normal', background: 'rgba(17,29,85,0.04)', padding: '16px 20px', borderLeft: '2px solid rgba(239,191,4,0.4)', marginBottom: 16, overflowWrap: 'anywhere' }}>
       {children}
     </address>
   );
 }
 
 function Legal({ children }: { children: React.ReactNode }) {
+  const isMobile = useIsMobile();
   return (
-    <p style={{ fontFamily: '"Inter", sans-serif', fontSize: 14, color: NAVY, lineHeight: 1.75, background: 'rgba(17,29,85,0.04)', padding: '12px 16px', borderLeft: `3px solid ${NAVY}`, margin: '0 0 16px', fontWeight: 500 }}>
+    <p style={{ fontFamily: '"Inter", sans-serif', fontSize: isMobile ? 15 : 14, color: NAVY, lineHeight: 1.75, background: 'rgba(17,29,85,0.04)', padding: '12px 16px', borderLeft: `3px solid ${NAVY}`, margin: '0 0 16px', fontWeight: 500, overflowWrap: 'anywhere' }}>
       {children}
     </p>
   );

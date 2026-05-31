@@ -398,7 +398,7 @@ const Home: React.FC = () => {
         {/* Subtle radial glow behind left copy */}
         <div style={{ position: 'absolute', left: -120, top: '50%', transform: 'translateY(-50%)', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(5,26,135,0.35) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr', position: 'relative', flex: 1, minHeight: 0, overflow: 'hidden' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr', position: 'relative', flex: isMobile ? 'none' : 1, minHeight: 0, overflow: 'hidden' }}>
 
           {/* Left — pitch copy */}
           <div style={{ padding: isMobile ? '32px 24px 24px' : '36px 36px 32px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
@@ -473,7 +473,7 @@ const Home: React.FC = () => {
             )}
 
             {/* Form area */}
-            <div style={{ padding: isMobile ? '32px 24px' : '24px 48px 32px 40px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, position: 'relative', zIndex: 1 }}>
+            <div style={{ padding: isMobile ? '32px 24px' : '24px 48px 32px 40px', flex: isMobile ? 'none' : 1, height: isMobile ? '82svh' : undefined, display: 'flex', flexDirection: 'column', minHeight: 0, position: 'relative', zIndex: 1 }}>
               <span style={{ fontFamily: FF, fontSize: 10, color: 'rgba(17,29,85,0.5)', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 8 }}>Direktbewerbung 2026</span>
               <h3 style={{ fontFamily: FF, fontSize: 'clamp(1.2rem, 1.8vw, 1.6rem)', fontWeight: 900, color: '#111D55', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: 24 }}>Kostenlos bewerben</h3>
               <BewerbungsForm theme="gold" />
@@ -483,8 +483,8 @@ const Home: React.FC = () => {
         </div>
 
         {/* Footnote row */}
-        <div style={{ position: 'relative', zIndex: 1, padding: '14px 56px 18px', display: 'flex', justifyContent: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
-          <span style={{ fontFamily: FF, fontSize: 15, color: 'rgba(255,255,255,0.45)', marginRight: 10 }}>Kostenlos und unverbindlich —</span>
+        <div style={{ position: 'relative', zIndex: 1, padding: isMobile ? '16px 24px 20px' : '14px 56px 18px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
+          <span style={{ fontFamily: FF, fontSize: 15, color: 'rgba(255,255,255,0.45)', marginRight: isMobile ? 6 : 10 }}>Kostenlos und unverbindlich —</span>
           <span style={{ fontFamily: FF, fontSize: 15, fontWeight: 700, color: 'rgba(239,191,4,0.8)' }}>keine Teilnahmegebühr</span>
         </div>
         <div style={{ height: 2, background: 'linear-gradient(to right, #EFBF04, rgba(239,191,4,0.25), transparent)', flexShrink: 0 }} />

@@ -115,14 +115,15 @@ const variants = {
 
 function StyledInput({ c, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { c: C }) {
   const [focused, setFocused] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <input
       {...props}
       onFocus={e => { setFocused(true);  props.onFocus?.(e); }}
       onBlur ={e => { setFocused(false); props.onBlur?.(e);  }}
       style={{
-        width: '100%', height: 42, padding: '0 12px',
-        fontSize: 14, color: c.inputText, fontFamily: FF,
+        width: '100%', height: isMobile ? 46 : 42, padding: '0 12px',
+        fontSize: isMobile ? 16 : 14, color: c.inputText, fontFamily: FF,
         border: `1.5px solid ${focused ? c.inputBorderFoc : c.inputBorder}`,
         background: focused ? c.inputBgFocus : c.inputBg,
         outline: 'none', boxSizing: 'border-box',
@@ -135,6 +136,7 @@ function StyledInput({ c, ...props }: React.InputHTMLAttributes<HTMLInputElement
 
 function StyledTextarea({ c, ...props }: React.TextareaHTMLAttributes<HTMLTextAreaElement> & { c: C }) {
   const [focused, setFocused] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <textarea
       {...props}
@@ -142,7 +144,7 @@ function StyledTextarea({ c, ...props }: React.TextareaHTMLAttributes<HTMLTextAr
       onBlur ={e => { setFocused(false); props.onBlur?.(e);  }}
       style={{
         width: '100%', padding: '10px 12px',
-        fontSize: 14, color: c.inputText, fontFamily: FF,
+        fontSize: isMobile ? 16 : 14, color: c.inputText, fontFamily: FF,
         border: `1.5px solid ${focused ? c.inputBorderFoc : c.inputBorder}`,
         background: focused ? c.inputBgFocus : c.inputBg,
         outline: 'none', boxSizing: 'border-box',
@@ -223,7 +225,7 @@ export default function KontaktForm({ theme = 'dark' }: { theme?: 'dark' | 'gold
         <h3 style={{ fontSize: 20, fontWeight: 800, color: c.successHeading, marginBottom: 10, letterSpacing: '-0.02em', fontFamily: FF }}>
           Nachricht gesendet
         </h3>
-        <p style={{ fontSize: 15, color: c.successBody, lineHeight: 1.7, maxWidth: 280, margin: '0 auto', fontFamily: FF }}>
+        <p style={{ fontSize: 15, color: c.successBody, lineHeight: 1.7, maxWidth: 280, margin: '0 auto', fontFamily: FF, overflowWrap: 'anywhere' }}>
           Danke, <strong style={{ color: c.successHeading }}>{data.name}</strong>. Wir melden uns zeitnah bei{' '}
           <strong style={{ color: c.successIcon }}>{data.email}</strong>.
         </p>
@@ -313,7 +315,7 @@ export default function KontaktForm({ theme = 'dark' }: { theme?: 'dark' | 'gold
           <button type="button" onClick={prev} style={{
             fontSize: 12, fontWeight: 600, color: c.backText, background: 'none', border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: isMobile ? 'center' : 'flex-start', gap: 5,
-            padding: isMobile ? '8px 0' : 0, fontFamily: FF, transition: 'color 0.15s',
+            padding: isMobile ? '12px 0' : 0, minHeight: isMobile ? 44 : undefined, fontFamily: FF, transition: 'color 0.15s',
           }}
             onMouseEnter={e => (e.currentTarget.style.color = c.backTextHover)}
             onMouseLeave={e => (e.currentTarget.style.color = c.backText)}

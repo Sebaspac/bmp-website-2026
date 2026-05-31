@@ -7,6 +7,7 @@ import {
   ProcessCardBody,
   ProcessCardTitle,
 } from '@/components/ui/process-timeline';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 const FF = '"IBM Plex Sans", sans-serif';
 const FB = '"Inter", sans-serif';
@@ -21,6 +22,61 @@ const STEPS = [
 ];
 
 export default function WegZurAuszeichnungSection() {
+  const isMobile = useIsMobile();
+
+  // ── MOBILE: stacked vertical list (no scroll-jack, no horizontal overflow) ──
+  if (isMobile) {
+    return (
+      <section id="schritte" style={{ background: NAVY, padding: '56px 22px' }}>
+        {/* Section header */}
+        <div style={{ marginBottom: 36 }}>
+          <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Schritt für Schritt</span>
+          <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.9rem, 8vw, 2.6rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.05, margin: '0 0 16px' }}>
+            IHR WEG ZUR<br />AUSZEICHNUNG.
+          </h2>
+          <p style={{ fontFamily: FB, fontSize: 15, color: 'rgba(255,255,255,0.65)', lineHeight: 1.7, margin: 0 }}>
+            Von der Einreichung bis zur Gala — vier klar definierte Schritte auf dem Weg zur höchsten Auszeichnung des bayerischen Mittelstands.
+          </p>
+        </div>
+
+        {/* Stacked step cards */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {STEPS.map((item, index) => {
+            const Icon = item.Icon;
+            return (
+              <div key={item.step} style={{ border: '1px solid rgba(239,191,4,0.25)', background: '#111D55', padding: '24px 22px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+                  <div style={{ width: 44, height: 44, border: '1px solid rgba(239,191,4,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Icon size={18} style={{ color: GOLD }} strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
+                      <span style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, color: GOLD, letterSpacing: '0.18em', textTransform: 'uppercase' }}>Schritt {item.step}</span>
+                      <span style={{ width: 1, height: 11, background: 'rgba(255,255,255,0.2)' }} />
+                      <span style={{ fontFamily: FF, fontSize: 10, color: 'rgba(255,255,255,0.62)', letterSpacing: '0.06em' }}>{item.date}</span>
+                    </div>
+                    <h3 style={{ fontFamily: FF, fontSize: '1.35rem', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.1, margin: 0 }}>
+                      {item.title}
+                    </h3>
+                  </div>
+                </div>
+                <p style={{ fontFamily: FB, fontSize: 15, color: 'rgba(255,255,255,0.68)', lineHeight: 1.7, margin: 0 }}>
+                  {item.desc}
+                </p>
+                {/* Step progress indicator */}
+                <div style={{ display: 'flex', gap: 4, marginTop: 20 }}>
+                  {[0, 1, 2, 3].map(i => (
+                    <div key={i} style={{ height: 2, flex: i === index ? 2 : 1, background: i === index ? GOLD : 'rgba(255,255,255,0.1)' }} />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <ContainerScroll id="schritte" className="h-[380vh]" style={{ background: NAVY }}>
       <ContainerSticky className="top-0 h-screen flex flex-col">

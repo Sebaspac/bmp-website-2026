@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // ─── CONSTANTS ────────────────────────────────────────────────────────────────
 
@@ -210,6 +211,7 @@ function Input({
   maxLength?: number;
 }) {
   const [focused, setFocused] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <input
       type={type}
@@ -221,6 +223,8 @@ function Input({
       onBlur={() => { setFocused(false); onBlur?.(); }}
       style={{
         ...fieldBase,
+        // ≥16px on mobile prevents iOS auto-zoom on focus
+        fontSize: isMobile ? 16 : fieldBase.fontSize,
         borderColor: error ? GOLD : focused ? "rgba(239,191,4,0.6)" : "rgba(255,255,255,0.15)",
         background: focused ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.07)",
       }}
@@ -235,6 +239,7 @@ function Select({
   options: { value: string; label: string }[]; placeholder?: string; error?: string;
 }) {
   const [focused, setFocused] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <select
       value={value}
@@ -243,6 +248,8 @@ function Select({
       onBlur={() => setFocused(false)}
       style={{
         ...fieldBase,
+        // ≥16px on mobile prevents iOS auto-zoom on focus
+        fontSize: isMobile ? 16 : fieldBase.fontSize,
         cursor: "pointer",
         appearance: "none",
         borderColor: error ? GOLD : focused ? "rgba(239,191,4,0.6)" : "rgba(255,255,255,0.15)",
@@ -271,6 +278,7 @@ function Textarea({
   maxLength?: number; error?: string;
 }) {
   const [focused, setFocused] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <div>
       <textarea
@@ -283,6 +291,8 @@ function Textarea({
         rows={4}
         style={{
           ...fieldBase,
+          // ≥16px on mobile prevents iOS auto-zoom on focus
+          fontSize: isMobile ? 16 : fieldBase.fontSize,
           resize: "vertical",
           borderColor: error ? GOLD : focused ? "rgba(239,191,4,0.6)" : "rgba(255,255,255,0.15)",
           background: focused ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.07)",
@@ -419,8 +429,9 @@ function ReviewRow({ label, value }: { label: string; value: string }) {
 // ─── PROGRESS BAR ─────────────────────────────────────────────────────────────
 
 function ProgressBar({ current, total }: { current: number; total: number }) {
+  const isMobile = useIsMobile();
   return (
-    <div style={{ marginBottom: 36 }}>
+    <div style={{ marginBottom: isMobile ? 24 : 36 }}>
       {/* Step dots + connecting lines */}
       <div style={{ position: "relative", display: "flex", alignItems: "center", marginBottom: 12 }}>
         {/* Background track */}
@@ -502,28 +513,43 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
         })}
       </div>
 
-      {/* Step labels */}
-      <div style={{ display: "flex" }}>
-        {STEPS.map((step) => {
-          const done = step.id < current;
-          const active = step.id === current;
-          return (
-            <div key={step.id} style={{
-              flex: 1,
-              textAlign: step.id === 1 ? "left" : step.id === total ? "right" : "center",
-              fontSize: 10,
-              fontWeight: active ? 700 : 500,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: active ? GOLD : done ? "rgba(239,191,4,0.5)" : "rgba(255,255,255,0.25)",
-              fontFamily: '"IBM Plex Sans", sans-serif',
-              transition: "color 0.3s",
-            }}>
-              {step.label}
-            </div>
-          );
-        })}
-      </div>
+      {/* Step labels — full list on desktop; on mobile only the active label
+          (the 5-up text row would overflow / wrap on narrow screens) */}
+      {isMobile ? (
+        <div style={{
+          textAlign: "center",
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: "0.1em",
+          textTransform: "uppercase",
+          color: GOLD,
+          fontFamily: '"IBM Plex Sans", sans-serif',
+        }}>
+          {STEPS.find((s) => s.id === current)?.label} · {current}/{total}
+        </div>
+      ) : (
+        <div style={{ display: "flex" }}>
+          {STEPS.map((step) => {
+            const done = step.id < current;
+            const active = step.id === current;
+            return (
+              <div key={step.id} style={{
+                flex: 1,
+                textAlign: step.id === 1 ? "left" : step.id === total ? "right" : "center",
+                fontSize: 10,
+                fontWeight: active ? 700 : 500,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: active ? GOLD : done ? "rgba(239,191,4,0.5)" : "rgba(255,255,255,0.25)",
+                fontFamily: '"IBM Plex Sans", sans-serif',
+                transition: "color 0.3s",
+              }}>
+                {step.label}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
@@ -587,6 +613,7 @@ function NavButtons({
 }: {
   step: number; onBack: () => void; onNext: () => void; onSubmit: () => void; disabled?: boolean;
 }) {
+  const isMobile = useIsMobile();
   const isLast = step === 5;
   return (
     <div style={{
@@ -602,7 +629,8 @@ function NavButtons({
           onClick={onBack}
           style={{
             flex: "0 0 auto",
-            padding: "12px 20px",
+            padding: isMobile ? "12px 16px" : "12px 20px",
+            minHeight: 44,
             background: "transparent",
             border: "1px solid rgba(255,255,255,0.2)",
             borderRadius: 8,
@@ -613,6 +641,7 @@ function NavButtons({
             cursor: "pointer",
             letterSpacing: "0.05em",
             transition: "all 0.2s",
+            whiteSpace: "nowrap",
           }}
           onMouseEnter={(e) => {
             (e.target as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.5)";
@@ -633,17 +662,21 @@ function NavButtons({
         style={{
           flex: 1,
           padding: "13px 20px",
+          minHeight: 44,
           background: disabled ? "rgba(239,191,4,0.3)" : GOLD,
           border: "none",
           borderRadius: 8,
           color: disabled ? "rgba(17,29,85,0.5)" : NAVY,
           fontFamily: '"IBM Plex Sans", sans-serif',
-          fontSize: 13,
+          // long final-step label needs a smaller size + wrapping on mobile
+          fontSize: isMobile && isLast ? 12 : 13,
           fontWeight: 700,
           cursor: disabled ? "not-allowed" : "pointer",
-          letterSpacing: "0.1em",
+          letterSpacing: isMobile && isLast ? "0.04em" : "0.1em",
           textTransform: "uppercase",
           transition: "all 0.2s",
+          lineHeight: 1.3,
+          overflowWrap: "anywhere",
         }}
         onMouseEnter={(e) => {
           if (!disabled) (e.target as HTMLButtonElement).style.background = "#f5ca1a";
@@ -663,6 +696,7 @@ function NavButtons({
 function Step1({ data, onChange, errors }: {
   data: FormData; onChange: (k: keyof FormData, v: string | boolean) => void; errors: Errors;
 }) {
+  const isMobile = useIsMobile();
   const rechtsformen = [
     "GmbH","GmbH & Co. KG","AG","UG","KG","OHG","GbR",
     "Einzelunternehmen","e.K.","Sonstige",
@@ -672,7 +706,7 @@ function Step1({ data, onChange, errors }: {
     <>
       <StepHeading step={1} title="Ihr Unternehmen" subtitle="Angaben zum antragstellenden Unternehmen" />
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "0 16px" }}>
         <div style={{ gridColumn: "1 / -1" }}>
           <Field label="Firmenname" required error={errors.firmenname}>
             <Input value={data.firmenname} onChange={(v) => onChange("firmenname", v)} placeholder="Muster GmbH" error={errors.firmenname} />
@@ -713,17 +747,18 @@ function Step1({ data, onChange, errors }: {
 function Step2({ data, onChange, errors }: {
   data: FormData; onChange: (k: keyof FormData, v: string | boolean) => void; errors: Errors;
 }) {
+  const isMobile = useIsMobile();
   return (
     <>
       <StepHeading step={2} title="Kontaktperson" subtitle="Ansprechpartner für die Mitgliedschaft" />
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "0 16px" }}>
         <Field label="Anrede" required error={errors.anrede}>
           <Select value={data.anrede} onChange={(v) => onChange("anrede", v)}
             options={[{value:"Herr",label:"Herr"},{value:"Frau",label:"Frau"},{value:"Divers",label:"Divers"}]}
             placeholder="Bitte wählen" error={errors.anrede} />
         </Field>
-        <div /> {/* spacer */}
+        {!isMobile && <div />} {/* spacer (desktop only) */}
         <Field label="Vorname" required error={errors.vorname}>
           <Input value={data.vorname} onChange={(v) => onChange("vorname", v)} placeholder="Max" error={errors.vorname} />
         </Field>
@@ -755,6 +790,7 @@ function Step2({ data, onChange, errors }: {
 function Step3({ data, onChange, errors }: {
   data: FormData; onChange: (k: keyof FormData, v: string | boolean) => void; errors: Errors;
 }) {
+  const isMobile = useIsMobile();
   const beitrag = calcBeitrag(data.mitarbeiter);
   return (
     <>
@@ -800,7 +836,7 @@ function Step3({ data, onChange, errors }: {
         </div>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "0 16px" }}>
         <Field label="Gewünschtes Eintrittsdatum" required error={errors.eintrittsdatum}>
           <Input value={data.eintrittsdatum} onChange={(v) => onChange("eintrittsdatum", v)} type="date" error={errors.eintrittsdatum} />
         </Field>
@@ -826,6 +862,7 @@ function Step3({ data, onChange, errors }: {
 function Step4({ data, onChange, errors }: {
   data: FormData; onChange: (k: keyof FormData, v: string | boolean) => void; errors: Errors;
 }) {
+  const isMobile = useIsMobile();
   const ibanIsValid = validateIBAN(data.iban);
 
   return (
@@ -849,7 +886,7 @@ function Step4({ data, onChange, errors }: {
         Ich ermächtige den BMP e.V., Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die vom BMP e.V. auf mein Konto gezogenen Lastschriften einzulösen. Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen. Die Mandatsreferenz wird separat mitgeteilt. Gläubiger-Identifikationsnummer: DE98ZZZ09999999999.
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "0 16px" }}>
         <div style={{ gridColumn: "1 / -1" }}>
           <Field label="Kontoinhaber" required error={errors.kontoinhaber}>
             <Input value={data.kontoinhaber} onChange={(v) => onChange("kontoinhaber", v)} placeholder="Max Mustermann" error={errors.kontoinhaber} />
@@ -1084,6 +1121,7 @@ function SuccessScreen() {
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 
 function MembershipWizard() {
+  const isMobile = useIsMobile();
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
@@ -1162,7 +1200,7 @@ function MembershipWizard() {
       backdropFilter: "blur(8px)",
       borderRadius: 16,
       border: "1px solid rgba(255,255,255,0.08)",
-      padding: "32px 28px",
+      padding: isMobile ? "20px 16px" : "32px 28px",
       color: WHITE,
       fontFamily: '"IBM Plex Sans", sans-serif',
       boxShadow: "0 24px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)",
@@ -1191,7 +1229,7 @@ function MembershipWizard() {
         <>
           <ProgressBar current={step} total={STEPS.length} />
 
-          <div ref={contentRef} style={{ minHeight: 380 }}>
+          <div ref={contentRef} style={{ minHeight: isMobile ? 300 : 380 }}>
             {step === 1 && <Step1 data={data} onChange={onChange} errors={errors} />}
             {step === 2 && <Step2 data={data} onChange={onChange} errors={errors} />}
             {step === 3 && <Step3 data={data} onChange={onChange} errors={errors} />}

@@ -55,14 +55,15 @@ export default function Preistraeger() {
         </h1>
 
         {/* Year Tabs */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 0, marginBottom: 32, borderBottom: `2px solid ${BORDER}` }}>
+        <div style={{ display: 'flex', flexWrap: isMobile ? 'nowrap' : 'wrap', gap: 0, marginBottom: 32, borderBottom: `2px solid ${BORDER}`, overflowX: isMobile ? 'auto' : 'visible', WebkitOverflowScrolling: 'touch', maxWidth: '100%' }}>
           {YEARS.map(year => (
             <button
               key={year}
               onClick={() => { setActiveYear(year); reset(); }}
               style={{
                 fontFamily: FF, fontSize: 16, fontWeight: 700,
-                padding: '12px 32px',
+                padding: isMobile ? '12px 20px' : '12px 32px',
+                flexShrink: 0,
                 background: 'none', border: 'none', cursor: 'pointer',
                 color: activeYear === year ? NAVY : GRAY,
                 borderBottom: activeYear === year ? `2px solid ${GOLD}` : '2px solid transparent',
@@ -135,7 +136,7 @@ export default function Preistraeger() {
 
       {/* Grid */}
       {filtered.length === 0 ? (
-        <div style={{ padding: '80px', textAlign: 'center', color: GRAY, fontFamily: FF }}>
+        <div style={{ padding: isMobile ? '56px 24px' : '80px', textAlign: 'center', color: GRAY, fontFamily: FF }}>
           Keine Preisträger für diese Auswahl.
         </div>
       ) : (
@@ -162,7 +163,7 @@ export default function Preistraeger() {
         >
           Jetzt kostenlos bewerben <ArrowRight size={14} />
         </Link>
-        <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: isMobile ? 'center' : undefined, flexWrap: isMobile ? 'wrap' : 'nowrap', gap: 8 }}>
           <span style={{ width: 20, height: 1, background: 'rgba(239,191,4,0.3)', display: 'inline-block' }} />
           <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 11, color: 'rgba(16,24,40,0.4)' }}>Diese Arbeit unterstützen:</span>
           <Link

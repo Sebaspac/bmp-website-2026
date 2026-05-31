@@ -115,11 +115,11 @@ const About: React.FC = () => {
           </div>
 
           {/* Right — full-bleed image */}
-          <div style={{ position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'relative', overflow: 'hidden', minHeight: isMobile ? 220 : undefined }}>
             <img
               src="/images/preistraeger-gruppe.jpg"
               alt="BMP Gala Preisverleihung"
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+              style={{ position: isMobile ? 'relative' : 'absolute', inset: 0, width: '100%', height: isMobile ? 220 : '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
             <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to right, ${CREAM} 0%, transparent 25%), linear-gradient(to top, rgba(3,9,58,0.75) 0%, transparent 60%)` }} />
             <div style={{ position: 'absolute', bottom: 36, left: 36 }}>
@@ -423,6 +423,7 @@ function HighlightCard({ winner }: { winner: import('@/data/winners').Winner }) 
 
 function GoalItem({ n, text, sub, last }: { n: string; text: string; sub?: string; last: boolean }) {
   const [hovered, setHovered] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <div
       style={{ display: 'grid', gridTemplateColumns: '36px 1fr', gap: '0 16px', padding: '16px 0', borderBottom: last ? 'none' : '1px solid rgba(255,255,255,0.07)', cursor: 'default', transition: 'background 0.15s', alignItems: 'center' }}
@@ -430,9 +431,9 @@ function GoalItem({ n, text, sub, last }: { n: string; text: string; sub?: strin
       onMouseLeave={() => setHovered(false)}
     >
       <span style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, color: hovered ? GOLD : 'rgba(239,191,4,0.45)', letterSpacing: '0.1em', transition: 'color 0.2s' }}>{n}</span>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'baseline', gap: isMobile ? 3 : 12 }}>
         <span style={{ fontFamily: FF, fontSize: 15, fontWeight: 700, color: hovered ? '#fff' : 'rgba(255,255,255,0.75)', textTransform: 'uppercase', letterSpacing: '0.08em', transition: 'color 0.2s' }}>{text}</span>
-        {sub && <span style={{ fontFamily: FB, fontSize: 15, color: 'rgba(255,255,255,0.3)', flexShrink: 0 }}>{sub}</span>}
+        {sub && <span style={{ fontFamily: FB, fontSize: 15, color: 'rgba(255,255,255,0.3)', flexShrink: isMobile ? 1 : 0 }}>{sub}</span>}
       </div>
     </div>
   );

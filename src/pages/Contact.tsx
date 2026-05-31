@@ -113,7 +113,7 @@ const Contact: React.FC = () => {
           {!isMobile && <div style={{ background: 'rgba(255,255,255,0.07)' }} />}
 
           {/* Right — gold form panel */}
-          <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0, position: 'relative', background: 'linear-gradient(160deg,#DDB84A 0%,#C9A227 52%,#A87800 100%)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', overflow: isMobile ? 'visible' : 'hidden', height: isMobile ? 'auto' : undefined, minHeight: 0, position: 'relative', background: 'linear-gradient(160deg,#DDB84A 0%,#C9A227 52%,#A87800 100%)' }}>
             <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} aria-hidden="true">
               <defs>
                 <pattern id="kontaktCross" width="18" height="18" patternUnits="userSpaceOnUse">
@@ -139,7 +139,7 @@ const Contact: React.FC = () => {
                 </div>
               </div>
             )}
-            <div style={{ padding: isMobile ? '40px 24px' : '32px 48px 32px 40px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, position: 'relative', zIndex: 1 }}>
+            <div style={{ padding: isMobile ? '36px 20px' : '32px 48px 32px 40px', flex: isMobile ? 'none' : 1, display: 'flex', flexDirection: 'column', minHeight: isMobile ? 480 : 0, position: 'relative', zIndex: 1 }}>
               <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, color: 'rgba(17,29,85,0.5)', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 8 }}>Kontaktformular</span>
               <h3 style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 'clamp(1.2rem, 1.8vw, 1.6rem)', fontWeight: 900, color: '#111D55', letterSpacing: '-0.025em', textTransform: 'uppercase', lineHeight: 1.1, marginBottom: 24 }}>
                 Schreiben Sie uns

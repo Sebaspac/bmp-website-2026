@@ -111,7 +111,7 @@ function NewsCard({ item, idx, isMobile }: { item: typeof news[0]; idx: number; 
         />
       </div>
       {/* body */}
-      <div style={{ padding: '32px 36px 40px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+      <div style={{ padding: isMobile ? '24px 24px 32px' : '32px 36px 40px', display: 'flex', flexDirection: 'column', flex: 1 }}>
         <span
           style={{
             fontFamily: FF,
@@ -294,6 +294,7 @@ const Press: React.FC = () => {
               letterSpacing: '-0.03em',
               textTransform: 'uppercase',
               margin: '0 0 24px',
+              overflowWrap: 'anywhere',
             }}
           >
             EVENTS &amp;<br />BERICHTERSTATTUNG.
@@ -399,7 +400,7 @@ const Press: React.FC = () => {
             <div style={{ padding: isMobile ? '24px 24px 32px' : '40px 56px 40px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div style={{ fontFamily: FF, fontSize: 9, color: '#4A8FC9', textTransform: 'uppercase' as const, letterSpacing: '0.22em', fontWeight: 700, marginBottom: 10 }}>{event.cat}</div>
               <h3 style={{ fontFamily: FF, fontSize: 'clamp(1.3rem, 2vw, 1.7rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase' as const, letterSpacing: '-0.02em', margin: '0 0 14px' }}>{event.title}</h3>
-              <div style={{ display: 'flex', gap: 28, alignItems: 'center', marginBottom: 16 }}>
+              <div style={{ display: 'flex', gap: isMobile ? 16 : 28, alignItems: 'center', flexWrap: 'wrap', marginBottom: 16 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: FB, fontSize: 18, color: 'rgba(16,24,40,0.5)' }}>
                   <Calendar size={14} color={GOLD} />{event.date}
                 </div>
@@ -623,6 +624,7 @@ const Press: React.FC = () => {
                   fontSize: 18,
                   color: 'rgba(16,24,40,0.55)',
                   lineHeight: 1.8,
+                  overflowWrap: 'anywhere',
                 }}
               >
                 presse@bmp-bayern.de

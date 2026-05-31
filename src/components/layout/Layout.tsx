@@ -256,7 +256,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div style={{ display:'flex', alignItems:'center', justifyContent:'flex-end', padding:'0 12px', height:'100%' }}>
             {/* Mobile CTA */}
             <Link to="/teilnahme#bewerben"
-              style={{ fontFamily:FF_DISPLAY, fontSize:9, fontWeight:700, textTransform:'uppercase', letterSpacing:'.1em', color:'#101828', background:GOLD, padding:'7px 12px', textDecoration:'none', marginRight:8, whiteSpace:'nowrap' }}
+              style={{ display:'inline-flex', alignItems:'center', minHeight:36, fontFamily:FF_DISPLAY, fontSize:10, fontWeight:700, textTransform:'uppercase', letterSpacing:'.1em', color:'#101828', background:GOLD, padding:'0 14px', textDecoration:'none', marginRight:8, whiteSpace:'nowrap' }}
             >BMP</Link>
             {/* Mobile hamburger */}
             <button
@@ -551,10 +551,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
 
             {/* Mobile secondary links */}
-            <div style={{ padding:'0 24px 24px', display:'flex', flexWrap:'wrap', gap:'10px 24px' }}>
+            <div style={{ padding:'0 24px 24px', display:'flex', flexWrap:'wrap', gap:'4px 8px' }}>
               {SECONDARY.map(item => (
                 <Link key={item.path} to={item.path} onClick={() => setMobileMenuOpen(false)}
-                  style={{ fontSize:12, color:MUTED, textDecoration:'none', fontFamily:FF_BODY }}
+                  style={{ display:'inline-flex', alignItems:'center', minHeight:44, padding:'0 8px', fontSize:13, color:MUTED, textDecoration:'none', fontFamily:FF_BODY }}
                 >{item.label}</Link>
               ))}
             </div>
