@@ -208,8 +208,8 @@ const Home: React.FC = () => {
       <section style={{ overflow: 'hidden', position: 'relative', isolation: 'isolate' }}>
         <MunichSkylineBg />
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '55% 45%' }}>
-          {/* Left — text */}
-          <div style={{ background: '#E4E2E3', padding: isMobile ? '48px 24px' : '80px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          {/* Left (desktop) / Bottom (mobile) — text */}
+          <div style={{ background: '#E4E2E3', padding: isMobile ? '36px 24px 48px' : '80px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center', order: isMobile ? 2 : 0 }}>
             <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Schnell-Check</span>
             <h2 style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 'clamp(1.8rem, 2.8vw, 2.5rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.05, margin: '0 0 20px' }}>
               SIND SIE<br />BERECHTIGT?
@@ -247,15 +247,16 @@ const Home: React.FC = () => {
             </Link>
           </div>
 
-          {/* Right — full-bleed image */}
-          <div style={{ position: 'relative', minHeight: isMobile ? 280 : 560, overflow: 'hidden' }}>
+          {/* Right (desktop) / Top (mobile) — full-bleed image */}
+          <div style={{ position: 'relative', minHeight: isMobile ? 230 : 560, overflow: 'hidden', order: isMobile ? 1 : 0 }}>
             <img
               src="/images/buehne-gewinner.jpg"
               alt="Preisverleihung Bühne"
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center center' }}
             />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to left, transparent 40%, #E4E2E3 100%)' }} />
-            {/* Gold bottom line */}
+            {/* Fade: into the text bg — downward on mobile, leftward on desktop */}
+            <div style={{ position: 'absolute', inset: 0, background: isMobile ? 'linear-gradient(to bottom, transparent 45%, #E4E2E3 100%)' : 'linear-gradient(to left, transparent 40%, #E4E2E3 100%)' }} />
+            {/* Gold accent line — bottom edge */}
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(to right, rgba(239,191,4,0.2), #EFBF04, rgba(239,191,4,0.2))' }} />
           </div>
         </div>
