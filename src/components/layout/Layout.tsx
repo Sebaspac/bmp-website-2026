@@ -200,7 +200,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div
-      style={{ paddingTop: isMobile ? 0 : 60, paddingLeft: isMobile ? 60 : 0 }}
+      style={{ paddingTop: 60, paddingLeft: 0 }}
       className="min-h-screen flex flex-col bg-background text-foreground font-body"
     >
       {showLoader && <LoadingScreen onDone={() => setShowLoader(false)} />}
@@ -471,69 +471,41 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
 
       {/* ═══════════════════════════════════════════════════════════ */}
-      {/* ══  MOBILE CHROME (<768px) — sidebar + accordion overlay  ══ */}
+      {/* ══  MOBILE CHROME (<768px) — top bar + fullscreen overlay ══ */}
       {/* ═══════════════════════════════════════════════════════════ */}
       {isMobile && (
         <>
-          {/* ── SIDEBAR ──────────────────────────────────── */}
-          <aside style={{
-            position: 'fixed', top: 0, left: 0,
-            width: 60, height: '100vh',
-            background: ANTHRA,
-            zIndex: 400,
-            display: 'flex', flexDirection: 'column', alignItems: 'center',
-            padding: '16px 0',
-            userSelect: 'none',
-            borderRight: `1px solid ${LINE}`,
-            transform: mounted ? 'translateX(0)' : 'translateX(-60px)',
-            transition: 'transform 0.45s cubic-bezier(0.22,1,0.36,1)',
+          {/* ── TOP BAR ──────────────────────────────────── */}
+          <header style={{
+            position:'fixed', top:0, left:0, right:0, height:60,
+            background:ANTHRA, borderBottom:`1px solid ${LINE}`,
+            display:'flex', alignItems:'center', justifyContent:'space-between',
+            padding:'0 8px 0 20px',
+            zIndex:400, userSelect:'none',
+            transform: mounted ? 'translateY(0)' : 'translateY(-100%)',
+            transition:'transform 0.45s cubic-bezier(0.22,1,0.36,1)',
           }}>
             {/* Logo */}
-            <Link to="/" style={{ display:'flex', flexDirection:'column', alignItems:'center', textDecoration:'none', flexShrink:0, gap:2 }}>
-              <span style={{ fontSize:13, fontWeight:900, letterSpacing:'.06em', color:GOLD, fontFamily:FF_DISPLAY, lineHeight:1 }}>BMP</span>
-              <span style={{ fontSize:5.5, fontWeight:700, letterSpacing:'.14em', textTransform:'uppercase', color:'rgba(239,191,4,.45)', textAlign:'center', lineHeight:1.6, fontFamily:FF_DISPLAY }}>
-                BAY.<br/>MITTEL<br/>STANDS<br/>PREIS
-              </span>
+            <Link to="/" style={{ display:'flex', alignItems:'center', textDecoration:'none' }}>
+              <img src="/bmp-logo.png" alt="Bayerischer Mittelstandspreis 2026" style={{ height:32, width:'auto', display:'block', objectFit:'contain' }} />
             </Link>
-
-            {/* Gold vertical line */}
-            <div style={{ width:1, background:LINE, margin:'14px 0', flex:1, minHeight:30, maxHeight:'calc(100% - 230px)' }} />
 
             {/* Hamburger */}
             <button
-              onClick={() => setMobileOpen(v => !v)}
+              onClick={() => setMobileOpen(true)}
               aria-expanded={mobileOpen}
-              aria-label={mobileOpen ? 'Navigation schließen' : 'Navigation öffnen'}
-              style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:7, background:'none', border:'none', cursor:'pointer', padding:'8px 0', flexShrink:0 }}
+              aria-label="Navigation öffnen"
+              style={{ display:'flex', alignItems:'center', justifyContent:'center', width:48, height:48, background:'none', border:'none', cursor:'pointer', padding:0, flexShrink:0 }}
             >
-              <div style={{ display:'flex', flexDirection:'column', gap:4.5, width:20 }}>
-                <span style={{ display:'block', height:1.5, background:MUTED, transformOrigin:'center', transition:'transform .3s ease, opacity .3s ease', transform: mobileOpen ? 'translateY(6px) rotate(45deg)' : 'none' }} />
-                <span style={{ display:'block', height:1.5, background:MUTED, transition:'opacity .3s', opacity: mobileOpen ? 0 : 1 }} />
-                <span style={{ display:'block', height:1.5, background:MUTED, transformOrigin:'center', transition:'transform .3s ease', transform: mobileOpen ? 'translateY(-6px) rotate(-45deg)' : 'none' }} />
+              <div style={{ width:24, position:'relative', display:'flex', flexDirection:'column', gap:5 }}>
+                <span style={{ display:'block', height:2, background:MUTED, borderRadius:2 }} />
+                <span style={{ display:'block', height:2, background:MUTED, borderRadius:2 }} />
+                <span style={{ display:'block', height:2, width:'70%', background:GOLD, borderRadius:2 }} />
               </div>
-              <span style={{ fontSize:8, fontWeight:600, textTransform:'uppercase', letterSpacing:'.18em', color:MUTED, lineHeight:1, fontFamily:FF_DISPLAY, transition:'opacity .25s', opacity: mobileOpen ? 0 : 1 }}>Menü</span>
             </button>
+          </header>
 
-            {/* Social icons */}
-            <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:12, marginTop:'auto', flexShrink:0 }}>
-              {SOCIAL.map(s => <SocialLink key={s.label} {...s} />)}
-            </div>
-
-            {/* Lang switcher */}
-            <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:2, marginTop:14, flexShrink:0 }}>
-              {(['DE','EN'] as const).map((l, i) => (
-                <React.Fragment key={l}>
-                  {i === 1 && <div style={{ width:1, height:9, background:LINE }} />}
-                  <button
-                    onClick={() => setLang(l)}
-                    style={{ fontSize:10, fontWeight:600, letterSpacing:'.1em', textTransform:'uppercase', background:'none', border:'none', cursor:'pointer', color:lang===l ? GOLD : MUTED, padding:'1px 0', lineHeight:1, transition:'color .2s', fontFamily:FF_DISPLAY }}
-                  >{l}</button>
-                </React.Fragment>
-              ))}
-            </div>
-          </aside>
-
-          {/* ── MOBILE OVERLAY (accordion) ───────────────── */}
+          {/* ── FULLSCREEN OVERLAY ───────────────────────── */}
           <div role="dialog" aria-modal="true" aria-label="Navigation"
             style={{
               position: 'fixed', inset: 0,
@@ -543,93 +515,128 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               pointerEvents: mobileOpen ? 'all' : 'none',
               transition: `opacity ${mobileOpen ? '.28s' : '.2s'} ease`,
               display: 'flex', flexDirection: 'column',
+              overflow: 'hidden',
             }}
           >
-            {/* Top bar */}
-            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 20px', height:60, borderBottom:`1px solid ${SEP}`, flexShrink:0 }}>
+            {/* Brand watermark */}
+            <div aria-hidden style={{
+              position:'absolute', bottom:24, left:24, right:24,
+              fontFamily:FF_DISPLAY, fontWeight:900,
+              fontSize:'clamp(40px,17vw,80px)', lineHeight:.9,
+              textTransform:'uppercase', letterSpacing:'-.02em',
+              color:'rgba(255,255,255,.04)',
+              pointerEvents:'none', userSelect:'none', zIndex:0,
+            }}>Exzellenz<br/>seit 2005</div>
+
+            {/* Header row: logo + close */}
+            <div style={{ position:'relative', zIndex:1, display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 8px 0 20px', height:60, borderBottom:`1px solid ${SEP}`, flexShrink:0 }}>
               <Link to="/" onClick={() => setMobileOpen(false)} style={{ display:'flex', alignItems:'center', textDecoration:'none' }}>
                 <img src="/bmp-logo.png" alt="BMP Logo" style={{ height:32, width:'auto', display:'block', objectFit:'contain' }} />
               </Link>
               <button onClick={() => setMobileOpen(false)} aria-label="Menü schließen"
-                style={{ display:'flex', alignItems:'center', justifyContent:'center', minWidth:44, minHeight:44, background:'none', border:'none', cursor:'pointer', padding:8 }}>
-                <div style={{ width:28, height:28, position:'relative', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                  <span style={{ position:'absolute', width:20, height:1.5, background:MUTED, transform:'rotate(45deg)' }} />
-                  <span style={{ position:'absolute', width:20, height:1.5, background:MUTED, transform:'rotate(-45deg)' }} />
+                style={{ display:'flex', alignItems:'center', justifyContent:'center', width:48, height:48, background:'none', border:'none', cursor:'pointer', padding:0, flexShrink:0 }}>
+                <div style={{ width:26, height:26, position:'relative', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                  <span style={{ position:'absolute', width:22, height:2, background:MUTED, borderRadius:2, transform:'rotate(45deg)' }} />
+                  <span style={{ position:'absolute', width:22, height:2, background:MUTED, borderRadius:2, transform:'rotate(-45deg)' }} />
                 </div>
               </button>
             </div>
 
-            {/* Scrollable nav */}
-            <nav style={{ flex:1, overflowY:'auto', padding:'4px 0' }}>
-              <ul style={{ listStyle:'none', margin:0, padding:0 }}>
-                {NAV.map((item) => (
-                  <li key={item.key} style={{ borderTop:`1px solid ${SEP}` }}>
-                    <button
-                      onClick={() => setExpand(k => k === item.key ? null : item.key)}
-                      style={{
-                        display:'flex', alignItems:'center', justifyContent:'space-between', width:'100%',
-                        padding:'14px 20px',
-                        background:'none', border:'none', cursor:'pointer',
-                        color: expandKey === item.key ? GOLD : '#fff',
-                        fontSize:17, fontFamily:FF_DISPLAY, fontWeight:600, textTransform:'uppercase', letterSpacing:'.03em',
-                        textAlign:'left', minHeight:44,
-                      }}
-                    >
-                      <span>{item.label}</span>
-                      <span style={{ color:GOLD, fontSize:'1.1em', transition:'transform .22s', display:'inline-block', transform: expandKey === item.key ? 'rotate(90deg)' : 'none' }}>›</span>
-                    </button>
-                    <div style={{
-                      overflow:'hidden',
-                      maxHeight: expandKey === item.key ? 460 : 0,
-                      transition:'max-height .28s cubic-bezier(0.4,0,0.2,1)',
-                    }}>
-                      {item.sub && (
-                        <div style={{ padding:'4px 20px 14px 28px', borderTop:`1px solid rgba(239,191,4,.1)` }}>
-                          <div style={{ fontSize:10, fontWeight:700, textTransform:'uppercase', letterSpacing:'.22em', color:'#009EE0', marginBottom:10, fontFamily:FF_DISPLAY }}>{item.subLabel}</div>
-                          <ul style={{ listStyle:'none', margin:0, padding:0 }}>
-                            {item.sub.map(sub => (
-                              <li key={sub.path} style={{ borderTop:'1px solid rgba(239,191,4,.1)' }}>
-                                <Link to={sub.path} onClick={() => setMobileOpen(false)}
-                                  style={{ display:'flex', alignItems:'center', padding:'10px 0', textDecoration:'none', color:MUTED, fontSize:14, fontFamily:FF_BODY, minHeight:44 }}
-                                >{sub.label}</Link>
-                              </li>
-                            ))}
-                          </ul>
+            {/* Scrollable body */}
+            <div style={{ position:'relative', zIndex:1, flex:1, overflowY:'auto', WebkitOverflowScrolling:'touch' }}>
+
+              {/* Accordion nav */}
+              <nav>
+                <ul style={{ listStyle:'none', margin:0, padding:0 }}>
+                  {NAV.map((item, idx) => {
+                    const expanded = expandKey === item.key;
+                    return (
+                      <li key={item.key} style={{ borderBottom:`1px solid ${SEP}` }}>
+                        <button
+                          onClick={() => setExpand(k => k === item.key ? null : item.key)}
+                          aria-expanded={expanded}
+                          style={{
+                            display:'flex', alignItems:'center', justifyContent:'space-between', width:'100%',
+                            padding:'18px 24px',
+                            background: expanded ? 'rgba(239,191,4,0.04)' : 'none',
+                            border:'none', cursor:'pointer',
+                            color: expanded ? GOLD : '#fff',
+                            textAlign:'left', minHeight:60,
+                            transition:'color .18s, background .18s',
+                          }}
+                        >
+                          <span style={{ display:'flex', alignItems:'baseline', gap:12 }}>
+                            <span style={{ fontFamily:FF_DISPLAY, fontSize:11, fontWeight:700, color: expanded ? GOLD : 'rgba(255,255,255,.28)', letterSpacing:'.1em', transition:'color .18s' }}>
+                              0{idx + 1}
+                            </span>
+                            <span style={{ fontFamily:FF_DISPLAY, fontSize:19, fontWeight:600, textTransform:'uppercase', letterSpacing:'.02em' }}>
+                              {item.label}
+                            </span>
+                          </span>
+                          <span style={{ color:GOLD, fontSize:22, lineHeight:1, transition:'transform .26s cubic-bezier(0.22,1,0.36,1)', display:'inline-block', transform: expanded ? 'rotate(90deg)' : 'none' }}>›</span>
+                        </button>
+
+                        {/* Subnav */}
+                        <div style={{ overflow:'hidden', maxHeight: expanded ? 520 : 0, transition:'max-height .3s cubic-bezier(0.22,1,0.36,1)' }}>
+                          {item.sub && (
+                            <ul style={{ listStyle:'none', margin:0, padding:'0 24px 18px 48px' }}>
+                              {item.sub.map(sub => (
+                                <li key={sub.label + sub.path}>
+                                  <Link to={sub.path} onClick={() => setMobileOpen(false)}
+                                    style={{ display:'flex', alignItems:'center', minHeight:46, padding:'4px 0', textDecoration:'none', color:'rgba(255,255,255,.62)', fontSize:15, fontFamily:FF_BODY }}
+                                  >{sub.label}</Link>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  </li>
-                ))}
-                <li style={{ borderTop:`1px solid ${SEP}` }} />
-              </ul>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
 
               {/* CTAs */}
-              <div style={{ padding:'20px 20px 12px', display:'flex', flexDirection:'column', gap:10 }}>
+              <div style={{ padding:'24px 24px 8px', display:'flex', flexDirection:'column', gap:12 }}>
                 <Link to="/teilnahme#bewerben" onClick={() => setMobileOpen(false)}
-                  style={{ display:'block', background:GOLD, color:'#101828', fontSize:14, fontWeight:700, textTransform:'uppercase', letterSpacing:'.12em', padding:'13px 22px', textDecoration:'none', fontFamily:FF_DISPLAY, textAlign:'center' }}
+                  style={{ display:'flex', alignItems:'center', justifyContent:'center', minHeight:52, background:GOLD, color:'#101828', fontSize:14, fontWeight:700, textTransform:'uppercase', letterSpacing:'.12em', textDecoration:'none', fontFamily:FF_DISPLAY }}
                 >Jetzt bewerben</Link>
                 <Link to="/mitglied-werden" onClick={() => setMobileOpen(false)}
-                  style={{ display:'block', background:'transparent', color:MUTED, fontSize:14, fontWeight:700, textTransform:'uppercase', letterSpacing:'.12em', padding:'12px 22px', textDecoration:'none', fontFamily:FF_DISPLAY, border:`1.5px solid rgba(239,191,4,0.35)`, textAlign:'center' }}
+                  style={{ display:'flex', alignItems:'center', justifyContent:'center', minHeight:50, background:'transparent', color:'#fff', fontSize:14, fontWeight:700, textTransform:'uppercase', letterSpacing:'.12em', textDecoration:'none', fontFamily:FF_DISPLAY, border:`1.5px solid ${LINE}` }}
                 >Mitglied werden</Link>
                 <Link to="/formular-hochladen" onClick={() => setMobileOpen(false)}
-                  style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, background:'rgba(255,255,255,0.04)', color:'rgba(255,255,255,0.5)', fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:'.14em', padding:'12px 22px', textDecoration:'none', fontFamily:FF_DISPLAY, border:'1px dashed rgba(255,255,255,0.2)', textAlign:'center' }}
-                ><Upload size={12} strokeWidth={2} /> Formular hochladen</Link>
+                  style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, minHeight:46, background:'none', color:'rgba(255,255,255,0.5)', fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:'.14em', textDecoration:'none', fontFamily:FF_DISPLAY, border:'1px dashed rgba(255,255,255,0.2)' }}
+                ><Upload size={13} strokeWidth={2} /> Formular hochladen</Link>
               </div>
 
-              {/* Secondary links */}
-              <div style={{ padding:'0 20px 16px', display:'flex', flexWrap:'wrap', gap:'4px 8px' }}>
-                {SECONDARY.map(item => (
-                  <Link key={item.path} to={item.path} onClick={() => setMobileOpen(false)}
-                    style={{ display:'inline-flex', alignItems:'center', minHeight:44, padding:'0 8px', fontSize:13, color:MUTED, textDecoration:'none', fontFamily:FF_BODY }}
-                  >{item.label}</Link>
-                ))}
+              {/* Footer zone: lang + social + secondary */}
+              <div style={{ marginTop:8, padding:'20px 24px 28px', borderTop:`1px solid ${SEP}`, display:'flex', flexDirection:'column', gap:18 }}>
+                {/* Lang + social row */}
+                <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+                    {(['DE','EN'] as const).map((l, i) => (
+                      <React.Fragment key={l}>
+                        {i === 1 && <span style={{ color:LINE, fontSize:13 }}>|</span>}
+                        <button onClick={() => setLang(l)}
+                          style={{ fontSize:12, fontWeight:600, letterSpacing:'.1em', textTransform:'uppercase', background:'none', border:'none', cursor:'pointer', color:lang===l ? GOLD : MUTED, padding:'4px 0', lineHeight:1, fontFamily:FF_DISPLAY }}
+                        >{l}</button>
+                      </React.Fragment>
+                    ))}
+                  </div>
+                  <div style={{ display:'flex', gap:18 }}>
+                    {SOCIAL.map(s => <SocialLink key={s.label} {...s} />)}
+                  </div>
+                </div>
+                {/* Secondary links */}
+                <div style={{ display:'flex', flexWrap:'wrap', gap:'0 20px' }}>
+                  {SECONDARY.map(item => (
+                    <Link key={item.path} to={item.path} onClick={() => setMobileOpen(false)}
+                      style={{ display:'inline-flex', alignItems:'center', minHeight:40, fontSize:13, color:'rgba(255,255,255,.5)', textDecoration:'none', fontFamily:FF_BODY }}
+                    >{item.label}</Link>
+                  ))}
+                </div>
               </div>
-
-              {/* Social */}
-              <div style={{ padding:'16px 20px', borderTop:`1px solid ${SEP}`, display:'flex', gap:20 }}>
-                {SOCIAL.map(s => <SocialLink key={s.label} {...s} />)}
-              </div>
-            </nav>
+            </div>
           </div>
         </>
       )}
