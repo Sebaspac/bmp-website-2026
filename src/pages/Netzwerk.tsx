@@ -36,11 +36,11 @@ function PersonCard({ imgSrc, imgAlt, name, titleLine1, titleLine2, institution,
   const isMobileCard = useIsMobile();
   return (
     <div
-      style={{ borderRight: borderRight && !isMobileCard ? '1px solid rgba(255,255,255,0.08)' : 'none', borderBottom: borderRight && isMobileCard ? '1px solid rgba(255,255,255,0.08)' : 'none', display: 'flex', flexDirection: 'column' }}
+      style={{ borderRight: borderRight && !isMobileCard ? '1px solid rgba(255,255,255,0.08)' : 'none', display: 'flex', flexDirection: 'column', ...(isMobileCard ? { minWidth: '85vw', maxWidth: '85vw', flexShrink: 0, scrollSnapAlign: 'start', borderRadius: 16, overflow: 'hidden' } : {}) }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ position: 'relative', height: 320, overflow: 'hidden', width: '100%' }}>
+      <div style={{ position: 'relative', height: isMobileCard ? 250 : 320, overflow: 'hidden', width: '100%' }}>
         <img
           src={imgSrc}
           alt={imgAlt}
@@ -75,7 +75,7 @@ const JuryCard: React.FC<{ member: JuryMember; idx: number }> = ({ member, idx }
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ borderLeft: !isMobileCard && idx > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none', borderTop: isMobileCard && idx > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none', display: 'flex', flexDirection: 'column', cursor: 'default', background: hovered ? 'rgba(255,255,255,0.03)' : 'transparent', transition: 'background 0.2s' }}
+      style={{ borderLeft: !isMobileCard && idx > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none', display: 'flex', flexDirection: 'column', cursor: 'default', background: hovered ? 'rgba(255,255,255,0.03)' : 'transparent', transition: 'background 0.2s', ...(isMobileCard ? { minWidth: '74vw', maxWidth: '74vw', flexShrink: 0, scrollSnapAlign: 'start', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, overflow: 'hidden' } : {}) }}
     >
       <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '3/4' }}>
         <img src={member.img} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: hovered ? 'none' : 'grayscale(100%)', transition: 'filter 0.5s', display: 'block' }} />
@@ -97,6 +97,7 @@ interface Partner {
   id: string;
   name: string;
   role: string;
+  tier: 1 | 2 | 3;
   desc: string;
   fullDesc: string;
   logo: React.ReactNode;
@@ -124,6 +125,45 @@ const PartnerCell: React.FC<{ partner: Partner; idx: number; total: number; onCl
       <div style={{ fontFamily: FF, fontSize: 18, fontWeight: 700, color: '#101828' }}>{partner.name}</div>
       <div style={{ fontFamily: FF, fontSize: 11, color: GOLD, textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700 }}>{partner.role}</div>
       <div style={{ fontFamily: FB, fontSize: 17, color: 'rgba(16,24,40,0.45)', lineHeight: 1.6, flexGrow: 1 }}>{partner.desc}</div>
+      <div style={{ fontFamily: FF, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.12em', color: GOLD, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
+        Details <ArrowRight size={10} />
+      </div>
+    </div>
+  );
+};
+
+// ── SponsorCell (tiered) ──────────────────────────────────────────────────────
+
+const SponsorCell: React.FC<{ partner: Partner; variant: 'lg' | 'md' | 'sm'; idx: number; cols: number; onClick: () => void }> = ({ partner, variant, idx, cols, onClick }) => {
+  const [hovered, setHovered] = useState(false);
+  const isMobileCell = useIsMobile();
+  const lg = variant === 'lg';
+  const sm = variant === 'sm';
+  const lastCol = (idx % cols) === cols - 1;
+  return (
+    <div
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        padding: isMobileCell ? '24px 20px' : lg ? '40px 36px' : sm ? '28px 28px' : '32px 32px',
+        borderRight: !lastCol && !isMobileCell ? '1px solid rgba(3,9,58,0.08)' : 'none',
+        borderBottom: '1px solid rgba(3,9,58,0.08)',
+        display: 'flex', flexDirection: 'column', gap: 14,
+        cursor: 'pointer',
+        background: hovered ? '#E8E5E4' : 'transparent',
+        transition: 'background 0.15s',
+        position: 'relative',
+      }}
+    >
+      {lg && (
+        <span style={{ position: 'absolute', top: 18, right: 18, fontFamily: FF, fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.18em', color: '#101828', background: GOLD, padding: '4px 10px', borderRadius: 100, zIndex: 1 }}>Premium</span>
+      )}
+      <div style={{ height: lg ? 52 : 44, display: 'flex', alignItems: 'center' }}>{partner.logo}</div>
+      <div style={{ width: hovered ? 48 : 20, height: 1, background: GOLD, transition: 'width 0.3s ease' }} />
+      <div style={{ fontFamily: FF, fontSize: lg ? 22 : 18, fontWeight: 700, color: '#101828', letterSpacing: '-0.01em', lineHeight: 1.15 }}>{partner.name}</div>
+      <div style={{ fontFamily: FF, fontSize: sm ? 10 : 11, color: GOLD, textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700 }}>{partner.role}</div>
+      {!sm && <div style={{ fontFamily: FB, fontSize: lg ? 17 : 16, color: 'rgba(16,24,40,0.45)', lineHeight: 1.6, flexGrow: 1 }}>{partner.desc}</div>}
       <div style={{ fontFamily: FF, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.12em', color: GOLD, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
         Details <ArrowRight size={10} />
       </div>
@@ -348,97 +388,102 @@ const Netzwerk: React.FC = () => {
   ];
 
   const partners: Partner[] = [
+    /* ── TIER 1 · Hauptsponsoren ─────────────────────────────── */
     {
-      id: 'rsm', name: 'RSM Ebner Stolz', role: 'Hauptsponsor',
+      id: 'rsm', name: 'RSM Ebner Stolz', role: 'Hauptsponsor', tier: 1,
       desc: 'Führende mittelständische Wirtschaftsprüfungs- und Steuerberatungsgesellschaft.',
       fullDesc: 'RSM Ebner Stolz ist eine der größten unabhängigen Wirtschaftsprüfungs- und Steuerberatungsgesellschaften Deutschlands mit besonderer Expertise im Mittelstand. Als Hauptsponsor des BMP unterstützen sie die Identifikation herausragender Unternehmen und bringen ihre Netzwerke aktiv in die Nominierungsphase ein.',
       logo: (<span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ display: 'flex', gap: 2 }}><span style={{ width: 10, height: 10, background: '#6b7280', display: 'block' }} /><span style={{ width: 10, height: 10, background: '#22c55e', display: 'block' }} /><span style={{ width: 10, height: 10, background: '#3b82f6', display: 'block' }} /></span><span style={{ fontWeight: 900, fontSize: 15, letterSpacing: '-0.02em', color: '#374151', fontFamily: FF }}>RSM <span style={{ color: '#6b7280', fontWeight: 600 }}>EBNER STOLZ</span></span></span>),
       industry: 'Wirtschaftsprüfung & Beratung', location: 'München, Bayern', website: 'rsm-ebner-stolz.de', linkedin: 'https://linkedin.com/company/rsm-ebner-stolz',
     },
     {
-      id: 'wwk', name: 'WWK', role: 'Sponsor',
+      id: 'wwk', name: 'WWK', role: 'Hauptsponsor', tier: 1,
       desc: 'Eine starke Gemeinschaft — Lebensversicherungsgruppe mit bayerischen Wurzeln.',
       fullDesc: 'Die WWK Lebensversicherung a. G. ist eine der leistungsstärksten deutschen Lebensversicherungsgruppen. Als Münchner Traditionsunternehmen verbindet die WWK tiefe bayerische Verwurzelung mit finanzieller Stärke — Werte, die sie mit dem Bayerischen Mittelstandspreis teilt.',
       logo: (<span style={{ fontWeight: 900, fontSize: 24, letterSpacing: '-0.02em', color: '#16a34a', fontFamily: 'Arial Black, sans-serif' }}>WWK</span>),
       industry: 'Lebensversicherung', location: 'München, Bayern', website: 'wwk.de', linkedin: 'https://linkedin.com/company/wwk-versicherung',
     },
+
+    /* ── TIER 2 · Medienpartner ──────────────────────────────── */
     {
-      id: 'wir', name: 'Wir Eigentümerunternehmer', role: 'Partner',
-      desc: 'Netzwerk und Stimme der inhabergeführten Unternehmen in Bayern.',
-      fullDesc: 'Der Verband Wir Eigentümerunternehmer e.V. vertritt die Interessen inhabergeführter Unternehmen und bringt die authentische Unternehmerperspektive in den BMP ein. Mitglieder erhalten exklusive Einblicke in die Jury-Prozesse und profitieren vom Netzwerk der Preisträger.',
-      logo: (<span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><svg width="20" height="20" viewBox="0 0 20 20"><polygon points="10,1 19,6 19,14 10,19 1,14 1,6" fill="none" stroke="#1e3a5f" strokeWidth="2" /><polygon points="10,4 16,7.5 16,12.5 10,16 4,12.5 4,7.5" fill="#1e3a5f" /></svg><span style={{ fontSize: 10, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#1e3a5f', lineHeight: 1.2, fontFamily: FF }}>WIR<br />EIGENTÜMER</span></span>),
-      industry: 'Unternehmensverband', location: 'München, Bayern', website: 'wir-eigentuemerunternehmer.de',
+      id: 'radiogong', name: 'Radio Gong 96.3', role: 'Medienpartner', tier: 2,
+      desc: 'Der reichweitenstärkste Radiosender Münchens — Stimme des Mittelstands.',
+      fullDesc: 'Radio Gong 96.3 ist der reichweitenstärkste Radiosender Münchens. Als Medienpartner des BMP sorgt er für Aufmerksamkeit für die Nominierten in Sendemitschnitten und redaktionellen Beiträgen.',
+      logo: (<span style={{ background: '#e11d48', color: '#fff', fontWeight: 900, fontSize: 14, padding: '4px 10px', lineHeight: 1.25, display: 'inline-block', textAlign: 'center' as const, fontFamily: '"IBM Plex Sans", sans-serif' }}>Radio<br/>Gong <span style={{ color: '#fde047' }}>96.3</span></span>),
+      industry: 'Medien', location: 'München', website: 'radiogong.com',
     },
     {
-      id: 'deutschebank', name: 'Deutsche Bank', role: 'Finanzpartner',
-      desc: 'Partnerbank für die Finanzierung und Skalierung von KMU-Wachstum.',
-      fullDesc: 'Die Deutsche Bank begleitet mittelständische Unternehmen als verlässlicher Finanzpartner durch alle Wachstumsphasen. Im Rahmen des BMP stellt sie ihr deutschlandweites Netzwerk, spezifische Mittelstandsprodukte und direkte Ansprechpartner für die Nominierten bereit.',
-      logo: (<span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><svg width="20" height="20" viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" fill="none" stroke="#1d1d1b" strokeWidth="1.5" /><line x1="5" y1="15" x2="15" y2="5" stroke="#1d1d1b" strokeWidth="2" /></svg><span style={{ fontWeight: 600, fontSize: 15, color: '#1d1d1b', fontFamily: FB }}>Deutsche Bank</span></span>),
-      industry: 'Bankwesen & Finanzen', location: 'Frankfurt a. M.', website: 'db.com', linkedin: 'https://linkedin.com/company/deutsche-bank',
+      id: 'muenchentv', name: 'münchen.tv', role: 'Medienpartner', tier: 2,
+      desc: 'Der lokale Fernsehsender der Landeshauptstadt München.',
+      fullDesc: 'münchen.tv ist der lokale Fernsehsender der Landeshauptstadt München. Als Medienpartner überträgt münchen.tv Highlights der BMP-Gala und produziert Porträts der Nominierten.',
+      logo: (<span style={{ fontWeight: 900, fontSize: 15, color: '#0ea5e9', fontFamily: '"Inter", sans-serif' }}>münchen<span style={{ color: '#1e293b' }}>.tv</span></span>),
+      industry: 'Medien', location: 'München', website: 'muenchen.tv',
     },
+
+    /* ── TIER 3 · Weitere Sponsoren ──────────────────────────── */
     {
-      id: 'bionorica', name: 'Bionorica', role: 'Sponsor',
-      desc: 'Weltmarktführer für pflanzliche Arzneimittel aus dem bayerischen Neumarkt.',
-      fullDesc: 'Bionorica SE ist ein international agierendes Pharmaunternehmen mit Sitz in Neumarkt i. d. OPf. und Weltmarktführer bei pflanzlichen Arzneimitteln. Das Unternehmen selbst ist ein Paradebeispiel eines bayerischen Mittelständlers mit globalem Anspruch und verkörpert die Innovationskraft, die der BMP würdigt.',
-      logo: (<span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#16a34a" /><path d="M10 3 Q14 7 14 10 Q14 14 10 17 Q6 14 6 10 Q6 7 10 3Z" fill="white" opacity="0.8" /></svg><span style={{ fontWeight: 700, fontSize: 15, color: '#16a34a', fontFamily: FB }}>Bionorica<sup style={{ fontSize: 8 }}>®</sup></span></span>),
-      industry: 'Pharmaindustrie', location: 'Neumarkt i.d.OPf., Bayern', website: 'bionorica.de', linkedin: 'https://linkedin.com/company/bionorica',
-    },
-    {
-      id: 'berchtesgadenerland', name: 'Berchtesgadener Land', role: 'Sponsor',
-      desc: 'Bayerische Bio-Molkerei — Qualität und Nachhaltigkeit aus den Alpen.',
-      fullDesc: 'Die Molkerei Berchtesgadener Land eG ist eine der führenden Bio-Molkereien Deutschlands. Als genossenschaftlich organisiertes Unternehmen mit Sitz in Piding verkörpert sie die Werte des bayerischen Mittelstands: regionale Verantwortung, Qualität und nachhaltige Unternehmensführung.',
-      logo: (<span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><svg width="18" height="18" viewBox="0 0 18 18"><polygon points="9,1 17,9 13,17 5,17 1,9" fill="#2d5a27" /><polygon points="9,4 14,9 9,14 4,9" fill="#5a8a54" opacity="0.6" /></svg><span style={{ fontWeight: 700, fontSize: 11, color: '#2d5a27', lineHeight: 1.2, fontFamily: FF }}>BERCHTESGADENER<br />LAND</span></span>),
-      industry: 'Bio-Lebensmittel', location: 'Piding, Bayern', website: 'berchtesgadener-land.com', linkedin: 'https://linkedin.com/company/berchtesgadener-land',
-    },
-    {
-      id: 'metzler', name: 'METZLER', role: 'Finanzpartner',
+      id: 'metzler', name: 'METZLER', role: 'Sponsor', tier: 3,
       desc: 'Älteste Privatbank Deutschlands — Unabhängigkeit seit 1674.',
       fullDesc: 'B. Metzler seel. Sohn & Co. KGaA ist die älteste deutsche Privatbank in Familienbesitz — seit über 350 Jahren unabhängig. Ihr Engagement für den BMP unterstreicht die tiefe Verbundenheit mit dem Mittelstand, dessen Werte wie Verlässlichkeit, Substanz und Langfristigkeit Metzler selbst verkörpert.',
       logo: (<span style={{ fontWeight: 900, fontSize: 21, letterSpacing: '0.15em', color: '#1a1a1a', fontFamily: 'Georgia, serif' }}>METZLER</span>),
       industry: 'Privatbankwesen', location: 'Frankfurt a. M.', website: 'metzler.com', linkedin: 'https://linkedin.com/company/metzler',
     },
     {
-      id: 'radiogong', name: 'Radio Gong 96.3', role: 'Medienpartner',
-      desc: 'Münchens meistgehörter Radiosender — Reichweite für den Mittelstand.',
-      fullDesc: 'Radio Gong 96.3 ist der reichweitenstärkste Radiosender Münchens und der Region. Als Medienpartner des BMP sorgt er für maximale Aufmerksamkeit für die Nominierten — in Sendemitschnitten, redaktionellen Beiträgen und Live-Übertragungen von der Gala.',
-      logo: (<span style={{ background: '#e11d48', color: '#fff', fontWeight: 900, fontSize: 14, padding: '4px 10px', lineHeight: 1.25, display: 'inline-block', textAlign: 'center', fontFamily: FF }}>Radio<br />Gong <span style={{ color: '#fde047' }}>96.3</span></span>),
-      industry: 'Medien & Radio', location: 'München, Bayern', website: 'radiogong.com',
+      id: 'wieselhuber', name: 'Dr. Wieselhuber & Partner', role: 'Sponsor', tier: 3,
+      desc: 'Unabhängige Top-Management-Beratung für Familienunternehmen und Mittelstand.',
+      fullDesc: 'Dr. Wieselhuber & Partner ist eine unabhängige, branchenübergreifende Top-Management-Beratung mit besonderem Fokus auf Familienunternehmen und Mittelstand. Als Sponsor bringt das Haus seine Strategie- und Transformationsexpertise in das Netzwerk des BMP ein.',
+      logo: (<span style={{ fontWeight: 900, fontSize: 16, letterSpacing: '-0.01em', color: '#1a2b4a', fontFamily: FF }}>W&amp;P <span style={{ fontWeight: 600, color: '#5a6b85' }}>WIESELHUBER</span></span>),
+      industry: 'Unternehmensberatung', location: 'München, Bayern', website: 'wieselhuber.de',
     },
     {
-      id: 'muenchentv', name: 'münchen.tv', role: 'Medienpartner',
-      desc: 'Das lokale TV des Großraums München — Bild und Ton zur Gala.',
-      fullDesc: 'münchen.tv ist der lokale Fernsehsender der Landeshauptstadt München mit einer täglichen Reichweite von mehreren hunderttausend Zuschauern. Als Medienpartner überträgt münchen.tv Highlights der BMP-Gala und produziert Porträts der Nominierten für ein breites Publikum.',
-      logo: (<span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><svg width="22" height="18" viewBox="0 0 22 18"><path d="M2 4 Q2 1 5 1 L17 1 Q20 1 20 4 L20 14 Q20 17 17 17 L5 17 Q2 17 2 14 Z" fill="#0ea5e9" /><path d="M20 5 L22 3 L22 15 L20 13" fill="#0ea5e9" /></svg><span style={{ fontWeight: 900, fontSize: 15, color: '#0ea5e9', fontFamily: FB }}>münchen<span style={{ color: '#1e293b' }}>.tv</span></span></span>),
-      industry: 'Fernsehen & Medien', location: 'München, Bayern', website: 'muenchen.tv',
+      id: 'fristads', name: 'Fristads', role: 'Sponsor', tier: 3,
+      desc: 'Premium-Arbeitsbekleidung — Funktion, Qualität und Design.',
+      fullDesc: 'Fristads steht für hochwertige, funktionale Arbeitsbekleidung, die Schutz, Komfort und Design vereint. Als Sponsor des Bayerischen Mittelstandspreises unterstützt das Unternehmen die Auszeichnung herausragender mittelständischer Betriebe.',
+      logo: (<span style={{ fontWeight: 900, fontSize: 19, letterSpacing: '0.02em', color: '#1a1a1a', fontFamily: 'Arial Black, sans-serif' }}>FRISTADS</span>),
+      industry: 'Workwear & Textil', location: 'Deutschland', website: 'fristads.com',
     },
     {
-      id: 'ews', name: 'EWS', role: 'Partner',
-      desc: 'Energiewirtschaftliche Kompetenz für nachhaltige Mittelstandslösungen.',
-      fullDesc: 'EWS steht für zukunftsweisende Energieversorgung aus 100% erneuerbaren Quellen. Als Partner des BMP bringt EWS Expertise zu Energieeffizienz, nachhaltiger Unternehmensführung und der Energiewende ein — Themen, die für den modernen bayerischen Mittelstand zentral sind.',
-      logo: (<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 48, border: '2px solid #1e3a8a' }}><span style={{ fontWeight: 900, color: '#1e3a8a', fontSize: 17, letterSpacing: '0.1em', fontFamily: FF }}>EWS</span></span>),
-      industry: 'Erneuerbare Energien', location: 'Schönau, Baden-Württemberg', website: 'ews-schoenau.de',
+      id: 'newedge', name: 'New Edge', role: 'Sponsor', tier: 3,
+      desc: 'Digitale Markenführung, Web und Design für den Mittelstand.',
+      fullDesc: 'New Edge gestaltet Marken, Web-Erlebnisse und digitale Auftritte für mittelständische Unternehmen. Als Sponsor des BMP unterstützt die Agentur die Sichtbarkeit und das digitale Profil ausgezeichneter Unternehmen.',
+      logo: (<span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ width: 22, height: 22, background: '#3a3a3a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: 11, fontFamily: FF }}>NE</span><span style={{ fontWeight: 700, fontSize: 15, color: '#005E67', fontFamily: FF }}>New Edge</span></span>),
+      industry: 'Branding & Digital', location: 'Bayern', website: 'newedgebrand.com',
     },
     {
-      id: 'vbw', name: 'vbw', role: 'Partner',
-      desc: 'Die bayerische Wirtschaft — Spitzenverband der bayerischen Industrie.',
-      fullDesc: 'Die vbw – Vereinigung der Bayerischen Wirtschaft e.V. ist der Spitzenverband der bayerischen Wirtschaft und vertritt rund 150 Mitgliedsverbände. Als strategischer Partner verleiht die vbw dem BMP gesamtwirtschaftliche Bedeutung und öffnet Türen zu Politik und Verbänden.',
-      logo: (<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 40, background: '#1e3a8a' }}><span style={{ fontWeight: 900, color: '#fff', fontSize: 17, letterSpacing: '0.2em', fontFamily: FF }}>vbw</span></span>),
-      industry: 'Wirtschaftsverband', location: 'München, Bayern', website: 'vbw-bayern.de', linkedin: 'https://linkedin.com/company/vbw-vereinigung-der-bayerischen-wirtschaft',
+      id: 'moodtalk', name: 'Moodtalk', role: 'Sponsor', tier: 3,
+      desc: 'Plattform für Teamkultur und Mitarbeiter-Feedback.',
+      fullDesc: 'Moodtalk ist eine Plattform für Teamkultur, Stimmung und kontinuierliches Mitarbeiter-Feedback. Als Sponsor des BMP steht das Unternehmen für moderne, wertebasierte Unternehmensführung.',
+      logo: (<span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ width: 20, height: 20, borderRadius: '50%', background: '#7c3aed', display: 'block' }} /><span style={{ fontWeight: 700, fontSize: 16, color: '#7c3aed', fontFamily: FF }}>moodtalk</span></span>),
+      industry: 'HR & Software', location: 'Bayern', website: 'moodtalk.io',
     },
     {
-      id: 'wirtschaftsbeirat', name: 'Wirtschaftsbeirat Bayern', role: 'Partner',
-      desc: 'Im Dialog gestalten — Sprachrohr des bayerischen Unternehmertums.',
-      fullDesc: 'Der Wirtschaftsbeirat Bayern e.V. ist die Interessenvertretung des bayerischen Unternehmertums und steht in direktem politischem Dialog mit der Staatsregierung. Er bringt sein Netzwerk von über 2.000 Mitgliedsunternehmen in die Nominierungsphase des BMP ein.',
-      logo: (<span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><svg width="18" height="18" viewBox="0 0 18 18"><rect x="1" y="1" width="16" height="16" fill="none" stroke="#1e4d8c" strokeWidth="1.5" /><path d="M4 9 L9 4 L14 9 L9 14Z" fill="#1e4d8c" /></svg><span style={{ fontSize: 10, fontWeight: 700, color: '#1e4d8c', textTransform: 'uppercase', letterSpacing: '0.06em', lineHeight: 1.2, fontFamily: FF }}>WIRTSCHAFTS<br />BEIRAT BAYERN</span></span>),
-      industry: 'Unternehmensverband', location: 'München, Bayern', website: 'wirtschaftsbeirat.de',
+      id: 'deutschebank', name: 'Deutsche Bank', role: 'Sponsor', tier: 3,
+      desc: 'Partnerbank für die Finanzierung und Skalierung von KMU-Wachstum.',
+      fullDesc: 'Die Deutsche Bank begleitet mittelständische Unternehmen als verlässlicher Finanzpartner durch alle Wachstumsphasen. Im Rahmen des BMP stellt sie ihr deutschlandweites Netzwerk, spezifische Mittelstandsprodukte und direkte Ansprechpartner für die Nominierten bereit.',
+      logo: (<span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><svg width="20" height="20" viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" fill="none" stroke="#1d1d1b" strokeWidth="1.5" /><line x1="5" y1="15" x2="15" y2="5" stroke="#1d1d1b" strokeWidth="2" /></svg><span style={{ fontWeight: 600, fontSize: 15, color: '#1d1d1b', fontFamily: FB }}>Deutsche Bank</span></span>),
+      industry: 'Bankwesen & Finanzen', location: 'Frankfurt a. M.', website: 'db.com', linkedin: 'https://linkedin.com/company/deutsche-bank',
+    },
+    {
+      id: 'bionorica', name: 'Bionorica', role: 'Sponsor', tier: 3,
+      desc: 'Weltmarktführer für pflanzliche Arzneimittel aus dem bayerischen Neumarkt.',
+      fullDesc: 'Bionorica SE ist ein international agierendes Pharmaunternehmen mit Sitz in Neumarkt i. d. OPf. und Weltmarktführer bei pflanzlichen Arzneimitteln. Das Unternehmen selbst ist ein Paradebeispiel eines bayerischen Mittelständlers mit globalem Anspruch und verkörpert die Innovationskraft, die der BMP würdigt.',
+      logo: (<span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#16a34a" /><path d="M10 3 Q14 7 14 10 Q14 14 10 17 Q6 14 6 10 Q6 7 10 3Z" fill="white" opacity="0.8" /></svg><span style={{ fontWeight: 700, fontSize: 15, color: '#16a34a', fontFamily: FB }}>Bionorica<sup style={{ fontSize: 8 }}>®</sup></span></span>),
+      industry: 'Pharmaindustrie', location: 'Neumarkt i.d.OPf., Bayern', website: 'bionorica.de', linkedin: 'https://linkedin.com/company/bionorica',
+    },
+    {
+      id: 'primus', name: 'Primus', role: 'Sponsor', tier: 3,
+      desc: 'Partner des Bayerischen Mittelstandspreises.',
+      fullDesc: 'Primus unterstützt als Sponsor den Bayerischen Mittelstandspreis und sein Engagement für herausragende Unternehmen des bayerischen Mittelstands.',
+      logo: (<span style={{ fontWeight: 900, fontSize: 18, letterSpacing: '0.04em', color: '#b8860b', fontFamily: 'Georgia, serif' }}>PRIMUS</span>),
+      industry: 'Partner', location: 'Bayern', website: '',
     },
   ];
 
   const expertiseRows = [
-    { num: '01', label: 'Aktenstudium', body: 'Alle Einreichungen werden zunächst vollständig gesichtet und nach formalen Kriterien geprüft.' },
-    { num: '02', label: 'Scoring-Matrix', body: 'Jedes Jurymitglied bewertet unabhängig nach den vier gleichgewichteten Kriterien.' },
-    { num: '03', label: 'Jury-Plenum', body: 'In der gemeinsamen Sitzung werden Abweichungen diskutiert und Konsens gebildet.' },
-    { num: '04', label: 'Nominierungsliste', body: 'Die Jury beschließt einstimmig die Nominierten und den Preisträger.' },
+    { num: '01', label: 'Aktenstudium', body: 'Alle Einreichungen werden zunächst vollständig gesichtet und nach den festgelegten Kriterien geprüft.' },
+    { num: '02', label: 'Scoring-Matrix', body: 'Jedes Jurymitglied bewertet die Einreichungen unabhängig nach den festgelegten Kriterien.' },
+    { num: '03', label: 'Jury-Plenum', body: 'In der gemeinsamen Sitzung werden Argumente und Ansichten ausgetauscht, Eigenschaften verglichen und gemeinsam bewertet. Daraus entsteht die Liste der Finalisten.' },
+    { num: '04', label: 'Ergebnis', body: 'Die Gewinner des Bayerischen Mittelstandspreises werden nach vorgegebenem Punktesystem bestimmt, erweitert um Jury-Mitglieder aus der Praxis.' },
   ];
 
   return (
@@ -447,7 +492,7 @@ const Netzwerk: React.FC = () => {
       {/* ── 1. HERO ──────────────────────────────────────────────────────────── */}
       <section style={{ position: 'relative', minHeight: '72vh', display: 'flex', alignItems: 'flex-end', overflow: 'hidden', background: '#060C14' }}>
         <img src="/images/netzwerk-hero.jpg" alt="BMP Netzwerk Preisverleihung" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, #020930 0%, rgba(2,9,48,0.90) 38%, rgba(2,9,48,0.18) 65%, transparent 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: isMobile ? 'linear-gradient(to top, rgba(2,9,48,0.95) 0%, rgba(2,9,48,0.72) 38%, rgba(2,9,48,0.22) 72%, transparent 100%)' : 'linear-gradient(to right, #020930 0%, rgba(2,9,48,0.90) 38%, rgba(2,9,48,0.18) 65%, transparent 100%)' }} />
         <div style={{ position: 'absolute', top: 0, left: 80, width: 2, height: '100%', background: `linear-gradient(to bottom, transparent, ${GOLD}, transparent)`, opacity: 0.4 }} />
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(to right, #EFBF04, rgba(239,191,4,0.3), transparent)', zIndex: 2 }} />
 
@@ -475,7 +520,7 @@ const Netzwerk: React.FC = () => {
           <p style={{ fontFamily: FF, fontSize: 18, color: 'rgba(255,255,255,0.5)', margin: 0 }}>des Bayerischen Mittelstandspreises</p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr' }}>
+        <div style={{ display: isMobile ? 'flex' : 'grid', gridTemplateColumns: isMobile ? undefined : '1fr 1fr', overflowX: isMobile ? 'auto' : undefined, scrollSnapType: isMobile ? 'x mandatory' : undefined, gap: isMobile ? 14 : 0, padding: isMobile ? '0 24px 28px' : 0, WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
           <PersonCard
             imgSrc="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800"
             imgAlt="Ilse Aigner"
@@ -521,36 +566,68 @@ const Netzwerk: React.FC = () => {
 
 
       {/* ── 3. JURY-INTRO (editorial 2-col split) ────────────────────────────── */}
-      <section style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '40% 60%', minHeight: isMobile ? 'auto' : 400, position: 'relative', overflow: 'hidden', isolation: 'isolate' }}>
-        <MunichSkylineBg />
-        {/* Left — Cream, stats */}
-        <div style={{ background: CREAM, padding: isMobile ? '48px 24px' : '72px 64px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
-          <div>
-            <div style={{ fontFamily: FF, fontSize: 'clamp(4rem, 7vw, 6rem)', fontWeight: 900, color: '#101828', letterSpacing: '-0.04em', lineHeight: 1 }}>04</div>
-            <div style={{ fontFamily: FF, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(16,24,40,0.4)', marginTop: 4 }}>Unabhängige Jurymitglieder</div>
+      <section style={{ display: isMobile ? 'block' : 'grid', gridTemplateColumns: isMobile ? undefined : '40% 60%', minHeight: isMobile ? 'auto' : 400, position: 'relative', overflow: 'hidden', isolation: 'isolate', background: isMobile ? NAVY : undefined }}>
+        {!isMobile && <MunichSkylineBg />}
+        {isMobile && (
+          <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, backgroundImage: 'url(/munich-skyline.jpg)', backgroundRepeat: 'no-repeat', backgroundPosition: 'bottom center', backgroundSize: 'cover', opacity: 0.07 }} />
+        )}
+        {isMobile ? (
+          /* Mobile: one cohesive navy module — copy + compact stat strip */
+          <div style={{ padding: '48px 24px', position: 'relative', zIndex: 1 }}>
+            <span style={{ fontFamily: FF, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, color: GOLD, display: 'block', marginBottom: 18 }}>Wer entscheidet?</span>
+            <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.7rem, 8vw, 2.2rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.08, margin: '0 0 22px' }}>
+              UNABHÄNGIGE EXPERTISE FÜR DEN MITTELSTAND.
+            </h2>
+            <div style={{ width: 40, height: 2, background: GOLD, marginBottom: 22 }} />
+            <p style={{ fontFamily: FB, fontSize: 16, color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, margin: 0 }}>
+              Die Jury des Bayerischen Mittelstandspreises besteht ausschließlich aus ehrenamtlich tätigen Expertinnen und Experten. Kein Mitglied steht in wirtschaftlicher Verbindung zu einem Bewerber — Transparenz und Unparteilichkeit sind die Grundpfeiler unseres Verfahrens.
+            </p>
+            {/* Stat strip */}
+            <div style={{ display: 'flex', marginTop: 32, paddingTop: 26, borderTop: '1px solid rgba(255,255,255,0.14)' }}>
+              {[
+                { v: '11', l: 'Jurymitglieder' },
+                { v: 'Mehrstufig', l: 'Bewertungsverfahren' },
+                { v: '100%', l: 'Unabhängig' },
+              ].map((s, i) => (
+                <div key={i} style={{ flex: 1, minWidth: 0, paddingLeft: i > 0 ? 14 : 0, borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.14)' : 'none' }}>
+                  <div style={{ fontFamily: FF, fontSize: 'clamp(2.2rem, 9vw, 3rem)', fontWeight: 900, color: GOLD, letterSpacing: '-0.03em', lineHeight: 1 }}>{s.v}</div>
+                  <div style={{ fontFamily: FF, fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'rgba(255,255,255,0.5)', marginTop: 8, lineHeight: 1.3 }}>{s.l}</div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div style={{ width: '100%', height: 1, background: 'rgba(3,9,58,0.1)', margin: '32px 0' }} />
-          <div>
-            <div style={{ fontFamily: FF, fontSize: 'clamp(4rem, 7vw, 6rem)', fontWeight: 900, color: '#101828', letterSpacing: '-0.04em', lineHeight: 1 }}>100%</div>
-            <div style={{ fontFamily: FF, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(16,24,40,0.4)', marginTop: 4 }}>Unabhängig &amp; ehrenamtlich</div>
-          </div>
-          <div style={{ width: '100%', height: 1, background: 'rgba(3,9,58,0.1)', margin: '32px 0' }} />
-          <div>
-            <div style={{ fontFamily: FF, fontSize: 'clamp(4rem, 7vw, 6rem)', fontWeight: 900, color: '#101828', letterSpacing: '-0.04em', lineHeight: 1 }}>3</div>
-            <div style={{ fontFamily: FF, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(16,24,40,0.4)', marginTop: 4 }}>Bewertungsrunden bis zur Gala</div>
-          </div>
-        </div>
-        {/* Right — Navy, editorial copy */}
-        <div style={{ background: NAVY, padding: isMobile ? '48px 24px' : '72px 64px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
-          <span style={{ fontFamily: FF, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, color: GOLD, marginBottom: 20 }}>Wer entscheidet?</span>
-          <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.08, margin: '0 0 24px' }}>
-            UNABHÄNGIGE EXPERTISE FÜR DEN MITTELSTAND.
-          </h2>
-          <div style={{ width: 40, height: 2, background: GOLD }} />
-          <p style={{ marginTop: 24, fontFamily: FB, fontSize: 19, color: 'rgba(255,255,255,0.45)', lineHeight: 1.85 }}>
-            Die Jury des Bayerischen Mittelstandspreises besteht ausschließlich aus ehrenamtlich tätigen Expertinnen und Experten. Kein Mitglied steht in wirtschaftlicher Verbindung zu einem Bewerber — Transparenz und Unparteilichkeit sind die Grundpfeiler unseres Verfahrens.
-          </p>
-        </div>
+        ) : (
+          <>
+            {/* Left — Cream, stats */}
+            <div style={{ background: CREAM, padding: '72px 64px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
+              <div>
+                <div style={{ fontFamily: FF, fontSize: 'clamp(5rem, 8.5vw, 7.5rem)', fontWeight: 900, color: '#101828', letterSpacing: '-0.04em', lineHeight: 1 }}>11</div>
+                <div style={{ fontFamily: FF, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(16,24,40,0.4)', marginTop: 4 }}>Unabhängige Jurymitglieder</div>
+              </div>
+              <div style={{ width: '100%', height: 1, background: 'rgba(3,9,58,0.1)', margin: '32px 0' }} />
+              <div>
+                <div style={{ fontFamily: FF, fontSize: 'clamp(2.4rem, 4vw, 3.4rem)', fontWeight: 900, color: '#101828', letterSpacing: '-0.03em', lineHeight: 1 }}>Mehrstufig</div>
+                <div style={{ fontFamily: FF, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(16,24,40,0.4)', marginTop: 8 }}>Bewertungsverfahren</div>
+              </div>
+              <div style={{ width: '100%', height: 1, background: 'rgba(3,9,58,0.1)', margin: '32px 0' }} />
+              <div>
+                <div style={{ fontFamily: FF, fontSize: 'clamp(5rem, 8.5vw, 7.5rem)', fontWeight: 900, color: '#101828', letterSpacing: '-0.04em', lineHeight: 1 }}>100%</div>
+                <div style={{ fontFamily: FF, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(16,24,40,0.4)', marginTop: 4 }}>Unabhängig &amp; ehrenamtlich</div>
+              </div>
+            </div>
+            {/* Right — Navy, editorial copy */}
+            <div style={{ background: NAVY, padding: '72px 64px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
+              <span style={{ fontFamily: FF, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, color: GOLD, marginBottom: 20 }}>Wer entscheidet?</span>
+              <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.08, margin: '0 0 24px' }}>
+                UNABHÄNGIGE EXPERTISE FÜR DEN MITTELSTAND.
+              </h2>
+              <div style={{ width: 40, height: 2, background: GOLD }} />
+              <p style={{ marginTop: 24, fontFamily: FB, fontSize: 19, color: 'rgba(255,255,255,0.45)', lineHeight: 1.85 }}>
+                Die Jury des Bayerischen Mittelstandspreises besteht ausschließlich aus ehrenamtlich tätigen Expertinnen und Experten. Kein Mitglied steht in wirtschaftlicher Verbindung zu einem Bewerber — Transparenz und Unparteilichkeit sind die Grundpfeiler unseres Verfahrens.
+              </p>
+            </div>
+          </>
+        )}
       </section>
 
 
@@ -562,10 +639,10 @@ const Netzwerk: React.FC = () => {
             <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3.5vw, 3rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 0.95, margin: 0 }}>UNSERE JURY 2026</h2>
           </div>
           <p style={{ fontFamily: FB, fontSize: 19, color: 'rgba(255,255,255,0.4)', lineHeight: 1.8, margin: 0 }}>
-            Vier Expertinnen und Experten aus Wirtschaft, Wissenschaft und Verbänden — für einen vollständig unabhängigen Bewertungsprozess.
+            Unabhängige Expertinnen und Experten aus Wirtschaft, Wissenschaft und Verbänden, für einen vollständig unabhängigen Bewertungsprozess.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)' }}>
+        <div style={{ display: isMobile ? 'flex' : 'grid', gridTemplateColumns: isMobile ? undefined : 'repeat(4, 1fr)', overflowX: isMobile ? 'auto' : undefined, scrollSnapType: isMobile ? 'x mandatory' : undefined, gap: isMobile ? 14 : 0, padding: isMobile ? '24px 24px 28px' : 0, WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
           {juryMembers.map((member, idx) => (
             <JuryCard key={idx} member={member} idx={idx} />
           ))}
@@ -612,14 +689,27 @@ const Netzwerk: React.FC = () => {
             <span style={{ fontFamily: FF, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, color: '#4A8FC9', display: 'block', marginBottom: 16 }}>Netzwerkqualität</span>
             <h2 style={{ fontFamily: FF, fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.025em', fontSize: 'clamp(2rem, 3.5vw, 3rem)', lineHeight: 0.95, margin: 0 }}>PARTNER &amp; SPONSOREN.</h2>
           </div>
-          <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(16,24,40,0.4)', maxWidth: isMobile ? '100%' : 200, textAlign: isMobile ? 'left' : 'right', lineHeight: 1.6, margin: 0 }}>
-            Ein starkes Netzwerk für einen starken Mittelstand. Klicken für Details.
+          <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(16,24,40,0.4)', maxWidth: isMobile ? '100%' : 220, textAlign: isMobile ? 'left' : 'right', lineHeight: 1.6, margin: 0 }}>
+            Partner in drei Kategorien: Hauptsponsoren, Medienpartner und weitere Sponsoren. Klicken für Details.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)' }}>
-          {partners.map((partner, idx) => (
-            <PartnerCell key={partner.id} partner={partner} idx={idx} total={partners.length} onClick={() => setSelectedPartner(partner)} />
-          ))}
+
+        {/* Tiered grid — continuous, ranks marked by label bars */}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          {([
+            { tier: 1 as const, label: 'Hauptsponsoren', note: 'Premium', variant: 'lg' as const, cols: isMobile ? 1 : 2 },
+            { tier: 2 as const, label: 'Medienpartner', note: '', variant: 'md' as const, cols: isMobile ? 2 : 2 },
+            { tier: 3 as const, label: 'Weitere Sponsoren', note: '', variant: 'sm' as const, cols: isMobile ? 2 : 4 },
+          ]).map(t => {
+            const items = partners.filter(p => p.tier === t.tier);
+            return (
+              <div key={t.tier} style={{ display: 'grid', gridTemplateColumns: `repeat(${t.cols}, 1fr)` }}>
+                {items.map((p, i) => (
+                  <SponsorCell key={p.id} partner={p} variant={t.variant} idx={i} cols={t.cols} onClick={() => setSelectedPartner(p)} />
+                ))}
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -627,12 +717,12 @@ const Netzwerk: React.FC = () => {
       {/* ── 7. SPONSORING-FORM ───────────────────────────────────────────────── */}
       <section id="sponsoring" style={{
         background: NAVY, overflow: 'hidden', position: 'relative',
-        height: isMobile ? 'auto' : 'calc(100vh - 60px)',
+        minHeight: isMobile ? 'auto' : 'calc(100vh - 60px)',
         display: 'flex', flexDirection: 'column',
       }}>
-        <div style={{ flex: 1, position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr', minHeight: 0, overflow: isMobile ? 'visible' : 'hidden' }}>
+        <div style={{ flex: 1, position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr', minHeight: 0, overflow: isMobile ? 'visible' : 'visible' }}>
           {/* Left — pitch */}
-          <div style={{ padding: isMobile ? '32px 24px 24px' : '36px 36px 32px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: isMobile ? 'visible' : 'hidden' }}>
+          <div style={{ padding: isMobile ? '32px 24px 24px' : '36px 36px 32px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'visible' }}>
             <span style={{ fontFamily: FF, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, color: GOLD, display: 'block', marginBottom: 8 }}>Wachstum durch Partnerschaft</span>
             <h2 style={{ fontFamily: FF, fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', fontSize: 'clamp(1.6rem, 2.4vw, 2.4rem)', lineHeight: 1.0, margin: '0 0 12px' }}>WIR FREUEN UNS ÜBER NEUE SPONSOREN.</h2>
             <div style={{ width: 36, height: 2, background: GOLD, margin: '0 0 14px', flexShrink: 0 }} />
@@ -656,7 +746,7 @@ const Netzwerk: React.FC = () => {
           {/* Center divider */}
           {!isMobile && <div style={{ background: 'rgba(255,255,255,0.07)' }} />}
           {/* Right — gold form panel */}
-          <div style={{ display: 'flex', flexDirection: 'column', overflow: isMobile ? 'visible' : 'hidden', minHeight: 0, position: 'relative', background: 'linear-gradient(160deg,#DDB84A 0%,#C9A227 52%,#A87800 100%)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', overflow: 'visible', minHeight: 0, position: 'relative', background: 'linear-gradient(160deg,#DDB84A 0%,#C9A227 52%,#A87800 100%)' }}>
             <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} aria-hidden="true">
               <defs>
                 <pattern id="sponsoringCross" width="18" height="18" patternUnits="userSpaceOnUse">

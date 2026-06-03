@@ -769,7 +769,8 @@ const MitgliedWerden: React.FC = () => {
               }}
             >
               Der Bayerische Mittelstandspreis lebt vom Engagement seiner Mitglieder.
-              Als Teil des Vereins gestaltest du aktiv mit, wer ausgezeichnet wird — und warum.
+              Eine Mitgliedschaft ist Unterstützung, damit der Preis weiterhin unabhängig
+              und kostenlos umgesetzt werden kann.
             </p>
           </div>
 
@@ -957,8 +958,8 @@ const MitgliedWerden: React.FC = () => {
             />
             <BenefitCard
               icon={<Star size={24} color={NAVY} strokeWidth={1.5} />}
-              title="Gestaltung"
-              body="Bringe deine Expertise in die Kriterien des Awards ein und forme aktiv mit, wer ausgezeichnet wird."
+              title="Unterstützung"
+              body="Mit deiner Mitgliedschaft sorgst du dafür, dass der Preis unabhängig und kostenlos vergeben werden kann."
               isLast={false}
               isMobile={isMobile}
             />
@@ -1045,6 +1046,18 @@ const MitgliedWerden: React.FC = () => {
             Unsere Mitglieder sind Unternehmer:innen, Wissenschaftler:innen, Verbände und
             Einzelpersonen — verbunden durch das Ziel, den Mittelstand als Rückgrat der
             bayerischen Wirtschaft zu stärken.
+          </p>
+          <p
+            style={{
+              fontFamily: FB,
+              fontSize: 18,
+              color: 'rgba(16,24,40,0.55)',
+              lineHeight: 1.85,
+              margin: '0 0 40px',
+            }}
+          >
+            Veranstalter ist der EWIF – Europäisches Wirtschaftsforum. Die Mitgliedschaft
+            läuft über den EWIF.
           </p>
           <div style={{ width: 40, height: 1, background: GOLD, marginBottom: 16 }} />
           <span
@@ -1364,7 +1377,7 @@ const MitgliedWerden: React.FC = () => {
               role="Unternehmer, München"
             />
             <QuoteCard
-              quote="Als Fördermitglied kann ich aktiv mitgestalten, was im bayerischen Mittelstand als exzellent gilt. Dieser Einfluss ist unbezahlbar."
+              quote="Als Fördermitglied unterstütze ich, dass der Preis unabhängig und kostenlos vergeben werden kann. Dieser Beitrag für den Mittelstand ist mir viel wert."
               initials="SK"
               name="Sandra Keller"
               role="Verbandsvertreterin"
@@ -1417,7 +1430,7 @@ const MitgliedWerden: React.FC = () => {
             maxWidth: 640,
           }}
         >
-          GESTALTE MIT. NETZWERKE. WIRKE.
+          UNTERSTÜTZE. NETZWERKE. WIRKE.
         </h2>
         <div
           style={{

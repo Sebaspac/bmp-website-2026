@@ -97,7 +97,7 @@ export default function FormularUpload() {
             {
               icon: FileText,
               title: 'Pflichtdokumente',
-              items: ['Kurzprofil des Unternehmens (max. 2 Seiten)', 'Begründung der Bewerbung (mind. 500 Wörter)', 'Letzte 2 Jahresabschlüsse', 'Anschreiben der Geschäftsführung'],
+              items: ['Kurzprofil des Unternehmens (max. 2 Seiten)', 'Begründung der Bewerbung (mind. 500 Wörter)', 'Anschreiben der Geschäftsführung', 'Letzte 2 Jahresabschlüsse (optional, falls vorhanden)'],
             },
             {
               icon: Clock,

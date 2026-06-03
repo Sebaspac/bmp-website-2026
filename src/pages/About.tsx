@@ -29,7 +29,7 @@ const About: React.FC = () => {
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         />
         {/* Left-to-right dark overlay */}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, #020930 0%, rgba(2,9,48,0.90) 38%, rgba(2,9,48,0.18) 65%, transparent 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: isMobile ? 'linear-gradient(to top, rgba(2,9,48,0.95) 0%, rgba(2,9,48,0.72) 38%, rgba(2,9,48,0.22) 72%, transparent 100%)' : 'linear-gradient(to right, #020930 0%, rgba(2,9,48,0.90) 38%, rgba(2,9,48,0.18) 65%, transparent 100%)' }} />
         {/* Gold accent line */}
         <div style={{ position: 'absolute', top: 0, left: 80, width: 2, height: '100%', background: `linear-gradient(to bottom, transparent, ${GOLD}, transparent)`, opacity: 0.4 }} />
         {/* Gold bottom line */}
@@ -44,7 +44,7 @@ const About: React.FC = () => {
           </div>
           <h1 style={{ fontFamily: FF, fontSize: isMobile ? 'clamp(1.6rem, 6vw, 5rem)' : 'clamp(2.8rem, 6vw, 5rem)', fontWeight: 900, color: '#fff', lineHeight: 0.95, letterSpacing: '-0.03em', textTransform: 'uppercase', margin: '0 0 28px' }}>
             WERTE, DIE<br />
-            <span style={{ color: GOLD }}>BAYERN BEWEGEN.</span>
+            <span style={{ color: GOLD }}>BAYERN BEWEGEN</span>
           </h1>
           <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(255,255,255,0.65)', lineHeight: 1.7, maxWidth: 560, margin: '0 0 40px', fontWeight: 300 }}>
             Seit 2005 ehrt der BMP herausragende Leistungen im bayerischen Mittelstand. Entdecken Sie die Geschichte, die Vision und die Menschen dahinter.
@@ -87,45 +87,63 @@ const About: React.FC = () => {
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '55% 45%', minHeight: isMobile ? 'auto' : 580 }}>
 
           {/* Left — text on cream */}
-          <div style={{ background: CREAM, padding: isMobile ? '48px 24px' : '88px 80px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 20 }}>Was ist der Preis?</span>
-            <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3.2vw, 2.9rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.04, margin: '0 0 20px' }}>
-              DER BAYERISCHE<br />MITTELSTANDS<wbr />PREIS.
-            </h2>
+          <div style={{ background: CREAM, padding: isMobile ? '32px 24px 44px' : '88px 80px', display: 'flex', flexDirection: 'column', justifyContent: 'center', order: isMobile ? 2 : 0 }}>
+            {!isMobile && (
+              <>
+                <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 20 }}>Was ist der Preis?</span>
+                <h2 style={{ fontFamily: FF, fontSize: 'clamp(2.1rem, 3.4vw, 3.1rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.04, margin: '0 0 20px' }}>
+                  DER BAYERISCHE<br />MITTELSTANDS<wbr />PREIS
+                </h2>
+              </>
+            )}
             <div style={{ width: 36, height: 2, background: GOLD, marginBottom: 28 }} />
-            <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(16,24,40,0.6)', lineHeight: 1.8, maxWidth: 440, marginBottom: 16 }}>
-              Seit 2005 ist der BMP die höchste Auszeichnung für den bayerischen Mittelstand. Vergeben von einer vollständig unabhängigen Expertenjury, ehrt er Unternehmen, die durch Innovation, Nachhaltigkeit und regionale Verwurzelung herausragen.
+            <p style={{ fontFamily: FB, fontSize: 19, color: 'rgba(16,24,40,0.8)', lineHeight: 1.8, maxWidth: 440, marginBottom: 16 }}>
+              Seit 2005 ist der BMP eine der bedeutendsten Auszeichnungen für den bayerischen Mittelstand. Vergeben von einer vollständig unabhängigen Expertenjury, ehrt er Unternehmen, die durch Innovation, Nachhaltigkeit und regionale Verwurzelung herausragen.
             </p>
-            <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(16,24,40,0.6)', lineHeight: 1.8, maxWidth: 440, marginBottom: 44 }}>
+            <p style={{ fontFamily: FB, fontSize: 19, color: 'rgba(16,24,40,0.8)', lineHeight: 1.8, maxWidth: 440, marginBottom: isMobile ? 0 : 44 }}>
               Entstanden aus einer Initiative bayerischer Wirtschaftsvertreter, ehrt der Preis heute jährlich die Leuchttürme unserer Wirtschaft.
             </p>
-            {/* Key facts */}
-            <div style={{ display: 'flex', borderTop: '1px solid #D0D5DD' }}>
+            {/* Key facts — moved above the copy on mobile */}
+            <div style={{ display: 'flex', order: isMobile ? -1 : 0, borderTop: isMobile ? 'none' : '1px solid #D0D5DD', borderBottom: isMobile ? '1px solid #D0D5DD' : 'none', marginBottom: isMobile ? 26 : 0 }}>
               {[
                 { val: '2005', label: 'Gegründet' },
-                { val: '0 €', label: 'Kostenfrei' },
+                { val: '0 €', label: 'Teilnahmegebühr' },
                 { val: '5', label: 'Jury-Schritte' },
               ].map((f, i) => (
-                <div key={i} style={{ flex: 1, padding: '20px 0', borderRight: i < 2 ? '1px solid #D0D5DD' : 'none', paddingLeft: i > 0 ? 20 : 0 }}>
+                <div key={i} style={{ flex: 1, padding: '20px 0', borderRight: i < 2 ? '1px solid #D0D5DD' : 'none', paddingLeft: 0, paddingRight: i < 2 ? 20 : 0 }}>
                   <div style={{ fontFamily: FF, fontSize: 'clamp(1.4rem, 2vw, 1.8rem)', fontWeight: 900, color: '#101828', letterSpacing: '-0.03em', lineHeight: 1 }}>{f.val}</div>
-                  <div style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '0.18em', marginTop: 6 }}>{f.label}</div>
+                  <div style={{ fontFamily: FF, fontSize: 12, fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '0.18em', marginTop: 6 }}>{f.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right — full-bleed image */}
-          <div style={{ position: 'relative', overflow: 'hidden', minHeight: isMobile ? 220 : undefined }}>
+          {/* Right — full-bleed image (+ heading on mobile) */}
+          <div style={{ position: 'relative', overflow: 'hidden', minHeight: isMobile ? 280 : undefined, order: isMobile ? 1 : 0 }}>
             <img
               src="/images/preistraeger-gruppe.jpg"
               alt="BMP Gala Preisverleihung"
-              style={{ position: isMobile ? 'relative' : 'absolute', inset: 0, width: '100%', height: isMobile ? 220 : '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
-            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to right, ${CREAM} 0%, transparent 25%), linear-gradient(to top, rgba(3,9,58,0.75) 0%, transparent 60%)` }} />
-            <div style={{ position: 'absolute', bottom: 36, left: 36 }}>
-              <div style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD, marginBottom: 6 }}>BMP Preisverleihung · München</div>
-              <div style={{ width: 28, height: 2, background: GOLD }} />
-            </div>
+            <div style={{ position: 'absolute', inset: 0, background: isMobile
+              ? 'linear-gradient(to top, rgba(3,9,58,0.94) 0%, rgba(3,9,58,0.55) 38%, rgba(3,9,58,0.12) 72%, transparent 100%), linear-gradient(to right, rgba(3,9,58,0.5) 0%, transparent 55%)'
+              : `linear-gradient(to right, ${CREAM} 0%, transparent 25%), linear-gradient(to top, rgba(3,9,58,0.75) 0%, transparent 60%)` }} />
+            {/* Heading overlay — mobile only */}
+            {isMobile && (
+              <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '0 24px 24px', zIndex: 2 }}>
+                <span style={{ fontFamily: FF, fontSize: 10, color: '#8FBEEC', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Was ist der Preis?</span>
+                <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.9rem, 8vw, 2.6rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.04, margin: 0, textShadow: '0 2px 18px rgba(3,9,58,0.6)' }}>
+                  DER BAYERISCHE<br />MITTELSTANDS<wbr />PREIS
+                </h2>
+              </div>
+            )}
+            {/* Decorative label — desktop only */}
+            {!isMobile && (
+              <div style={{ position: 'absolute', bottom: 36, left: 36 }}>
+                <div style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD, marginBottom: 6 }}>BMP Preisverleihung · München</div>
+                <div style={{ width: 28, height: 2, background: GOLD }} />
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -134,25 +152,42 @@ const About: React.FC = () => {
       <section id="mittelstand" style={{ overflow: 'hidden' }}>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '45% 55%', minHeight: isMobile ? 'auto' : 580 }}>
 
-          {/* Left — full-bleed image */}
-          <div style={{ position: 'relative', overflow: 'hidden', minHeight: isMobile ? 220 : undefined }}>
+          {/* Left — full-bleed image (+ heading on mobile) */}
+          <div style={{ position: 'relative', overflow: 'hidden', minHeight: isMobile ? 280 : undefined }}>
             <img
               src="/images/networking-innenhof.jpg"
               alt="Bayerischer Mittelstand"
-              style={{ position: isMobile ? 'relative' : 'absolute', inset: 0, width: '100%', height: isMobile ? 220 : '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
-            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to left, ${NAVY} 0%, transparent 30%)` }} />
-            <div style={{ position: 'absolute', top: 36, left: 36 }}>
-              <div style={{ width: 2, height: 40, background: GOLD }} />
-            </div>
+            <div style={{ position: 'absolute', inset: 0, background: isMobile
+              ? 'linear-gradient(to top, rgba(3,9,58,0.94) 0%, rgba(3,9,58,0.55) 38%, rgba(3,9,58,0.12) 72%, transparent 100%), linear-gradient(to right, rgba(3,9,58,0.5) 0%, transparent 55%)'
+              : `linear-gradient(to left, ${NAVY} 0%, transparent 30%)` }} />
+            {!isMobile && (
+              <div style={{ position: 'absolute', top: 36, left: 36 }}>
+                <div style={{ width: 2, height: 40, background: GOLD }} />
+              </div>
+            )}
+            {/* Heading overlay — mobile only */}
+            {isMobile && (
+              <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '0 24px 24px', zIndex: 2 }}>
+                <span style={{ fontFamily: FF, fontSize: 10, color: '#EFBF04', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Relevanz &amp; Zielsetzung</span>
+                <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.9rem, 8vw, 2.6rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.04, margin: 0, textShadow: '0 2px 18px rgba(3,9,58,0.6)' }}>
+                  BEDEUTUNG FÜR<br />DEN MITTELSTAND
+                </h2>
+              </div>
+            )}
           </div>
 
           {/* Right — text on navy */}
-          <div style={{ background: NAVY, padding: isMobile ? '48px 24px' : '88px 80px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ fontFamily: FF, fontSize: 10, color: '#EFBF04', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 20 }}>Relevanz &amp; Zielsetzung</span>
-            <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3.2vw, 2.9rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.04, margin: '0 0 20px' }}>
-              BEDEUTUNG FÜR<br />DEN MITTELSTAND.
-            </h2>
+          <div style={{ background: NAVY, padding: isMobile ? '32px 24px 40px' : '88px 80px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            {!isMobile && (
+              <>
+                <span style={{ fontFamily: FF, fontSize: 10, color: '#EFBF04', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 20 }}>Relevanz &amp; Zielsetzung</span>
+                <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3.2vw, 2.9rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.04, margin: '0 0 20px' }}>
+                  BEDEUTUNG FÜR<br />DEN MITTELSTAND
+                </h2>
+              </>
+            )}
             <div style={{ width: 36, height: 2, background: GOLD, marginBottom: 28 }} />
             <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8, maxWidth: 440, marginBottom: 16 }}>
               Der Bayerische Mittelstandspreis ist weit mehr als eine Trophäe. Seit seiner Gründung im Jahr 2005 verfolgt er das Ziel, die Vielfalt und Leistungsstärke bayerischer Familienunternehmen und KMU sichtbar zu machen.
@@ -160,16 +195,6 @@ const About: React.FC = () => {
             <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8, maxWidth: 440, marginBottom: 40 }}>
               In einer globalisierten Welt sind es diese Unternehmen, die für Stabilität, Innovation und soziale Verantwortung stehen. Der BMP macht sie sichtbar.
             </p>
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-              {[
-                { n: '01', title: 'Sichtbarkeit', desc: 'Sichtbarkeit für den Mittelstand erhöhen' },
-                { n: '02', title: 'Netzwerk', desc: 'Netzwerkbildung über Branchen hinweg' },
-                { n: '03', title: 'Werte', desc: 'Förderung von wertebasierter Führung' },
-                { n: '04', title: 'Arbeitgebermarke', desc: 'Stärkung der Arbeitgebermarke Mittelstand' },
-              ].map((item, i) => (
-                <GoalItem key={i} n={item.n} text={item.title} sub={item.desc} last={i === 3} />
-              ))}
-            </div>
           </div>
         </div>
       </section>
@@ -194,7 +219,19 @@ const About: React.FC = () => {
         </div>
 
         {/* 4-col photo grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)', gap: 0 }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? undefined : 'repeat(4, 1fr)',
+          gridAutoFlow: isMobile ? 'column' : undefined,
+          gridTemplateRows: isMobile ? 'repeat(2, 1fr)' : undefined,
+          gridAutoColumns: isMobile ? '66vw' : undefined,
+          overflowX: isMobile ? 'auto' : undefined,
+          scrollSnapType: isMobile ? 'x mandatory' : undefined,
+          gap: isMobile ? 8 : 0,
+          padding: isMobile ? '0 16px 8px' : 0,
+          WebkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'none',
+        }}>
           {HIGHLIGHTS.map(w => <HighlightCard key={w.id} winner={w} />)}
         </div>
       </section>
@@ -210,12 +247,12 @@ const About: React.FC = () => {
 
           {/* LEFT — navy, timeline */}
           <div style={{ background: NAVY, padding: isMobile ? '56px 24px' : '88px 80px', position: 'relative', overflow: 'hidden' }}>
-            {/* Ghost "20" watermark */}
-            <div style={{ position: 'absolute', right: -24, bottom: -40, fontFamily: FF, fontSize: 'clamp(160px, 20vw, 240px)', fontWeight: 900, color: 'rgba(239,191,4,0.04)', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.04em' }}>20</div>
+            {/* Ghost "20" watermark — desktop only */}
+            {!isMobile && <div style={{ position: 'absolute', right: -24, bottom: -40, fontFamily: FF, fontSize: 'clamp(160px, 20vw, 240px)', fontWeight: 900, color: 'rgba(239,191,4,0.04)', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.04em' }}>20</div>}
 
             <span style={{ fontFamily: FF, fontSize: 10, color: GOLD, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Geschichte &amp; Meilensteine</span>
             <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3vw, 2.8rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.03em', lineHeight: 1.0, margin: '0 0 52px' }}>
-              20 JAHRE<br /><span style={{ color: GOLD }}>MITTELSTANDS</span><wbr />EXZELLENZ.
+              20 JAHRE<br /><span style={{ color: GOLD }}>MITTELSTANDS</span><wbr />EXZELLENZ
             </h2>
 
             {/* Timeline */}
@@ -228,9 +265,10 @@ const About: React.FC = () => {
                 { year: '2010', title: 'Erste mediale Partnerschaft', desc: 'Kooperation mit bayernweiten TV- und Printmedien.' },
                 { year: '2015', title: '100 Preisträger', desc: 'Jubiläum: 100 ausgezeichnete Unternehmen seit der ersten Verleihung.' },
                 { year: '2020', title: 'Digital-Transformation', desc: 'Erweiterung um digitale Bewerbungsprozesse und Online-Formate.' },
-                { year: '2025', title: 'Jubiläumsjahr', desc: '20 Jahre BMP — stärker, sichtbarer und vernetzter denn je.' },
-              ].map((item, i) => (
-                <div key={i} style={{ position: 'relative', marginBottom: i < 4 ? 32 : 0 }}>
+                { year: '2025', title: 'Jubiläumsjahr', desc: '20 Jahre BMP: stärker, sichtbarer und vernetzter denn je.' },
+                { year: '2026', title: 'Bavarian Future Award', desc: 'Ergänzung des Portfolios um den Bavarian Future Award mit Fokus auf zukunftsweisende Unternehmen.' },
+              ].map((item, i, arr) => (
+                <div key={i} style={{ position: 'relative', marginBottom: i < arr.length - 1 ? 32 : 0 }}>
                   {/* Gold dot */}
                   <div style={{ position: 'absolute', left: -34, top: 7, width: 10, height: 10, background: GOLD, outline: `3px solid ${NAVY}`, outlineOffset: 1, transform: 'rotate(45deg)' }} />
                   <div style={{ fontFamily: FF, fontSize: 'clamp(1.05rem, 1.6vw, 1.35rem)', fontWeight: 900, color: GOLD, letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 4 }}>{item.year}</div>
@@ -244,10 +282,9 @@ const About: React.FC = () => {
           {/* RIGHT — cream, Zielsetzung */}
           <div style={{ background: '#EFE5E3', padding: isMobile ? '56px 24px' : '88px 80px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Zielsetzung</span>
-            <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3vw, 2.8rem)', fontWeight: 900, color: NAVY, textTransform: 'uppercase', letterSpacing: '-0.03em', lineHeight: 1.0, margin: '0 0 12px' }}>
-              WOFÜR WIR<br />STEHEN.
+            <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3vw, 2.8rem)', fontWeight: 900, color: NAVY, textTransform: 'uppercase', letterSpacing: '-0.03em', lineHeight: 1.0, margin: '0 0 40px' }}>
+              WOFÜR WIR<br />STEHEN
             </h2>
-            <div style={{ width: 40, height: 3, background: GOLD, marginBottom: 52 }} />
 
             <div>
               {[
@@ -255,6 +292,7 @@ const About: React.FC = () => {
                 { n: '02', title: 'Netzwerk', desc: 'Branchenübergreifende Verbindungen zwischen herausragenden Unternehmen und Entscheidern schaffen.' },
                 { n: '03', title: 'Werte', desc: 'Wertebasierte Führung, nachhaltige Unternehmenskultur und gesellschaftliche Verantwortung fördern.' },
                 { n: '04', title: 'Arbeitgebermarke', desc: 'Den Mittelstand als attraktiven Arbeitgeber stärken und Talente für Bayern gewinnen.' },
+                { n: '05', title: 'Resilienz', desc: 'Die Widerstandsfähigkeit bayerischer Unternehmen würdigen, die auch in unsicheren Zeiten Stabilität und Verantwortung beweisen.' },
               ].map((item, i, arr) => (
                 <div
                   key={i}
@@ -280,11 +318,11 @@ const About: React.FC = () => {
           <div>
             <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Vorteile &amp; Werte</span>
             <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3.2vw, 2.9rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.04, margin: 0 }}>
-              WARUM DER<br />BMP ZÄHLT.
+              WARUM DER<br />BMP ZÄHLT
             </h2>
           </div>
           <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(16,24,40,0.5)', lineHeight: 1.8, margin: 0, maxWidth: 440 }}>
-            Drei Dimensionen, die den Unterschied machen — für Ihr Unternehmen, Ihre Mitarbeiter und Ihren Marktauftritt.
+            Drei Dimensionen, die den Unterschied machen: für Ihr Unternehmen, Ihre Mitarbeitenden und Ihren Marktauftritt.
           </p>
         </div>
 
@@ -293,20 +331,14 @@ const About: React.FC = () => {
           {
             num: '01',
             title: 'Exzellenz-Siegel',
-            tag: 'Reputation',
-            desc: 'Ein unabhängiger Qualitätsnachweis, der Vertrauen schafft — bei Kunden, Partnern und Mitarbeitern. Die Auszeichnung wirkt langfristig als stärkstes Signal Ihres Marktauftritts.',
           },
           {
             num: '02',
             title: 'Partner-Netzwerk',
-            tag: 'Connections',
-            desc: 'Exklusiver Zugang zu Entscheidern aus Staatsregierung, Wirtschaftskammern und Topunternehmen. Kontakte, die Türen öffnen und Geschäftsbeziehungen begründen.',
           },
           {
             num: '03',
             title: 'Reichweite',
-            tag: 'Visibility',
-            desc: 'Breite mediale Begleitung durch TV-, Radio- und Printpartner bayernweit. Sichtbarkeit, die weit über die eigene Branche und über Bayern hinausgeht.',
           },
         ].map((item, i, arr) => (
           <ValueRow key={i} item={item} last={i === arr.length - 1} />
@@ -327,10 +359,10 @@ const About: React.FC = () => {
             <div style={{ width: 28, height: 1, background: GOLD, opacity: 0.6 }} />
           </div>
           <h2 style={{ fontFamily: FF, fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1, margin: '0 0 24px' }}>
-            SCHREIBEN AUCH SIE GESCHICHTE.
+            SCHREIBEN AUCH SIE GESCHICHTE
           </h2>
           <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(255,255,255,0.55)', lineHeight: 1.8, marginBottom: 48, fontWeight: 300 }}>
-            Werden Sie Teil der Wall of Fame des bayerischen Mittelstands. Die Teilnahme ist kostenfrei und lohnt sich in jeder Phase.
+            Werden Sie Teil der Wall of Fame des bayerischen Mittelstands. Die Teilnahmegebühr beträgt 0 EUR und die Teilnahme lohnt sich in jeder Phase.
           </p>
           <Link
             to="/teilnahme"
@@ -382,10 +414,11 @@ const About: React.FC = () => {
 
 function HighlightCard({ winner }: { winner: import('@/data/winners').Winner }) {
   const [hovered, setHovered] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <Link
       to={`/preistraeger/${winner.slug}`}
-      style={{ textDecoration: 'none', display: 'block', position: 'relative', height: 280, overflow: 'hidden' }}
+      style={{ textDecoration: 'none', display: 'block', position: 'relative', height: isMobile ? 220 : 280, overflow: 'hidden', scrollSnapAlign: isMobile ? 'start' : undefined }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -419,35 +452,15 @@ function HighlightCard({ winner }: { winner: import('@/data/winners').Winner }) 
   );
 }
 
-// ── GoalItem ──────────────────────────────────────────────────────────────────
-
-function GoalItem({ n, text, sub, last }: { n: string; text: string; sub?: string; last: boolean }) {
-  const [hovered, setHovered] = useState(false);
-  const isMobile = useIsMobile();
-  return (
-    <div
-      style={{ display: 'grid', gridTemplateColumns: '36px 1fr', gap: '0 16px', padding: '16px 0', borderBottom: last ? 'none' : '1px solid rgba(255,255,255,0.07)', cursor: 'default', transition: 'background 0.15s', alignItems: 'center' }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <span style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, color: hovered ? GOLD : 'rgba(239,191,4,0.45)', letterSpacing: '0.1em', transition: 'color 0.2s' }}>{n}</span>
-      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'baseline', gap: isMobile ? 3 : 12 }}>
-        <span style={{ fontFamily: FF, fontSize: 15, fontWeight: 700, color: hovered ? '#fff' : 'rgba(255,255,255,0.75)', textTransform: 'uppercase', letterSpacing: '0.08em', transition: 'color 0.2s' }}>{text}</span>
-        {sub && <span style={{ fontFamily: FB, fontSize: 15, color: 'rgba(255,255,255,0.3)', flexShrink: isMobile ? 1 : 0 }}>{sub}</span>}
-      </div>
-    </div>
-  );
-}
-
 // ── ValueRow ──────────────────────────────────────────────────────────────────
 
-function ValueRow({ item, last }: { item: { num: string; title: string; tag: string; desc: string }; last: boolean }) {
+function ValueRow({ item, last }: { item: { num: string; title: string }; last: boolean }) {
   const [hovered, setHovered] = useState(false);
   const isMobileRow = useIsMobile();
   return (
     <div
       style={{
-        display: 'grid', gridTemplateColumns: isMobileRow ? '1fr' : '120px 1fr 1fr', gap: isMobileRow ? '16px 0' : '0 48px',
+        display: 'grid', gridTemplateColumns: isMobileRow ? '1fr' : '120px 1fr', gap: isMobileRow ? '16px 0' : '0 48px',
         padding: isMobileRow ? '32px 24px' : '48px 80px',
         borderBottom: last ? 'none' : '1px solid #D0D5DD',
         background: hovered ? '#EAE7E6' : 'transparent',
@@ -457,19 +470,13 @@ function ValueRow({ item, last }: { item: { num: string; title: string; tag: str
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Left: number + tag */}
+      {/* Left: number */}
       <div>
         <div style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3vw, 2.8rem)', fontWeight: 900, color: hovered ? GOLD : 'rgba(16,24,40,0.1)', lineHeight: 1, letterSpacing: '-0.04em', transition: 'color 0.2s' }}>{item.num}</div>
-        <div style={{ fontFamily: FF, fontSize: 9, fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#4A8FC9', marginTop: 8 }}>{item.tag}</div>
       </div>
-      {/* Center: title */}
+      {/* Right: title (short label only) */}
       <div>
         <h3 style={{ fontFamily: FF, fontSize: 'clamp(1.3rem, 2vw, 1.8rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.1, margin: 0 }}>{item.title}</h3>
-      </div>
-      {/* Right: description */}
-      <div>
-        <div style={{ width: 28, height: 1, background: GOLD, marginBottom: 16 }} />
-        <p style={{ fontFamily: FB, fontSize: 17, color: 'rgba(16,24,40,0.55)', lineHeight: 1.8, margin: 0 }}>{item.desc}</p>
       </div>
     </div>
   );

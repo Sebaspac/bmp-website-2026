@@ -49,10 +49,7 @@ export default function Preistraeger() {
 
       {/* Filter Section */}
       <div style={{ background: '#fff', padding: isMobile ? '32px 24px 24px' : '48px 80px 32px' }}>
-        <p style={{ fontFamily: FF, fontSize: 15, color: GRAY, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Alle Preisträger</p>
-        <h1 style={{ fontFamily: FF, fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', marginBottom: 32 }}>
-          AUSGEZEICHNETE UNTERNEHMEN IM ÜBERBLICK
-        </h1>
+        {/* #93: Headline entfernt — Seitenname steht bereits oben im Breadcrumb. */}
 
         {/* Year Tabs */}
         <div style={{ display: 'flex', flexWrap: isMobile ? 'nowrap' : 'wrap', gap: 0, marginBottom: 32, borderBottom: `2px solid ${BORDER}`, overflowX: isMobile ? 'auto' : 'visible', WebkitOverflowScrolling: 'touch', maxWidth: '100%' }}>
@@ -140,7 +137,19 @@ export default function Preistraeger() {
           Keine Preisträger für diese Auswahl.
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)', gap: 0 }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? undefined : 'repeat(4, 1fr)',
+          gridAutoFlow: isMobile ? 'column' : undefined,
+          gridTemplateRows: isMobile ? 'repeat(2, 1fr)' : undefined,
+          gridAutoColumns: isMobile ? '74vw' : undefined,
+          overflowX: isMobile ? 'auto' : undefined,
+          scrollSnapType: isMobile ? 'x mandatory' : undefined,
+          gap: isMobile ? 8 : 0,
+          padding: isMobile ? '0 16px 8px' : 0,
+          WebkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'none',
+        }}>
           {filtered.map(w => (
             <WinnerCard key={w.id} winner={w} />
           ))}
@@ -204,10 +213,11 @@ export default function Preistraeger() {
 
 function WinnerCard({ winner }: { winner: import('@/data/winners').Winner }) {
   const [hovered, setHovered] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <Link
       to={`/preistraeger/${winner.slug}`}
-      style={{ textDecoration: 'none', display: 'block', position: 'relative', height: 300, overflow: 'hidden', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.07)' }}
+      style={{ textDecoration: 'none', display: 'block', position: 'relative', height: isMobile ? 260 : 340, overflow: 'hidden', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.07)', scrollSnapAlign: isMobile ? 'start' : undefined }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -224,15 +234,15 @@ function WinnerCard({ winner }: { winner: import('@/data/winners').Winner }) {
       {/* Text */}
       <div style={{ position: 'absolute', bottom: 0, left: 0, padding: '18px 22px', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 5 }}>
-          <Trophy size={11} style={{ color: GOLD, flexShrink: 0 }} fill={GOLD} />
-          <span style={{ fontFamily: FF, fontSize: 11, fontWeight: 700, color: GOLD, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+          <Trophy size={12} style={{ color: GOLD, flexShrink: 0 }} fill={GOLD} />
+          <span style={{ fontFamily: FF, fontSize: 12, fontWeight: 700, color: GOLD, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
             {winner.year} · {winner.type}
           </span>
         </div>
-        <h3 style={{ fontFamily: FF, fontSize: 16, fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.3, textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>
+        <h3 style={{ fontFamily: FF, fontSize: 18, fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.3, textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>
           {winner.name}
         </h3>
-        <p style={{ fontFamily: FF, fontSize: 15, color: 'rgba(255,255,255,0.82)', margin: '4px 0 0', lineHeight: 1.3 }}>
+        <p style={{ fontFamily: FF, fontSize: 16, color: 'rgba(255,255,255,0.82)', margin: '4px 0 0', lineHeight: 1.3 }}>
           {winner.category}
         </p>
 
@@ -241,8 +251,8 @@ function WinnerCard({ winner }: { winner: import('@/data/winners').Winner }) {
           marginTop: 12,
           display: 'inline-flex', alignItems: 'center', gap: 7,
           background: NAVY, color: '#fff',
-          padding: '8px 16px', borderRadius: 999,
-          fontSize: 15, fontWeight: 700, fontFamily: FF,
+          padding: '9px 18px', borderRadius: 999,
+          fontSize: 16, fontWeight: 700, fontFamily: FF,
           textTransform: 'uppercase', letterSpacing: '0.06em',
           opacity: hovered ? 1 : 0,
           transform: hovered ? 'translateY(0)' : 'translateY(6px)',

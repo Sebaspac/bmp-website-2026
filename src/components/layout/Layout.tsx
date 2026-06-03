@@ -643,7 +643,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
 
       {/* ── FLOATING CTA ─────────────────────────────── */}
-      {location.pathname === '/' && !formVisible && (
+      {location.pathname === '/' && !formVisible && !isMobile && (
         <Link
           to="/teilnahme"
           style={{

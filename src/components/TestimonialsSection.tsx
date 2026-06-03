@@ -24,7 +24,54 @@ export default function TestimonialsSection() {
   return (
     <section style={{ background: '#fff', overflow: 'hidden', position: 'relative', isolation: 'isolate' }}>
       <MunichSkylineBg />
-      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '42% 58%', height: isMobile ? 'auto' : 560, position: 'relative', zIndex: 1 }}>
+      {/* ── MOBILE: headed section + premium testimonial card ── */}
+      {isMobile && (
+        <div style={{ padding: '48px 24px 52px', position: 'relative', zIndex: 1 }}>
+          {/* Section header */}
+          <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 14 }}>Stimmen der Preisträger</span>
+          <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.8rem, 8vw, 2.3rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.04, margin: '0 0 16px' }}>
+            DAS SAGEN UNSERE<br />PREISTRÄGER.
+          </h2>
+          <div style={{ width: 40, height: 2, background: '#EFBF04', marginBottom: 28 }} />
+
+          {/* Card */}
+          <div style={{ background: '#fff', borderRadius: 20, border: '1px solid rgba(17,29,85,0.10)', boxShadow: '0 16px 38px rgba(3,9,58,0.10)', overflow: 'hidden' }}>
+            {/* Photo banner */}
+            <div style={{ position: 'relative', height: 240, overflow: 'hidden' }}>
+              <img key={t.img} src={t.img} alt={t.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(3,9,58,0.28) 0%, transparent 45%)' }} />
+              <span style={{ position: 'absolute', top: 14, left: 14, fontFamily: FF, fontSize: 9, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#101828', background: '#EFBF04', padding: '5px 10px', borderRadius: 100 }}>Preisträger {t.year}</span>
+            </div>
+            {/* Body */}
+            <div style={{ padding: '22px 22px 24px' }}>
+              <span aria-hidden style={{ fontFamily: 'Georgia, serif', fontSize: 52, lineHeight: 0.4, color: '#EFBF04', display: 'block', height: 26, marginBottom: 6 }}>&ldquo;</span>
+              <p style={{ fontFamily: FF, fontSize: '1.2rem', fontWeight: 300, color: '#101828', lineHeight: 1.5, margin: '0 0 22px' }}>{t.quote}</p>
+              <div style={{ width: 36, height: 2, background: '#EFBF04', marginBottom: 16 }} />
+              <div style={{ fontFamily: FF, fontSize: 16, fontWeight: 700, color: '#101828', marginBottom: 4 }}>{t.name}</div>
+              <div style={{ fontFamily: FF, fontSize: 14, color: 'rgba(16,24,40,0.5)' }}>{t.role} · {t.company}</div>
+            </div>
+          </div>
+
+          {/* Controls */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 24 }}>
+            <button onClick={prev} aria-label="Vorheriges" style={{ width: 46, height: 46, borderRadius: 12, border: '1.5px solid #D0D5DD', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <ChevronRight size={16} style={{ transform: 'rotate(180deg)' }} />
+            </button>
+            <button onClick={next} aria-label="Nächstes" style={{ width: 46, height: 46, borderRadius: 12, border: '1.5px solid #111D55', background: '#111D55', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', flexShrink: 0 }}>
+              <ChevronRight size={16} />
+            </button>
+            <div style={{ display: 'flex', gap: 6, marginLeft: 6 }}>
+              {TESTIMONIALS.map((_, i) => (
+                <button key={i} onClick={() => setActive(i)} aria-label={`Stimme ${i + 1}`} style={{ width: i === active ? 22 : 7, height: 7, borderRadius: 100, background: i === active ? '#EFBF04' : '#D0D5DD', border: 'none', cursor: 'pointer', padding: 0, transition: 'all 0.2s' }} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── DESKTOP ── */}
+      {!isMobile && (
+      <div style={{ display: 'grid', gridTemplateColumns: '42% 58%', height: 560, position: 'relative', zIndex: 1 }}>
         {/* Left — portrait photo */}
         <div style={{ position: 'relative', overflow: 'hidden', height: isMobile ? 280 : 'auto' }}>
           <img
@@ -38,7 +85,11 @@ export default function TestimonialsSection() {
 
         {/* Right — quote */}
         <div style={{ padding: isMobile ? '40px 22px 56px' : '80px 72px 80px 56px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 32 }}>Stimmen der Preisträger</span>
+          <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 14 }}>Stimmen der Preisträger</span>
+
+          <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.8rem, 2.6vw, 2.6rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.04, margin: '0 0 36px' }}>
+            DAS SAGEN UNSERE PREISTRÄGER.
+          </h2>
 
           <p style={{ fontFamily: FF, fontSize: 'clamp(1.4rem, 2.2vw, 2rem)', fontWeight: 300, color: '#101828', lineHeight: 1.55, margin: '0 0 40px' }}>
             {t.quote}
@@ -72,6 +123,7 @@ export default function TestimonialsSection() {
           </div>
         </div>
       </div>
+      )}
     </section>
   );
 }

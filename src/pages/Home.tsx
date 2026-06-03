@@ -71,7 +71,7 @@ const STATUS_PHASES: StatusPhase[] = [
     pulse: true,
     phase: 'Auswertungsphase 2026',
     headline: 'DIE JURY BEWERTET GERADE.',
-    body: 'Die Anmeldephase 2026 ist geschlossen. Unsere unabhängige Expertenjury aus Wirtschaft, Wissenschaft und Gesellschaft sichtet und bewertet derzeit alle Einreichungen.',
+    body: 'Die Anmeldephase 2026 ist geschlossen. Unsere unabhängige Expertenjury aus Wissenschaft und Praxis sichtet und bewertet derzeit alle Einreichungen.',
     cta: null,
     accent: '#4A8FC9',
     bg: '#060D1C',
@@ -95,10 +95,11 @@ const STATUS_PHASES: StatusPhase[] = [
 
 function HomeWinnerCard({ winner }: { winner: import('@/data/winners').Winner }) {
   const [hovered, setHovered] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <Link
       to={`/preistraeger/${winner.slug}`}
-      style={{ textDecoration: 'none', display: 'block', position: 'relative', height: 280, overflow: 'hidden' }}
+      style={{ textDecoration: 'none', display: 'block', position: 'relative', height: isMobile ? 220 : 280, overflow: 'hidden', scrollSnapAlign: isMobile ? 'start' : undefined }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -128,7 +129,7 @@ const Home: React.FC = () => {
   return (
     <div className="animate-fade-in">
       {/* Hero Section */}
-      <section className="relative flex items-center overflow-hidden" style={{ background: '#111D55', height: isMobile ? '100svh' : '100vh' }}>
+      <section className="relative flex items-center overflow-hidden" style={{ background: '#111D55', height: isMobile ? '88svh' : '100vh' }}>
         <div className="absolute inset-0 z-0">
           <img
             src="/images/gala-saal-overview.jpg"
@@ -136,12 +137,12 @@ const Home: React.FC = () => {
             className="w-full h-full object-cover scale-105"
             style={{ objectPosition: 'center top' }}
           />
-          <div style={{ position:'absolute', inset:0, background:'linear-gradient(to right, #111D55 0%, rgba(17,29,85,0.90) 38%, rgba(17,29,85,0.18) 65%, transparent 100%)' }}></div>
+          <div style={{ position:'absolute', inset:0, background: isMobile ? 'linear-gradient(to top, rgba(17,29,85,0.96) 0%, rgba(17,29,85,0.82) 42%, rgba(17,29,85,0.48) 72%, rgba(17,29,85,0.22) 100%)' : 'linear-gradient(to right, #111D55 0%, rgba(17,29,85,0.90) 38%, rgba(17,29,85,0.18) 65%, transparent 100%)' }}></div>
         </div>
 
         <div className="container mx-auto relative z-10" style={{ padding: isMobile ? '0 24px' : '0 24px' }}>
           <div style={{ maxWidth: isMobile ? '100%' : '48rem' }}>
-            <div className="inline-flex items-center gap-3 bg-accent/20 border border-accent/30 rounded-full px-4 py-1.5 mb-8 backdrop-blur-sm animate-fade-in">
+            <div className="inline-flex items-center gap-3 bg-accent/20 border border-accent/30 rounded-full px-4 py-1.5 mb-8 backdrop-blur-sm animate-fade-in" style={{ marginBottom: isMobile ? 20 : undefined }}>
               <span className="flex h-2 w-2 rounded-full bg-accent animate-pulse"></span>
               <span className="text-accent text-[10px] uppercase tracking-[0.2em] font-bold">Bewerbungsphase 2026 Eröffnet</span>
             </div>
@@ -151,7 +152,7 @@ const Home: React.FC = () => {
               <span className="text-accent">MITTELSTÄNDLER.</span>
             </h1>
             
-            <p className="text-white/70 mb-12 font-light leading-relaxed" style={{ fontSize: isMobile ? '1.0625rem' : '1.375rem', maxWidth: isMobile ? '100%' : '36rem' }}>
+            <p className="text-white/70 mb-12 font-light leading-relaxed" style={{ fontSize: isMobile ? '1.0625rem' : '1.375rem', maxWidth: isMobile ? '100%' : '36rem', marginBottom: isMobile ? 28 : undefined }}>
               Der Bayerische Mittelstandspreis würdigt herausragende Leistungen – von Innovation über Nachhaltigkeit bis hin zur Exzellenz.
             </p>
             
@@ -207,24 +208,30 @@ const Home: React.FC = () => {
       {/* Schnell-Check Section */}
       <section style={{ overflow: 'hidden', position: 'relative', isolation: 'isolate' }}>
         <MunichSkylineBg />
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '55% 45%' }}>
-          {/* Left (desktop) / Bottom (mobile) — text */}
-          <div style={{ background: '#E4E2E3', padding: isMobile ? '36px 24px 48px' : '80px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center', order: isMobile ? 2 : 0 }}>
-            <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Schnell-Check</span>
-            <h2 style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 'clamp(1.8rem, 2.8vw, 2.5rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.05, margin: '0 0 20px' }}>
-              SIND SIE<br />BERECHTIGT?
-            </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '55% 45%', position: 'relative' }}>
+          {/* Left (desktop) / Bottom (mobile) — text block (light bg, dark text) */}
+          <div style={{ background: '#E4E2E3', padding: isMobile ? '32px 24px 44px' : '80px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center', order: isMobile ? 2 : 0 }}>
+            {/* Eyebrow + heading — desktop only (on mobile these are overlaid on the image) */}
+            {!isMobile && (
+              <>
+                <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Schnell-Check</span>
+                <h2 style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 'clamp(1.8rem, 2.8vw, 2.5rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.05, margin: '0 0 20px' }}>
+                  SIND SIE<br />BERECHTIGT?
+                </h2>
+              </>
+            )}
             <div style={{ width: 40, height: 2, background: '#EFBF04', marginBottom: 28 }} />
             <p style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 17, color: 'rgba(16,24,40,0.6)', lineHeight: 1.7, marginBottom: 32 }}>
-              Der Bayerische Mittelstandspreis richtet sich an inhabergeführte KMU im Freistaat. Vier Kriterien entscheiden — erfüllen Sie alle vier, steht Ihrer Bewerbung nichts im Weg.
+              Der Bayerische Mittelstandspreis richtet sich an inhabergeführte KMU im Freistaat. Fünf Kriterien entscheiden, erfüllen Sie alle fünf, steht Ihrer Bewerbung nichts im Weg.
             </p>
             {/* Criteria list */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 36, borderTop: '1px solid #D0D5DD' }}>
               {[
                 { label: 'Standort Bayern', desc: 'Sitz oder Betriebsstätte im Freistaat' },
-                { label: '10–500 Mitarbeiter', desc: 'Klassischer Mittelstand' },
+                { label: '50–1.500 Mitarbeiter', desc: 'Klassischer Mittelstand' },
                 { label: 'Min. 3 Geschäftsjahre', desc: 'Markterfahrung und Stabilität' },
                 { label: 'Privatwirtschaft', desc: 'Kein staatlicher Träger' },
+                { label: 'Familien- bzw. eigentümergeführt', desc: 'Ihr Unternehmen ist inhabergeführt' },
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 0', borderBottom: '1px solid #D0D5DD' }}>
                   <div style={{ width: 24, height: 24, background: '#111D55', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -237,6 +244,9 @@ const Home: React.FC = () => {
                 </div>
               ))}
             </div>
+            <p style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 14, color: 'rgba(16,24,40,0.55)', lineHeight: 1.6, marginTop: 16, marginBottom: 28 }}>
+              Auch ein Verbund bzw. eine Gemeinschaft von mittelständischen Unternehmen oder von mittelständischen Unternehmen und Organisationen/Institutionen mit Schwerpunkt in Bayern kann teilnehmen.
+            </p>
             <Link
               to="/teilnahme"
               style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 15, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#101828', background: '#EFBF04', padding: '15px 32px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8, alignSelf: isMobile ? 'stretch' : 'flex-start', transition: 'background 0.15s, box-shadow 0.2s' }}
@@ -247,17 +257,28 @@ const Home: React.FC = () => {
             </Link>
           </div>
 
-          {/* Right (desktop) / Top (mobile) — full-bleed image */}
-          <div style={{ position: 'relative', minHeight: isMobile ? 230 : 560, overflow: 'hidden', order: isMobile ? 1 : 0 }}>
+          {/* Right (desktop) / Top (mobile) — image; on mobile the heading is overlaid here */}
+          <div style={{ position: 'relative', minHeight: isMobile ? 280 : 560, overflow: 'hidden', order: isMobile ? 1 : 0 }}>
             <img
               src="/images/buehne-gewinner.jpg"
               alt="Preisverleihung Bühne"
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center center' }}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: isMobile ? 'center right' : 'center center' }}
             />
-            {/* Fade: into the text bg — downward on mobile, leftward on desktop */}
-            <div style={{ position: 'absolute', inset: 0, background: isMobile ? 'linear-gradient(to bottom, transparent 45%, #E4E2E3 100%)' : 'linear-gradient(to left, transparent 40%, #E4E2E3 100%)' }} />
+            {/* Overlay: mobile = navy shadow bottom-left (for the heading); desktop = leftward fade into text bg */}
+            <div style={{ position: 'absolute', inset: 0, background: isMobile
+              ? 'linear-gradient(to top, rgba(3,9,58,0.92) 0%, rgba(3,9,58,0.55) 34%, rgba(3,9,58,0.12) 68%, transparent 100%), linear-gradient(to right, rgba(3,9,58,0.55) 0%, transparent 55%)'
+              : 'linear-gradient(to left, transparent 40%, #E4E2E3 100%)' }} />
+            {/* Heading overlay — mobile only */}
+            {isMobile && (
+              <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '0 24px 26px', zIndex: 2 }}>
+                <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, color: '#8FBEEC', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Schnell-Check</span>
+                <h2 style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 'clamp(1.9rem, 8vw, 2.5rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.05, margin: 0, textShadow: '0 2px 18px rgba(3,9,58,0.5)' }}>
+                  SIND SIE<br />BERECHTIGT?
+                </h2>
+              </div>
+            )}
             {/* Gold accent line — bottom edge */}
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(to right, rgba(239,191,4,0.2), #EFBF04, rgba(239,191,4,0.2))' }} />
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(to right, rgba(239,191,4,0.2), #EFBF04, rgba(239,191,4,0.2))', zIndex: 3 }} />
           </div>
         </div>
       </section>
@@ -266,7 +287,7 @@ const Home: React.FC = () => {
       <section style={{ overflow: 'hidden', position: 'relative', isolation: 'isolate' }}>
         <MunichSkylineBg />
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '45% 55%' }}>
-          {/* Left — full-bleed image with stats overlay */}
+          {/* Left — full-bleed image with stats overlay (+ heading on mobile) */}
           <div style={{ position: 'relative', minHeight: isMobile ? 300 : 600, overflow: 'hidden' }}>
             <img
               src="/images/preistraeger-jubel.jpg"
@@ -274,30 +295,58 @@ const Home: React.FC = () => {
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
             />
             {/* Dark overlay */}
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, transparent 50%, #fff 100%), linear-gradient(to top, rgba(3,9,58,0.82) 0%, rgba(3,9,58,0.50) 60%, transparent 100%)' }} />
-            {/* Stats bottom-left */}
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: isMobile ? '24px 24px' : '32px 40px', background: 'linear-gradient(to top, rgba(3,9,58,0.88) 0%, transparent 100%)', display: 'flex', gap: isMobile ? 20 : 36 }}>
-              {[['20+', 'Jahre Exzellenz'], ['0 €', 'Teilnahmegebühr'], ['100%', 'Unabhängig']].map(([v, l]) => (
-                <div key={l}>
-                  <div style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 28, fontWeight: 900, color: '#EFBF04', lineHeight: 1 }}>{v}</div>
-                  <div style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', marginTop: 4 }}>{l}</div>
-                </div>
-              ))}
-            </div>
+            <div style={{ position: 'absolute', inset: 0, background: isMobile
+              ? 'linear-gradient(to top, rgba(3,9,58,0.92) 0%, rgba(3,9,58,0.5) 36%, rgba(3,9,58,0.1) 70%, transparent 100%), linear-gradient(to right, rgba(3,9,58,0.5) 0%, transparent 55%)'
+              : 'linear-gradient(to right, transparent 50%, #fff 100%), linear-gradient(to top, rgba(3,9,58,0.82) 0%, rgba(3,9,58,0.50) 60%, transparent 100%)' }} />
+            {/* Heading overlay — mobile only (bottom-left) */}
+            {isMobile && (
+              <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '0 24px 26px', zIndex: 2 }}>
+                <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, color: '#8FBEEC', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Ein Gewinn für alle</span>
+                <h2 style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 'clamp(1.9rem, 8vw, 2.5rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.05, margin: 0, textShadow: '0 2px 18px rgba(3,9,58,0.5)' }}>
+                  AUSZEICHNUNG<br />FÜR DIE BESTEN.
+                </h2>
+              </div>
+            )}
+            {/* Stats bottom-left — desktop only (mobile shows them below the image) */}
+            {!isMobile && (
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '32px 40px', background: 'linear-gradient(to top, rgba(3,9,58,0.88) 0%, transparent 100%)', display: 'flex', gap: 36 }}>
+                {[['20+', 'Jahre Exzellenz'], ['0 €', 'Teilnahmegebühr'], ['100%', 'Unabhängig']].map(([v, l]) => (
+                  <div key={l}>
+                    <div style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 28, fontWeight: 900, color: '#EFBF04', lineHeight: 1 }}>{v}</div>
+                    <div style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', marginTop: 4 }}>{l}</div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Right — editorial text */}
-          <div style={{ background: '#fff', padding: isMobile ? '48px 24px' : '80px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Ein Gewinn für alle</span>
-            <h2 style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 'clamp(2rem, 3.2vw, 2.8rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.05, margin: '0 0 20px' }}>
-              AUSZEICHNUNG<br />FÜR DIE BESTEN.
-            </h2>
-            <div style={{ width: 40, height: 2, background: '#EFBF04', marginBottom: 28 }} />
-            <blockquote style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 18, fontStyle: 'italic', color: '#101828', lineHeight: 1.65, borderLeft: '3px solid #EFBF04', paddingLeft: 20, margin: '0 0 24px' }}>
+          <div style={{ background: '#fff', padding: isMobile ? '32px 24px 40px' : '80px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            {!isMobile && (
+              <>
+                <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Ein Gewinn für alle</span>
+                <h2 style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 'clamp(2rem, 3.2vw, 2.8rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.05, margin: '0 0 20px' }}>
+                  AUSZEICHNUNG<br />FÜR DIE BESTEN.
+                </h2>
+              </>
+            )}
+            {/* Stats row — mobile only, below the image */}
+            {isMobile && (
+              <div style={{ display: 'flex', gap: 16, marginBottom: 28, paddingBottom: 24, borderBottom: '1px solid #D0D5DD' }}>
+                {[['20+', 'Jahre Exzellenz'], ['0 €', 'Teilnahmegebühr'], ['100%', 'Unabhängig']].map(([v, l]) => (
+                  <div key={l} style={{ flex: 1 }}>
+                    <div style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 26, fontWeight: 900, color: '#101828', lineHeight: 1 }}>{v}</div>
+                    <div style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 9, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#4A8FC9', marginTop: 6 }}>{l}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div style={{ width: 40, height: 2, background: '#EFBF04', marginBottom: 28, display: isMobile ? 'none' : 'block' }} />
+            <blockquote style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 18, fontStyle: 'italic', color: '#101828', lineHeight: 1.7, borderLeft: '3px solid #EFBF04', paddingLeft: 20, margin: '0 0 24px' }}>
               "Ein Unternehmen zu gründen erfordert nicht allein spezielle Fähigkeiten. Es erfordert Persönlichkeit!"
             </blockquote>
-            <p style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 17, color: 'rgba(16,24,40,0.6)', lineHeight: 1.75, margin: '0 0 36px' }}>
-              Wir suchen Vorbilder, die sich trotz aller Risiken nicht scheuen, Visionen in Businesspläne und Ideen in Unternehmungen zu verwandeln. Seit vielen Jahren würdigen wir herausragende unternehmerische Leistungen im Freistaat.
+            <p style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 17, color: 'rgba(16,24,40,0.6)', lineHeight: 1.7, margin: '0 0 36px' }}>
+              Wir suchen Vorbilder, die sich trotz aller Risiken nicht scheuen, Visionen in Businesspläne und Ideen in Unternehmungen zu verwandeln, und das mit großem persönlichen Einsatz und Verantwortung für Ihre Mitarbeiter. Seit vielen Jahren würdigen wir herausragende unternehmerische Leistungen im Freistaat.
             </p>
             <Link
               to="/der-bmp"
@@ -320,7 +369,7 @@ const Home: React.FC = () => {
           <div>
             <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#EFBF04', display: 'block', marginBottom: 12 }}>Success Stories</span>
             <h2 style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', margin: 0, lineHeight: 1 }}>
-              PREISTRÄGER DER HERZEN.
+              DIE BESTEN UNTERNEHMEN IN BAYERN
             </h2>
           </div>
           <Link
@@ -331,7 +380,19 @@ const Home: React.FC = () => {
           </Link>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 0 }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? undefined : 'repeat(4, 1fr)',
+          gridAutoFlow: isMobile ? 'column' : undefined,
+          gridTemplateRows: isMobile ? 'repeat(2, 1fr)' : undefined,
+          gridAutoColumns: isMobile ? '66vw' : undefined,
+          overflowX: isMobile ? 'auto' : undefined,
+          scrollSnapType: isMobile ? 'x mandatory' : undefined,
+          gap: isMobile ? 8 : 0,
+          padding: isMobile ? '0 16px 8px' : 0,
+          WebkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'none',
+        }}>
           {WINNERS.filter(w => w.year === 2025).slice(0, 8).map(w => (
             <HomeWinnerCard key={w.id} winner={w} />
           ))}
@@ -348,11 +409,15 @@ const Home: React.FC = () => {
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '55% 45%', minHeight: isMobile ? 'auto' : 560 }}>
 
           {/* Left — text on cream */}
-          <div style={{ background: '#E4E2E3', padding: isMobile ? '48px 24px' : '80px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Mehr als nur ein Preis</span>
-            <h2 style={{ fontFamily: FF, fontSize: isMobile ? 'clamp(1.8rem, 7vw, 2.2rem)' : 'clamp(2rem, 3vw, 2.6rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.05, margin: '0 0 48px' }}>
-              WARUM SICH DIE<br />TEILNAHME LOHNT.
-            </h2>
+          <div style={{ background: '#E4E2E3', padding: isMobile ? '32px 24px 44px' : '80px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center', order: isMobile ? 2 : 0 }}>
+            {!isMobile && (
+              <>
+                <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Mehr als nur ein Preis</span>
+                <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3vw, 2.6rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.05, margin: '0 0 48px' }}>
+                  WARUM SICH DIE<br />TEILNAHME LOHNT.
+                </h2>
+              </>
+            )}
 
             {/* Numbered rows — no cards, no shadows */}
             <div style={{ borderTop: '1px solid #D0D5DD' }}>
@@ -377,19 +442,32 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          {/* Right — full-bleed photo */}
-          <div style={{ position: 'relative', overflow: 'hidden', minHeight: isMobile ? 240 : 'auto', display: isMobile ? 'block' : 'block' }}>
+          {/* Right — full-bleed photo (+ heading on mobile) */}
+          <div style={{ position: 'relative', overflow: 'hidden', minHeight: isMobile ? 280 : 'auto', order: isMobile ? 1 : 0 }}>
             <img
               src="/images/networking-innenhof.jpg"
               alt="BMP Gala Netzwerk"
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center center', display: 'block' }}
             />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, #E4E2E3 0%, transparent 30%), linear-gradient(to top, rgba(3,9,58,0.82) 0%, transparent 50%)' }} />
-            {/* Bottom-left label */}
-            <div style={{ position: 'absolute', bottom: 40, left: 40 }}>
-              <div style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#EFBF04', marginBottom: 6 }}>BMP Gala-Netzwerk</div>
-              <div style={{ width: 32, height: 2, background: '#EFBF04' }} />
-            </div>
+            <div style={{ position: 'absolute', inset: 0, background: isMobile
+              ? 'linear-gradient(to top, rgba(3,9,58,0.92) 0%, rgba(3,9,58,0.5) 36%, rgba(3,9,58,0.1) 70%, transparent 100%), linear-gradient(to right, rgba(3,9,58,0.5) 0%, transparent 55%)'
+              : 'linear-gradient(to right, #E4E2E3 0%, transparent 30%), linear-gradient(to top, rgba(3,9,58,0.82) 0%, transparent 50%)' }} />
+            {/* Heading overlay — mobile only (bottom-left) */}
+            {isMobile && (
+              <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '0 24px 26px', zIndex: 2 }}>
+                <span style={{ fontFamily: FF, fontSize: 10, color: '#8FBEEC', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Mehr als nur ein Preis</span>
+                <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.9rem, 8vw, 2.4rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.05, margin: 0, textShadow: '0 2px 18px rgba(3,9,58,0.5)' }}>
+                  WARUM SICH DIE<br />TEILNAHME LOHNT.
+                </h2>
+              </div>
+            )}
+            {/* Bottom-left label — desktop only */}
+            {!isMobile && (
+              <div style={{ position: 'absolute', bottom: 40, left: 40 }}>
+                <div style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#EFBF04', marginBottom: 6 }}>BMP Gala-Netzwerk</div>
+                <div style={{ width: 32, height: 2, background: '#EFBF04' }} />
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -416,7 +494,7 @@ const Home: React.FC = () => {
             <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
               {[
                 { num: '01', label: 'Kostenfrei',   desc: 'Ohne Teilnahmegebühr' },
-                { num: '02', label: 'Jury',          desc: 'Unabhängige Experten' },
+                { num: '02', label: 'Jury',          desc: 'Aus Wissenschaft und Praxis' },
                 { num: '03', label: 'Sichtbarkeit', desc: 'Medial bayernweit' },
                 { num: '04', label: 'Gala',          desc: 'Verleihung München' },
               ].map(item => (
@@ -443,13 +521,8 @@ const Home: React.FC = () => {
                 <pattern id="bmpCross" width="18" height="18" patternUnits="userSpaceOnUse">
                   <path d="M0,0 L18,18 M18,0 L0,18" stroke="rgba(17,29,85,0.055)" strokeWidth="0.65" />
                 </pattern>
-                {/* Corner-mark diamond accent */}
-                <pattern id="bmpDiamond" width="36" height="36" patternUnits="userSpaceOnUse">
-                  <polygon points="18,2 34,18 18,34 2,18" fill="none" stroke="rgba(17,29,85,0.045)" strokeWidth="0.6" />
-                </pattern>
               </defs>
               <rect width="100%" height="100%" fill="url(#bmpCross)" />
-              <rect width="100%" height="100%" fill="url(#bmpDiamond)" />
             </svg>
 
             {/* Inner vignette — edges slightly deeper gold */}

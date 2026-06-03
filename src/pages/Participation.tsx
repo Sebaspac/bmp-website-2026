@@ -26,13 +26,13 @@ const Participation: React.FC = () => {
           alt="Teilnahme BMP"
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, #020930 0%, rgba(2,9,48,0.90) 38%, rgba(2,9,48,0.18) 65%, transparent 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: isMobile ? 'linear-gradient(to top, rgba(2,9,48,0.95) 0%, rgba(2,9,48,0.72) 38%, rgba(2,9,48,0.22) 72%, transparent 100%)' : 'linear-gradient(to right, #020930 0%, rgba(2,9,48,0.90) 38%, rgba(2,9,48,0.18) 65%, transparent 100%)' }} />
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: `linear-gradient(to right, ${GOLD}, rgba(239,191,4,0.3), transparent)` }} />
 
         <div style={{ position: 'relative', zIndex: 1, padding: isMobile ? '0 24px 48px' : '0 80px 80px', maxWidth: 800 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
             <div style={{ width: 36, height: 2, background: GOLD }} />
-            <span style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, letterSpacing: '0.32em', textTransform: 'uppercase', color: '#EFBF04' }}>Phase 2026</span>
+            <span style={{ fontFamily: FF, fontSize: 12, fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', color: '#EFBF04' }}>Bewerbungsphase 2026</span>
           </div>
           <h1 style={{ fontFamily: FF, fontSize: isMobile ? 'clamp(1.6rem, 6vw, 5rem)' : 'clamp(2.8rem, 6vw, 5rem)', fontWeight: 900, color: '#fff', lineHeight: 0.95, letterSpacing: '-0.03em', textTransform: 'uppercase', margin: '0 0 24px' }}>
             GESTALTEN SIE<br />BAYERNS ZUKUNFT.
@@ -79,7 +79,7 @@ const Participation: React.FC = () => {
               </Link>
             </div>
             <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(16,24,40,0.5)', lineHeight: 1.8, margin: 0, textAlign: isMobile ? 'left' : 'right' }}>
-              Vier klar definierte Kriterien — erfüllen Sie alle, bewerben Sie sich kostenlos und ohne bürokratischen Aufwand.
+              Vier klar definierte Kriterien: Erfüllen Sie alle, bewerben Sie sich kostenlos und ohne bürokratischen Aufwand.
             </p>
           </div>
         </div>
@@ -88,7 +88,7 @@ const Participation: React.FC = () => {
         <div style={{ position: 'relative', zIndex: 1, borderBottom: `1px solid #D0D5DD` }}>
           {[
             { num: '01', title: 'Standort Bayern', body: 'Sitz oder wesentliche Betriebsstätte im Freistaat Bayern.', Icon: MapPin },
-            { num: '02', title: 'KMU-Größe', body: '10 bis 500 Beschäftigte — klassischer Mittelstand im privatwirtschaftlichen Bereich.', Icon: Users },
+            { num: '02', title: 'KMU-Größe', body: '50 bis 1.500 Mitarbeiter: klassischer Mittelstand im privatwirtschaftlichen Bereich.', Icon: Users },
             { num: '03', title: 'Marktreife', body: 'Mindestens drei vollständige Geschäftsjahre am Markt tätig.', Icon: TrendingUp },
             { num: '04', title: 'Privatwirtschaft', body: 'Keine überwiegende Zugehörigkeit zu staatlichen oder kommunalen Trägern.', Icon: Building2 },
           ].map((item, i, arr) => {
@@ -97,6 +97,28 @@ const Participation: React.FC = () => {
               <QualRow key={i} item={item} Icon={Icon} last={i === arr.length - 1} />
             );
           })}
+        </div>
+
+        {/* Zusätzliche Hinweise: Verbund + Wiederbewerber */}
+        <div style={{ position: 'relative', zIndex: 1, padding: isMobile ? '28px 24px' : '40px 80px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 24 : 48, borderBottom: '1px solid #D0D5DD' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
+            <Building2 size={18} style={{ color: GOLD, flexShrink: 0, marginTop: 3 }} strokeWidth={1.7} />
+            <div>
+              <div style={{ fontFamily: FF, fontSize: 13, fontWeight: 700, color: '#101828', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>Verbund &amp; Gemeinschaft</div>
+              <p style={{ fontFamily: FB, fontSize: 17, color: 'rgba(16,24,40,0.6)', lineHeight: 1.7, margin: 0 }}>
+                Oder Sie sind ein Verbund bzw. eine Gemeinschaft von mittelständischen Unternehmen oder von mittelständischen Unternehmen und Organisationen/Institutionen, die einen Schwerpunkt in Bayern hat.
+              </p>
+            </div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
+            <UserCheck size={18} style={{ color: GOLD, flexShrink: 0, marginTop: 3 }} strokeWidth={1.7} />
+            <div>
+              <div style={{ fontFamily: FF, fontSize: 13, fontWeight: 700, color: '#101828', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>Erneute Bewerbung</div>
+              <p style={{ fontFamily: FB, fontSize: 17, color: 'rgba(16,24,40,0.6)', lineHeight: 1.7, margin: 0 }}>
+                Nominierte ohne Gewinn können sich sofort erneut bewerben. Preisträger können sich nach 7 Jahren erneut bewerben.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* CTA nudge */}
@@ -122,8 +144,8 @@ const Participation: React.FC = () => {
         {/* TOP: editorial split — image left (45%) / header right (55%) */}
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '45% 55%', minHeight: isMobile ? 'auto' : 480 }}>
 
-          {/* Left — full-bleed image with gradient blend into navy on the right */}
-          <div style={{ position: 'relative', overflow: 'hidden' }}>
+          {/* Left — full-bleed image with gradient blend into navy on the right (+ heading on mobile) */}
+          <div style={{ position: 'relative', overflow: 'hidden', minHeight: isMobile ? 280 : undefined }}>
             <img
               src="/images/buehne-gewinner.jpg"
               alt="Jury-Bewertung BMP"
@@ -131,32 +153,60 @@ const Participation: React.FC = () => {
             />
             {/* Dark overlay for depth */}
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(3,9,58,0.35) 0%, rgba(3,9,58,0.15) 50%, rgba(3,9,58,0.35) 100%)' }} />
-            {/* Right-side blend into navy */}
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, transparent 50%, rgba(3,9,58,0.7) 80%, #111D55 100%)' }} />
+            {/* Right-side blend into navy (desktop) */}
+            {!isMobile && <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, transparent 50%, rgba(3,9,58,0.7) 80%, #111D55 100%)' }} />}
+            {/* Mobile heading shadow (bottom-left) */}
+            {isMobile && <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(3,9,58,0.94) 0%, rgba(3,9,58,0.55) 38%, rgba(3,9,58,0.12) 72%, transparent 100%), linear-gradient(to right, rgba(3,9,58,0.5) 0%, transparent 55%)' }} />}
             {/* Bottom blend for continuity with grid below */}
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 120, background: 'linear-gradient(to bottom, transparent, #111D55)' }} />
+            {/* Heading overlay — mobile only */}
+            {isMobile && (
+              <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '0 24px 24px', zIndex: 2 }}>
+                <span style={{ fontFamily: FF, fontSize: 10, color: '#EFBF04', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Bewertung</span>
+                <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 9vw, 2.8rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.03em', lineHeight: 0.97, margin: 0, textShadow: '0 2px 18px rgba(3,9,58,0.6)' }}>
+                  UNSERE<br />KRITERIEN.
+                </h2>
+              </div>
+            )}
           </div>
 
           {/* Right — overline + headline + intro */}
-          <div style={{ padding: isMobile ? '48px 24px' : '80px 80px 72px 64px', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-            <span style={{ fontFamily: FF, fontSize: 10, color: '#EFBF04', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 20 }}>Bewertung</span>
-            <h2 style={{ fontFamily: FF, fontSize: 'clamp(2.4rem, 4vw, 3.6rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.03em', lineHeight: 0.97, margin: '0 0 28px' }}>
-              UNSERE<br />KRITERIEN.
-            </h2>
+          <div style={{ padding: isMobile ? '32px 24px 40px' : '80px 80px 72px 64px', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+            {!isMobile && (
+              <>
+                <span style={{ fontFamily: FF, fontSize: 10, color: '#EFBF04', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 20 }}>Bewertung</span>
+                <h2 style={{ fontFamily: FF, fontSize: 'clamp(2.4rem, 4vw, 3.6rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.03em', lineHeight: 0.97, margin: '0 0 28px' }}>
+                  UNSERE<br />KRITERIEN.
+                </h2>
+              </>
+            )}
             <div style={{ width: 40, height: 2, background: GOLD, marginBottom: 28 }} />
-            <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(255,255,255,0.68)', lineHeight: 1.8, margin: 0, maxWidth: 420 }}>
-              Vier gleichgewichtete Säulen — bewertet durch eine vollständig unabhängige Expertenjury aus Wirtschaft, Wissenschaft und Gesellschaft.
+            <p style={{ fontFamily: FB, fontSize: 19, color: 'rgba(255,255,255,0.68)', lineHeight: 1.8, margin: 0, maxWidth: 420 }}>
+              Vier zentrale Säulen, bewertet durch eine vollständig unabhängige Expertenjury aus Wirtschaft, Wissenschaft und Gesellschaft.
+              <br />
+              <br />
+              Die Kriterien werden nicht gleich gewichtet.
             </p>
+            <a
+              href="https://www.der-bayerische-mittelstandspreis.de/der-preis/kriterien/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontFamily: FF, fontSize: 14, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: GOLD, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 28, borderBottom: `1px solid rgba(239,191,4,0.4)`, paddingBottom: 2, alignSelf: 'flex-start' }}
+              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.opacity = '0.8')}
+              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.opacity = '1')}
+            >
+              Kriterien &amp; Bewertung <ArrowRight size={13} />
+            </a>
           </div>
         </div>
 
         {/* BOTTOM: full-width 4-column criteria grid */}
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)', borderTop: '1px solid rgba(255,255,255,0.07)', position: 'relative' }}>
           {[
-            { percentage: '25%', title: 'Innovations\u00ADkraft', desc: 'Zukunftsweisende Produkte, Dienstleistungen oder interne Prozessinnovationen.' },
-            { percentage: '25%', title: 'Nachhaltigkeit',        desc: 'Ökologische Verantwortung und Ressourcen-Effizienz im operativen Kern.' },
-            { percentage: '25%', title: 'Unternehmens\u00ADkultur', desc: 'Mitarbeiterbindung, Aus- und Weiterbildung sowie wertebasierte Führung.' },
-            { percentage: '25%', title: 'Regionale Wurzeln',     desc: 'Engagement am Standort Bayern und Beitrag zur regionalen Wertschöpfung.' },
+            { title: 'Innovations\u00ADkraft', desc: 'Zukunftsweisende Produkte, Dienstleistungen oder interne Prozessinnovationen.' },
+            { title: 'Nachhaltigkeit',        desc: 'Ökologische Verantwortung und Ressourcen-Effizienz im operativen Kern.' },
+            { title: 'Unternehmens\u00ADkultur', desc: 'Mitarbeiterbindung, Aus- und Weiterbildung sowie wertebasierte Führung.' },
+            { title: 'Regionale Wurzeln',     desc: 'Engagement am Standort Bayern und Beitrag zur regionalen Wertschöpfung.' },
           ].map((crit, i) => (
             <CriteriaCell key={i} crit={crit} idx={i} />
           ))}
@@ -170,26 +220,46 @@ const Participation: React.FC = () => {
 
       {/* ── DATES BANNER ─────────────────────────────────────────────────────── */}
       <section id="fristen" style={{ background: GOLD }}>
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1px 1fr 1px 1fr 1px 1fr', maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ padding: isMobile ? '32px 24px' : '48px 56px' }}>
-            <h3 style={{ fontFamily: FF, fontSize: 18, fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', marginBottom: 6 }}>Wichtige Termine 2026</h3>
-            <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(16,24,40,0.6)', margin: 0 }}>Planen Sie Ihre Teilnahme rechtzeitig.</p>
+        {isMobile ? (
+          /* Mobile: slim horizontal bar */
+          <div style={{ padding: '24px 22px 26px' }}>
+            <div style={{ fontFamily: FF, fontSize: 12, fontWeight: 700, color: '#101828', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: 18 }}>Wichtige Termine 2026</div>
+            <div style={{ display: 'flex' }}>
+              {[
+                { date: '30. Juni 2026', label: 'Bewerbungsschluss' },
+                { date: 'August 2026', label: 'Nominierte' },
+                { date: 'Oktober 2026', label: 'Gala-Verleihung' },
+              ].map((d, i) => (
+                <div key={i} style={{ flex: 1, minWidth: 0, paddingLeft: i > 0 ? 14 : 0, borderLeft: i > 0 ? '1px solid rgba(3,9,58,0.2)' : 'none' }}>
+                  <div style={{ fontFamily: FF, fontSize: 17, fontWeight: 900, color: '#101828', letterSpacing: '-0.02em', lineHeight: 1.12, marginBottom: 6 }}>{d.date}</div>
+                  <div style={{ fontFamily: FF, fontSize: 9.5, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(16,24,40,0.55)', lineHeight: 1.25 }}>{d.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div style={{ background: 'rgba(3,9,58,0.12)' }} />
-          {[
-            { date: '30. Juni 2026', label: 'Bewerbungsschluss' },
-            { date: 'August 2026', label: 'Bekanntgabe Nominierte' },
-            { date: 'Oktober 2026', label: 'Gala-Verleihung' },
-          ].map((d, i) => (
-            <React.Fragment key={i}>
-              <div style={{ padding: isMobile ? '24px 24px' : '48px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderTop: isMobile ? '1px solid rgba(3,9,58,0.12)' : 'none' }}>
-                <div style={{ fontFamily: FF, fontSize: 'clamp(1.1rem, 1.8vw, 1.4rem)', fontWeight: 900, color: '#101828', letterSpacing: '-0.02em', marginBottom: 6 }}>{d.date}</div>
-                <div style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(16,24,40,0.55)' }}>{d.label}</div>
-              </div>
-              {i < 2 && !isMobile && <div style={{ background: 'rgba(3,9,58,0.12)' }} />}
-            </React.Fragment>
-          ))}
-        </div>
+        ) : (
+          /* Desktop: full banner */
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr 1px 1fr 1px 1fr', maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ padding: '48px 56px' }}>
+              <h3 style={{ fontFamily: FF, fontSize: 18, fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', marginBottom: 6 }}>Wichtige Termine 2026</h3>
+              <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(16,24,40,0.6)', margin: 0 }}>Planen Sie Ihre Teilnahme rechtzeitig.</p>
+            </div>
+            <div style={{ background: 'rgba(3,9,58,0.12)' }} />
+            {[
+              { date: '30. Juni 2026', label: 'Bewerbungsschluss' },
+              { date: 'August 2026', label: 'Bekanntgabe Nominierte' },
+              { date: 'Oktober 2026', label: 'Gala-Verleihung' },
+            ].map((d, i) => (
+              <React.Fragment key={i}>
+                <div style={{ padding: '48px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div style={{ fontFamily: FF, fontSize: 'clamp(1.1rem, 1.8vw, 1.4rem)', fontWeight: 900, color: '#101828', letterSpacing: '-0.02em', marginBottom: 6 }}>{d.date}</div>
+                  <div style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(16,24,40,0.55)' }}>{d.label}</div>
+                </div>
+                {i < 2 && <div style={{ background: 'rgba(3,9,58,0.12)' }} />}
+              </React.Fragment>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* ── FORM SECTION ─────────────────────────────────────────────────────── */}
@@ -203,19 +273,19 @@ const Participation: React.FC = () => {
             </h2>
             <div style={{ width: 36, height: 2, background: GOLD, marginBottom: 28 }} />
             <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(255,255,255,0.68)', lineHeight: 1.8, maxWidth: 400, marginBottom: 48 }}>
-              Sie können sich selbst bewerben oder ein herausragendes Unternehmen vorschlagen. Die Teilnahme ist vollständig kostenfrei.
+              Sie können sich selbst bewerben oder ein herausragendes Unternehmen vorschlagen. Firmenverbunde können sich ebenfalls bewerben. Die Teilnahme ist vollständig kostenfrei.
             </p>
             <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
               {[
-                { num: '01', label: 'Kostenfrei', desc: 'Keine Teilnahmegebühr' },
+                { num: '01', label: '0 EUR', desc: 'Teilnahmegebühr' },
                 { num: '02', label: 'Schnell', desc: 'Ca. 30–45 Minuten' },
                 { num: '03', label: 'Mehrstufig', desc: 'Transparenter Prozess' },
               ].map((item, i) => (
                 <div key={i} style={{ display: 'grid', gridTemplateColumns: '36px 1fr', gap: '0 16px', padding: '16px 0', borderBottom: '1px solid rgba(255,255,255,0.06)', alignItems: 'center' }}>
                   <span style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, color: 'rgba(239,191,4,0.5)', letterSpacing: '0.1em' }}>{item.num}</span>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                    <span style={{ fontFamily: FF, fontSize: 15, fontWeight: 700, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{item.label}</span>
-                    <span style={{ fontFamily: FB, fontSize: 15, color: 'rgba(255,255,255,0.62)' }}>{item.desc}</span>
+                    <span style={{ fontFamily: FF, fontSize: 16, fontWeight: 700, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{item.label}</span>
+                    <span style={{ fontFamily: FB, fontSize: 16, color: 'rgba(255,255,255,0.62)' }}>{item.desc}</span>
                   </div>
                 </div>
               ))}
@@ -270,7 +340,10 @@ const Participation: React.FC = () => {
           </div>
         </div>
 
-        <div style={{ position: 'relative', zIndex: 1, padding: isMobile ? '16px 20px 20px' : '14px 56px 18px', display: 'flex', justifyContent: 'center', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
+        <div style={{ position: 'relative', zIndex: 1, padding: isMobile ? '16px 20px 20px' : '14px 56px 18px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, justifyContent: 'center', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
+          <span style={{ fontFamily: FB, fontSize: 14, color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, maxWidth: 520 }}>
+            Sie haben Ihre Unterlagen bereits als PDF vorbereitet? Laden Sie sie direkt hoch, statt das Formular auszufüllen.
+          </span>
           <Link to="/formular-hochladen" style={{ fontFamily: FF, fontSize: 15, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(239,191,4,0.7)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6, borderBottom: '1px solid rgba(239,191,4,0.3)', paddingBottom: 1 }}>
             Formular hochladen →
           </Link>
@@ -313,7 +386,7 @@ function QualRow({ item, Icon, last }: { item: { num: string; title: string; bod
 
 // ── CriteriaCell ──────────────────────────────────────────────────────────────
 
-function CriteriaCell({ crit, idx }: { crit: { percentage: string; title: string; desc: string }; idx: number }) {
+function CriteriaCell({ crit, idx }: { crit: { title: string; desc: string }; idx: number }) {
   const [hovered, setHovered] = React.useState(false);
   const isMobileCell = useIsMobile();
   return (
@@ -324,7 +397,6 @@ function CriteriaCell({ crit, idx }: { crit: { percentage: string; title: string
     >
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
         <span style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.50)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>0{idx + 1}</span>
-        <span style={{ fontFamily: FF, fontSize: 28, fontWeight: 900, color: GOLD, lineHeight: 1, letterSpacing: '-0.02em' }}>{crit.percentage}</span>
       </div>
       <div style={{ width: hovered ? '100%' : 28, height: 1, background: hovered ? 'rgba(239,191,4,0.6)' : 'rgba(239,191,4,0.3)', marginBottom: 20, transition: 'width 0.5s ease' }} />
       <h4 style={{ fontFamily: FF, fontSize: 16, fontWeight: 700, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.08em', lineHeight: 1.3, marginBottom: 14 }}>{crit.title}</h4>
@@ -359,16 +431,66 @@ function BewerbungswegeSection() {
             HIER KÖNNEN SIE SICH<br />BEWERBEN ODER EIN<br />UNTERNEHMEN VORSCHLAGEN.
           </h2>
           <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(16,24,40,0.55)', lineHeight: 1.8, margin: 0 }}>
-            Als Unternehmen haben Sie zwei Möglichkeiten: Sie werden von einem unterstützenden Partner oder einer Institution vorgeschlagen — oder Sie ergreifen selbst die Initiative und füllen unsere Anmeldung aus. Die Teilnahme ist in allen Fällen kostenfrei.
+            Als Unternehmen haben Sie zwei Möglichkeiten: Sie werden von einem unterstützenden Partner oder einer Institution vorgeschlagen, oder Sie ergreifen selbst die Initiative und füllen unsere Anmeldung aus. Die Teilnahme ist in allen Fällen kostenfrei.
           </p>
         </div>
       </div>
 
-      {/* 3 Wege */}
-      <div style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)' }}>
+      {/* 3 Wege — premium swipe cards on mobile, 3-col grid on desktop */}
+      <div style={{ position: 'relative', zIndex: 1, display: isMobile ? 'flex' : 'grid', gridTemplateColumns: isMobile ? undefined : 'repeat(3, 1fr)', overflowX: isMobile ? 'auto' : undefined, scrollSnapType: isMobile ? 'x mandatory' : undefined, WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', gap: isMobile ? 14 : 0, padding: isMobile ? '28px 24px 36px' : 0 }}>
+
+        {/* ── MOBILE: unified premium cards ── */}
+        {isMobile && ([
+          { weg: 'Weg 01', title: 'Vorschlag unterbreiten', desc: 'Durch ehemalige Preisträger, die HAM, Senatoren und den Preis unterstützende Institutionen.', Icon: Send, checkItems: INSTITUTIONEN, cta: 'Vorschlag unterbreiten', featured: false },
+          { weg: 'Weg 02', title: 'Initiativbewerbung', desc: 'Für Unternehmer, die selbst die Initiative ergreifen.', Icon: UserCheck, kvItems: [ { k: '0 EUR', v: 'Teilnahmegebühr' }, { k: 'Eigeninitiative', v: 'Direkt ohne Intermediär' }, { k: 'Für Unternehmer', v: 'Inhabergeführte KMU in Bayern' }, { k: 'Deadline', v: '30. Juni 2026' } ], cta: 'Jetzt bewerben', featured: true },
+          { weg: 'Weg 03 · Sonderpreis', title: 'Bavarian Future Award', desc: 'Sonderpreis, initiiert durch die Studierenden der HAM, Hochschule für angewandtes Management.', Icon: Star, kvItems: [ { k: 'Vorschlag möglich', v: 'Durch HAM & Partner' }, { k: 'Selbstbewerbung', v: 'Direkte Einreichung' }, { k: 'Initiiert von', v: 'Studierenden der HAM' }, { k: 'Kategorie', v: 'Zukunft & Innovation' } ], cta: 'Zum Formular', featured: false },
+        ] as { weg: string; title: string; desc: string; Icon: any; checkItems?: string[]; kvItems?: { k: string; v: string }[]; cta: string; featured: boolean }[]).map((w) => {
+          const Icon = w.Icon;
+          return (
+            <div key={w.weg} style={{ flexShrink: 0, minWidth: '85vw', maxWidth: '85vw', scrollSnapAlign: 'center', display: 'flex', flexDirection: 'column', background: '#fff', borderRadius: 18, overflow: 'hidden', border: w.featured ? `1.5px solid ${GOLD}` : '1px solid rgba(17,29,85,0.10)', boxShadow: w.featured ? '0 14px 34px rgba(239,191,4,0.20), 0 6px 16px rgba(3,9,58,0.10)' : '0 10px 28px rgba(3,9,58,0.08)' }}>
+              {/* Header */}
+              <div style={{ padding: '22px 22px 0', position: 'relative' }}>
+                {w.featured && (
+                  <span style={{ position: 'absolute', top: 22, right: 22, fontFamily: FF, fontSize: 9, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#101828', background: GOLD, padding: '5px 10px', borderRadius: 100 }}>Empfohlen</span>
+                )}
+                <div style={{ width: 46, height: 46, borderRadius: 12, background: w.featured ? GOLD : NAVY, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18 }}>
+                  <Icon size={20} style={{ color: w.featured ? '#101828' : GOLD }} strokeWidth={1.6} />
+                </div>
+                <span style={{ fontFamily: FF, fontSize: 9, fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', color: w.featured ? '#A87800' : 'rgba(16,24,40,0.4)', display: 'block', marginBottom: 8 }}>{w.weg}</span>
+                <h3 style={{ fontFamily: FF, fontSize: '1.45rem', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.08, margin: '0 0 10px' }}>{w.title}</h3>
+                <p style={{ fontFamily: FB, fontSize: 16, color: 'rgba(16,24,40,0.55)', lineHeight: 1.6, margin: '0 0 20px' }}>{w.desc}</p>
+                <div style={{ width: 36, height: 2, background: GOLD }} />
+              </div>
+              {/* Detail list */}
+              <div style={{ padding: '4px 22px 0', flex: 1 }}>
+                {w.checkItems && w.checkItems.map((inst, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '12px 0', borderBottom: '1px solid rgba(17,29,85,0.08)' }}>
+                    <div style={{ width: 18, height: 18, borderRadius: 5, background: GOLD, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
+                      <svg width="9" height="9" viewBox="0 0 8 8"><polyline points="1,4 3,6 7,2" stroke="#101828" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </div>
+                    <span style={{ fontFamily: FB, fontSize: 16, color: 'rgba(16,24,40,0.7)', lineHeight: 1.5 }}>{inst}</span>
+                  </div>
+                ))}
+                {w.kvItems && w.kvItems.map((item, i) => (
+                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, padding: '13px 0', borderBottom: '1px solid rgba(17,29,85,0.08)' }}>
+                    <span style={{ fontFamily: FF, fontSize: 14, fontWeight: 700, color: '#101828', textTransform: 'uppercase', letterSpacing: '0.06em', flexShrink: 0 }}>{item.k}</span>
+                    <span style={{ fontFamily: FB, fontSize: 15, color: 'rgba(16,24,40,0.5)', textAlign: 'right' }}>{item.v}</span>
+                  </div>
+                ))}
+              </div>
+              {/* CTA */}
+              <div style={{ padding: '18px 22px 22px' }}>
+                <a href="#bewerben" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, minHeight: 52, background: GOLD, color: '#101828', fontFamily: FF, fontSize: 14, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none', borderRadius: 10 }}>{w.cta} <ArrowRight size={14} /></a>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* ── DESKTOP: original 3 columns ── */}
+        {!isMobile && (<>
 
         {/* ── Weg A: Vorschlag ── */}
-        <div style={{ padding: isMobile ? '32px 24px' : '56px 48px 56px', borderRight: isMobile ? 'none' : '1px solid #D0D5DD', borderBottom: isMobile ? '1px solid #D0D5DD' : 'none', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ padding: isMobile ? '32px 24px' : '56px 48px 56px', borderRight: '1px solid #D0D5DD', display: 'flex', flexDirection: 'column', ...(isMobile ? { minWidth: '83vw', maxWidth: '83vw', flexShrink: 0, scrollSnapAlign: 'start' } : {}) }}>
           <div style={{ width: 44, height: 44, background: NAVY, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 28 }}>
             <Send size={18} style={{ color: GOLD }} strokeWidth={1.5} />
           </div>
@@ -403,7 +525,7 @@ function BewerbungswegeSection() {
         </div>
 
         {/* ── Weg B: Initiativbewerbung ── */}
-        <div style={{ padding: isMobile ? '32px 24px' : '56px 48px 56px', borderRight: isMobile ? 'none' : '1px solid #D0D5DD', borderBottom: isMobile ? '1px solid rgba(255,255,255,0.1)' : 'none', display: 'flex', flexDirection: 'column', background: NAVY }}>
+        <div style={{ padding: isMobile ? '32px 24px' : '56px 48px 56px', borderRight: '1px solid #D0D5DD', display: 'flex', flexDirection: 'column', background: NAVY, ...(isMobile ? { minWidth: '83vw', maxWidth: '83vw', flexShrink: 0, scrollSnapAlign: 'start' } : {}) }}>
           <div style={{ width: 44, height: 44, background: GOLD, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 28 }}>
             <UserCheck size={18} style={{ color: '#101828' }} strokeWidth={1.5} />
           </div>
@@ -417,14 +539,14 @@ function BewerbungswegeSection() {
 
           <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', flex: 1 }}>
             {[
-              { label: 'Kostenfrei', desc: 'Keine Teilnahmegebühr' },
+              { label: '0 EUR', desc: 'Teilnahmegebühr' },
               { label: 'Eigeninitiative', desc: 'Direkt ohne Intermediär' },
               { label: 'Für Unternehmer', desc: 'Inhabergeführte KMU in Bayern' },
               { label: 'Deadline', desc: '30. Juni 2026' },
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '14px 0', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-                <span style={{ fontFamily: FF, fontSize: 15, fontWeight: 700, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.07em' }}>{item.label}</span>
-                <span style={{ fontFamily: FB, fontSize: 15, color: 'rgba(255,255,255,0.50)' }}>{item.desc}</span>
+                <span style={{ fontFamily: FF, fontSize: 16, fontWeight: 700, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.07em' }}>{item.label}</span>
+                <span style={{ fontFamily: FB, fontSize: 16, color: 'rgba(255,255,255,0.50)' }}>{item.desc}</span>
               </div>
             ))}
           </div>
@@ -440,16 +562,16 @@ function BewerbungswegeSection() {
         </div>
 
         {/* ── Weg C: Sonderpreis ── */}
-        <div style={{ padding: isMobile ? '32px 24px' : '56px 48px 56px', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ padding: isMobile ? '32px 24px' : '56px 48px 56px', display: 'flex', flexDirection: 'column', ...(isMobile ? { minWidth: '83vw', maxWidth: '83vw', flexShrink: 0, scrollSnapAlign: 'start' } : {}) }}>
           <div style={{ width: 44, height: 44, background: NAVY, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 28 }}>
             <Star size={18} style={{ color: GOLD }} strokeWidth={1.5} />
           </div>
-          <span style={{ fontFamily: FF, fontSize: 9, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(16,24,40,0.4)', display: 'block', marginBottom: 10 }}>Weg 03 — Sonderpreis</span>
+          <span style={{ fontFamily: FF, fontSize: 9, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(16,24,40,0.4)', display: 'block', marginBottom: 10 }}>Weg 03 · Sonderpreis</span>
           <h3 style={{ fontFamily: FF, fontSize: 'clamp(1.3rem, 2vw, 1.7rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.1, margin: '0 0 8px' }}>
             Bavarian<br />Future Award
           </h3>
           <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(16,24,40,0.5)', lineHeight: 1.7, margin: '0 0 32px' }}>
-            Sonderpreis, initiiert durch die Studierenden der HAM — Hochschule für angewandtes Management.
+            Sonderpreis, initiiert durch die Studierenden der HAM, Hochschule für angewandtes Management.
           </p>
 
           <div style={{ borderTop: '1px solid #D0D5DD', flex: 1 }}>
@@ -460,8 +582,8 @@ function BewerbungswegeSection() {
               { label: 'Kategorie', desc: 'Zukunft & Innovation' },
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '14px 0', borderBottom: '1px solid #D0D5DD' }}>
-                <span style={{ fontFamily: FF, fontSize: 15, fontWeight: 700, color: '#101828', textTransform: 'uppercase', letterSpacing: '0.07em' }}>{item.label}</span>
-                <span style={{ fontFamily: FB, fontSize: 15, color: 'rgba(16,24,40,0.45)' }}>{item.desc}</span>
+                <span style={{ fontFamily: FF, fontSize: 16, fontWeight: 700, color: '#101828', textTransform: 'uppercase', letterSpacing: '0.07em' }}>{item.label}</span>
+                <span style={{ fontFamily: FB, fontSize: 16, color: 'rgba(16,24,40,0.45)' }}>{item.desc}</span>
               </div>
             ))}
           </div>
@@ -475,6 +597,8 @@ function BewerbungswegeSection() {
             Zum Formular <ArrowRight size={13} />
           </a>
         </div>
+
+        </>)}
 
       </div>
     </section>

@@ -254,8 +254,9 @@ const Press: React.FC = () => {
           style={{
             position: 'absolute',
             inset: 0,
-            background:
-              'linear-gradient(to right, #020930 0%, rgba(2,9,48,0.90) 38%, rgba(2,9,48,0.18) 65%, transparent 100%)',
+            background: isMobile
+              ? 'linear-gradient(to top, rgba(2,9,48,0.95) 0%, rgba(2,9,48,0.72) 38%, rgba(2,9,48,0.22) 72%, transparent 100%)'
+              : 'linear-gradient(to right, #020930 0%, rgba(2,9,48,0.90) 38%, rgba(2,9,48,0.18) 65%, transparent 100%)',
           }}
         />
         <div
