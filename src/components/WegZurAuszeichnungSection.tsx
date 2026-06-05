@@ -32,10 +32,10 @@ export default function WegZurAuszeichnungSection() {
         <div style={{ marginBottom: 36 }}>
           <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Schritt für Schritt</span>
           <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.9rem, 8vw, 2.6rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.05, margin: '0 0 16px' }}>
-            IHR WEG ZUR<br />AUSZEICHNUNG.
+            IHR WEG ZUM<br />PREIS.
           </h2>
           <p style={{ fontFamily: FB, fontSize: 15, color: 'rgba(255,255,255,0.65)', lineHeight: 1.7, margin: 0 }}>
-            Von der Einreichung bis zur Gala — vier klar definierte Schritte auf dem Weg zur höchsten Auszeichnung des bayerischen Mittelstands.
+            Von der Einreichung bis zur Gala – vier klar definierte Schritte auf dem Weg zur höchsten Auszeichnung des bayerischen Mittelstands.
           </p>
         </div>
 
@@ -86,15 +86,15 @@ export default function WegZurAuszeichnungSection() {
           <div>
             <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 14 }}>Schritt für Schritt</span>
             <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.03, margin: 0 }}>
-              IHR WEG ZUR<br />AUSZEICHNUNG.
+              IHR WEG ZUM<br />PREIS.
             </h2>
           </div>
           <p style={{ fontFamily: FB, fontSize: 14, color: 'rgba(255,255,255,0.65)', lineHeight: 1.8, margin: 0 }}>
-            Von der Einreichung bis zur Gala — vier klar definierte Schritte auf dem Weg zur höchsten Auszeichnung des bayerischen Mittelstands.
+            Von der Einreichung bis zur Gala – vier klar definierte Schritte auf dem Weg zur höchsten Auszeichnung des bayerischen Mittelstands.
           </p>
         </div>
 
-        {/* Scroll hint — prominent */}
+        {/* Scroll hint – prominent */}
         <div style={{ padding: '20px 80px', display: 'flex', alignItems: 'center', gap: 14, flexShrink: 0 }}>
           {/* Animated chevron stack */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>

@@ -100,8 +100,8 @@ const STEPS = [
 ];
 
 const PAKETE = [
-  { value: 'main',     title: 'Haupt-Sponsoring',  desc: 'Maximale Sichtbarkeit auf allen Kanälen — Bühne, Digital, Print.' },
-  { value: 'category', title: 'Kategorie-Partner', desc: 'Namensgebung einer Auszeichnungskategorie — fokussiertes Branding.' },
+  { value: 'main',     title: 'Haupt-Sponsoring',  desc: 'Maximale Sichtbarkeit auf allen Kanälen – Bühne, Digital, Print.' },
+  { value: 'category', title: 'Kategorie-Partner', desc: 'Namensgebung einer Auszeichnungskategorie – fokussiertes Branding.' },
   { value: 'event',    title: 'Event-Partner',      desc: 'Präsenz beim exklusiven Gala-Abend in München.' },
 ];
 
@@ -253,7 +253,7 @@ export default function SponsoringForm({ theme = 'dark' }: { theme?: 'dark' | 'g
             {step === 0 && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <div>
-                  <p style={{ fontFamily: FF, fontSize: 10, color: c.accentLabel, textTransform: 'uppercase', letterSpacing: '0.25em', fontWeight: 700, marginBottom: 6 }}>Schritt 1 — Paket wählen</p>
+                  <p style={{ fontFamily: FF, fontSize: 10, color: c.accentLabel, textTransform: 'uppercase', letterSpacing: '0.25em', fontWeight: 700, marginBottom: 6 }}>Schritt 1 – Paket wählen</p>
                   <h3 style={{ fontFamily: FF, fontSize: 18, fontWeight: 900, color: c.heading, textTransform: 'uppercase', letterSpacing: '-0.01em', marginBottom: 12 }}>Interesse an</h3>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -268,7 +268,7 @@ export default function SponsoringForm({ theme = 'dark' }: { theme?: 'dark' | 'g
             {step === 1 && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <div>
-                  <p style={{ fontFamily: FF, fontSize: 10, color: c.accentLabel, textTransform: 'uppercase', letterSpacing: '0.25em', fontWeight: 700, marginBottom: 8 }}>Schritt 2 — Unternehmen</p>
+                  <p style={{ fontFamily: FF, fontSize: 10, color: c.accentLabel, textTransform: 'uppercase', letterSpacing: '0.25em', fontWeight: 700, marginBottom: 8 }}>Schritt 2 – Unternehmen</p>
                   <h3 style={{ fontFamily: FF, fontSize: 18, fontWeight: 900, color: c.heading, textTransform: 'uppercase', letterSpacing: '-0.01em' }}>Ihr Unternehmen</h3>
                 </div>
                 <Field c={c} label="Unternehmen *" error={errors.unternehmen}>
@@ -283,7 +283,7 @@ export default function SponsoringForm({ theme = 'dark' }: { theme?: 'dark' | 'g
             {step === 2 && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <div>
-                  <p style={{ fontFamily: FF, fontSize: 10, color: c.accentLabel, textTransform: 'uppercase', letterSpacing: '0.25em', fontWeight: 700, marginBottom: 8 }}>Schritt 3 — Kontakt</p>
+                  <p style={{ fontFamily: FF, fontSize: 10, color: c.accentLabel, textTransform: 'uppercase', letterSpacing: '0.25em', fontWeight: 700, marginBottom: 8 }}>Schritt 3 – Kontakt</p>
                   <h3 style={{ fontFamily: FF, fontSize: 18, fontWeight: 900, color: c.heading, textTransform: 'uppercase', letterSpacing: '-0.01em' }}>Ansprechpartner</h3>
                 </div>
                 <Field c={c} label="Ansprechpartner *" error={errors.kontakt}>

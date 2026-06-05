@@ -29,19 +29,14 @@ const NAV: NavItem[] = [
     sub: [
       { label: 'Alle Preisträger:innen',      path: '/preistraeger' },
       { label: 'Sieger & Aufsteiger 2025',    path: '/preistraeger' },
-      { label: 'Preisträger 2024',            path: '/preistraeger' },
-      { label: 'Preisträger 2023',            path: '/preistraeger' },
-      { label: 'Preisträger-Detail →',        path: '/preistraeger' },
     ],
   },
   {
     key: 'teilnahme', label: 'Ihr Weg zum Preis', path: '/teilnahme',
     subLabel: 'IHR WEG ZUM PREIS',
     sub: [
-      { label: 'Die 4 Schritte zum Preis',    path: '/teilnahme#schritte' },
       { label: 'Teilnahmevoraussetzungen',    path: '/teilnahme#voraussetzungen' },
       { label: 'Kriterien & Bewertung',       path: '/teilnahme#kriterien' },
-      { label: 'Vorschlag unterbreiten',      path: '/teilnahme#bewerben' },
       { label: 'Fristen & Termine',           path: '/teilnahme#fristen' },
       { label: 'Bewerbungsformular',          path: '/teilnahme#bewerben' },
     ],
@@ -53,30 +48,24 @@ const NAV: NavItem[] = [
       { label: 'Was ist der Preis?',          path: '/der-bmp#was-ist' },
       { label: 'Geschichte & Werte',          path: '/der-bmp#geschichte' },
       { label: 'Vorteile der Auszeichnung',   path: '/der-bmp#vorteile' },
-      { label: 'Bayerischer Mittelstand',     path: '/der-bmp#mittelstand' },
-      { label: 'Jetzt bewerben →',            path: '/teilnahme' },
     ],
   },
   {
     key: 'netzwerk', label: 'Netzwerk', path: '/netzwerk',
     subLabel: 'NETZWERK',
     sub: [
-      { label: 'Das Netzwerk',                path: '/netzwerk' },
       { label: 'Jury-Mitglieder',             path: '/netzwerk#jury' },
       { label: 'Partner & Sponsoren',         path: '/netzwerk#partner' },
       { label: 'Schirmherrschaft',            path: '/netzwerk#schirmherrschaft' },
       { label: 'Mitglied werden',             path: '/mitglied-werden' },
-      { label: 'Sponsoring-Anfrage →',        path: '/netzwerk#sponsoring' },
     ],
   },
   {
     key: 'presse', label: 'Presse', path: '/presse',
     subLabel: 'PRESSE',
     sub: [
-      { label: 'Aktuelles & News',            path: '/presse' },
       { label: 'Events & Gala',               path: '/presse#events' },
       { label: 'Downloads & Impressionen',    path: '/presse#downloads' },
-      { label: 'Pressekontakt →',             path: '/kontakt' },
     ],
   },
 ];
@@ -184,7 +173,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     return () => clearTimeout(t);
   }, []);
 
-  // Hide floating CTA when the form section (#bewerben) is in view — homepage only
+  // Hide floating CTA when the form section (#bewerben) is in view – homepage only
   useEffect(() => {
     setFormVisible(false);
     if (location.pathname !== '/') return;
@@ -217,7 +206,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
 
       {/* ═══════════════════════════════════════════════════════════ */}
-      {/* ══  DESKTOP CHROME (≥768px) — original top bar + overlay  ══ */}
+      {/* ══  DESKTOP CHROME (≥768px) – original top bar + overlay  ══ */}
       {/* ═══════════════════════════════════════════════════════════ */}
       {!isMobile && (
         <>
@@ -231,7 +220,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             transition:'transform 0.45s cubic-bezier(0.22,1,0.36,1)',
           }}>
 
-            {/* LEFT — logo */}
+            {/* LEFT – logo */}
             <div style={{ flex:1, display:'flex', alignItems:'center', padding:'0 24px', height:'100%', borderRight:`1px solid ${LINE}` }}>
               <Link to="/" style={{ display:'flex', alignItems:'center', textDecoration:'none' }}>
                 <img
@@ -242,7 +231,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </Link>
             </div>
 
-            {/* CENTER — hamburger */}
+            {/* CENTER – hamburger */}
             <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', height:'100%', borderRight:`1px solid ${LINE}`, gap:16 }}>
               <span style={{ fontSize:8, color:'rgba(5,26,135,0.5)', letterSpacing:2, userSelect:'none' }}>◆</span>
               <button
@@ -261,7 +250,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <span style={{ fontSize:8, color:'rgba(5,26,135,0.5)', letterSpacing:2, userSelect:'none' }}>◆</span>
             </div>
 
-            {/* RIGHT — social + lang */}
+            {/* RIGHT – social + lang */}
             <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'flex-end', gap:20, padding:'0 28px', height:'100%' }}>
               <div style={{ display:'flex', gap:14, alignItems:'center' }}>
                 {SOCIAL.map(s => <SocialLink key={s.label} {...s} />)}
@@ -297,7 +286,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           >
             <div style={{ display:'flex', flexDirection:'column', height:'100%', overflow:'hidden' }}>
 
-              {/* TOP — tagline + logo */}
+              {/* TOP – tagline + logo */}
               <div style={{ flex:'1 1 50%', display:'flex', alignItems:'flex-end', padding:'0 80px 48px', position:'relative', minHeight:0, zIndex:1 }}>
                 <div>
                   <div style={{ fontSize:12, color:'rgba(255,255,255,.4)', letterSpacing:'.12em', textTransform:'uppercase', marginBottom:12, fontFamily:FF_DISPLAY }}>
@@ -312,14 +301,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </div>
               </div>
 
-              {/* BOTTOM — 3 columns */}
+              {/* BOTTOM – 3 columns */}
               <div style={{
                 flex:'0 0 auto',
                 display:'grid', gridTemplateColumns:'1fr 1.4fr 1fr',
                 borderTop:`1px solid ${SEP}`,
               }}>
 
-                {/* LEFT — main nav */}
+                {/* LEFT – main nav */}
                 <div style={{ borderRight:`1px solid ${SEP}`, padding:'40px 0 40px 60px' }}>
                   <ul style={{ listStyle:'none' }}>
                     {NAV.map((item, idx) => (
@@ -354,7 +343,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   </ul>
                 </div>
 
-                {/* MIDDLE — subnav */}
+                {/* MIDDLE – subnav */}
                 <div style={{ borderRight:`1px solid ${SEP}`, padding:'40px 48px', position:'relative', minHeight:440 }}>
                   {NAV.map(item => (
                     <div key={item.key} style={{
@@ -389,7 +378,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   ))}
                 </div>
 
-                {/* RIGHT — utilities */}
+                {/* RIGHT – utilities */}
                 <div style={{ padding:'40px 80px 40px 48px', display:'flex', flexDirection:'column', gap:24 }}>
 
                   <div style={{ display:'flex', alignItems:'center', gap:20, flexWrap:'wrap' }}>
@@ -471,7 +460,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
 
       {/* ═══════════════════════════════════════════════════════════ */}
-      {/* ══  MOBILE CHROME (<768px) — top bar + fullscreen overlay ══ */}
+      {/* ══  MOBILE CHROME (<768px) – top bar + fullscreen overlay ══ */}
       {/* ═══════════════════════════════════════════════════════════ */}
       {isMobile && (
         <>
@@ -735,7 +724,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           alignItems: 'flex-start',
         }}>
 
-          {/* Decorative year — desktop only */}
+          {/* Decorative year – desktop only */}
           {!isMobile && (
             <div style={{
               position: 'absolute',
@@ -913,7 +902,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </ul>
               </div>
 
-              {/* Gold vertical separator — desktop only */}
+              {/* Gold vertical separator – desktop only */}
               {!isMobile && (
                 <div style={{
                   width: 1,
@@ -960,7 +949,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </ul>
               </div>
 
-              {/* Gold vertical separator — desktop only */}
+              {/* Gold vertical separator – desktop only */}
               {!isMobile && (
                 <div style={{
                   width: 1,

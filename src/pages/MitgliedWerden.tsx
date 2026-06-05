@@ -270,7 +270,7 @@ function BeitragsrechnerSection({ isMobile }: { isMobile: boolean }) {
   );
 }
 
-// ── PDF Download Section — editorial split strip ──────────────────────────────
+// ── PDF Download Section – editorial split strip ──────────────────────────────
 
 function PDFDownloadSection({ isMobile }: { isMobile: boolean }) {
   const [hover, setHover] = useState<'online' | 'pdf' | null>(null);
@@ -291,7 +291,7 @@ function PDFDownloadSection({ isMobile }: { isMobile: boolean }) {
         gridTemplateColumns: isMobile ? '1fr' : '1fr 1px 1fr',
         minHeight: isMobile ? undefined : 140,
       }}>
-        {/* Left — online */}
+        {/* Left – online */}
         <a
           href="#mitglied-formular"
           style={{
@@ -392,7 +392,7 @@ function PDFDownloadSection({ isMobile }: { isMobile: boolean }) {
           </div>
         )}
 
-        {/* Right — PDF */}
+        {/* Right – PDF */}
         <a
           href="/aufnahmeantrag-bmp.pdf"
           download
@@ -655,7 +655,7 @@ const MitgliedWerden: React.FC = () => {
   return (
     <div className="animate-fade-in">
 
-      {/* ── SECTION 1 — Minimal Header ──────────────────────────────────────── */}
+      {/* ── SECTION 1 – Minimal Header ──────────────────────────────────────── */}
       <header
         style={{
           background: NAVY,
@@ -698,7 +698,7 @@ const MitgliedWerden: React.FC = () => {
         </Link>
       </header>
 
-      {/* ── SECTION 2 — Hero ────────────────────────────────────────────────── */}
+      {/* ── SECTION 2 – Hero ────────────────────────────────────────────────── */}
       <section
         style={{
           background: NAVY,
@@ -774,7 +774,7 @@ const MitgliedWerden: React.FC = () => {
             </p>
           </div>
 
-          {/* Right col — typographic stat block */}
+          {/* Right col – typographic stat block */}
           {!isMobile && (
             <div
               style={{
@@ -902,7 +902,7 @@ const MitgliedWerden: React.FC = () => {
         />
       </section>
 
-      {/* ── SECTION 3 — Benefit cards ───────────────────────────────────────── */}
+      {/* ── SECTION 3 – Benefit cards ───────────────────────────────────────── */}
       <section style={{ background: CREAM, position: 'relative', overflow: 'hidden', isolation: 'isolate' }}>
         <MunichSkylineBg />
         <div
@@ -966,7 +966,7 @@ const MitgliedWerden: React.FC = () => {
             <BenefitCard
               icon={<Eye size={24} color={NAVY} strokeWidth={1.5} />}
               title="Sichtbarkeit"
-              body="Als Vereinsmitglied wirst du im BMP-Ökosystem sichtbar — auf Events, in Publikationen und online."
+              body="Als Vereinsmitglied wirst du im BMP-Ökosystem sichtbar – auf Events, in Publikationen und online."
               isLast={false}
               isMobile={isMobile}
             />
@@ -981,7 +981,7 @@ const MitgliedWerden: React.FC = () => {
         </div>
       </section>
 
-      {/* ── SECTION 4 — Über den Verein ─────────────────────────────────────── */}
+      {/* ── SECTION 4 – Über den Verein ─────────────────────────────────────── */}
       <section
         style={{
           background: '#fff',
@@ -1044,7 +1044,7 @@ const MitgliedWerden: React.FC = () => {
             }}
           >
             Unsere Mitglieder sind Unternehmer:innen, Wissenschaftler:innen, Verbände und
-            Einzelpersonen — verbunden durch das Ziel, den Mittelstand als Rückgrat der
+            Einzelpersonen – verbunden durch das Ziel, den Mittelstand als Rückgrat der
             bayerischen Wirtschaft zu stärken.
           </p>
           <p
@@ -1153,13 +1153,13 @@ const MitgliedWerden: React.FC = () => {
         </div>
       </section>
 
-      {/* ── SECTION 5 — Beitragsrechner ─────────────────────────────────────── */}
+      {/* ── SECTION 5 – Beitragsrechner ─────────────────────────────────────── */}
       <BeitragsrechnerSection isMobile={isMobile} />
 
       {/* ── Antrag-Wahl Strip ────────────────────────────────────────────────── */}
       <PDFDownloadSection isMobile={isMobile} />
 
-      {/* ── SECTION 6 — Formular ────────────────────────────────────────────── */}
+      {/* ── SECTION 6 – Formular ────────────────────────────────────────────── */}
       <section
         id="mitglied-formular"
         style={{ background: NAVY, position: 'relative', overflow: 'hidden', height: isMobile ? 'auto' : 'calc(100vh - 60px)', display: 'flex', flexDirection: 'column' }}
@@ -1173,7 +1173,7 @@ const MitgliedWerden: React.FC = () => {
             overflow: isMobile ? 'visible' : 'hidden',
           }}
         >
-          {/* Left — pitch */}
+          {/* Left – pitch */}
           <div
             style={{
               padding: isMobile ? '32px 24px 24px' : '36px 36px 32px 52px',
@@ -1309,7 +1309,7 @@ const MitgliedWerden: React.FC = () => {
             }}
           />
 
-          {/* Right — wizard */}
+          {/* Right – wizard */}
           <div style={{ display: 'flex', flexDirection: 'column', background: 'rgba(0,0,0,0.18)', overflowY: isMobile ? 'visible' : 'auto', minHeight: 0 }}>
             {!isMobile && (
               <div style={{ height: 180, position: 'relative', overflow: 'hidden', flexShrink: 0 }}>
@@ -1330,7 +1330,7 @@ const MitgliedWerden: React.FC = () => {
         <div style={{ height: 2, background: 'linear-gradient(to right, #EFBF04, rgba(239,191,4,0.25), transparent)', flexShrink: 0 }} />
       </section>
 
-      {/* ── SECTION 7 — Testimonials ────────────────────────────────────────── */}
+      {/* ── SECTION 7 – Testimonials ────────────────────────────────────────── */}
       <section style={{ background: '#fff', position: 'relative', overflow: 'hidden' }}>
         <div style={{ padding: isMobile ? '48px 24px' : '80px' }}>
           <span
@@ -1383,7 +1383,7 @@ const MitgliedWerden: React.FC = () => {
               role="Verbandsvertreterin"
             />
             <QuoteCard
-              quote="Der Verein ist das Rückgrat des Awards — ohne die Mitglieder gibt es keinen BMP. Ich bin stolz, Teil davon zu sein."
+              quote="Der Verein ist das Rückgrat des Awards – ohne die Mitglieder gibt es keinen BMP. Ich bin stolz, Teil davon zu sein."
               initials="TR"
               name="Thomas Riedl"
               role="Jury-Alumni"
@@ -1395,7 +1395,7 @@ const MitgliedWerden: React.FC = () => {
       {/* ── FAQ ─────────────────────────────────────────────────────────────── */}
       <FAQSection isMobile={isMobile} />
 
-      {/* ── SECTION 8 — Bottom CTA ──────────────────────────────────────────── */}
+      {/* ── SECTION 8 – Bottom CTA ──────────────────────────────────────────── */}
       <section
         style={{
           background: NAVY,

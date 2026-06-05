@@ -53,7 +53,7 @@ export default function FormularUpload() {
 
         <div style={{ maxWidth: 720, position: 'relative', zIndex: 1 }}>
           <span style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.35em', color: HELLBLAU, display: 'block', marginBottom: 16 }}>
-            BMP 2026 — Bewerbungsportal
+            BMP 2026 – Bewerbungsportal
           </span>
           <h1 style={{ fontFamily: FF, fontSize: isMobile ? 'clamp(1.6rem, 4vw, 3.6rem)' : 'clamp(2.2rem, 4vw, 3.6rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.0, margin: '0 0 20px' }}>
             UNTERLAGEN<br />EINREICHEN
@@ -118,7 +118,7 @@ export default function FormularUpload() {
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {items.map((item, j) => (
                   <li key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontFamily: FF, fontSize: 14, color: '#555', lineHeight: 1.5 }}>
-                    <span style={{ color: GOLD, marginTop: 2, flexShrink: 0 }}>—</span>
+                    <span style={{ color: GOLD, marginTop: 2, flexShrink: 0 }}>–</span>
                     {item}
                   </li>
                 ))}

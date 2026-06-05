@@ -94,7 +94,7 @@ export default function PreistraegerDetail() {
               <span style={{ color: GOLD, fontSize: 28, lineHeight: 1, marginLeft: 2, fontFamily: '"IBM Plex Sans"' }}>"</span>
             </p>
             <p style={{ fontFamily: FF, fontSize: 16, fontWeight: 700, color: GRAY, margin: 0, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              — {winner.quotePerson}, {winner.quoteRole}
+              – {winner.quotePerson}, {winner.quoteRole}
             </p>
           </div>
         </div>

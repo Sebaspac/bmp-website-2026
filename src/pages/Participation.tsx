@@ -44,7 +44,7 @@ const Participation: React.FC = () => {
         </div>
       </section>
 
-      {/* ── TIMELINE — direkt nach Hero ──────────────────────────────────────── */}
+      {/* ── TIMELINE – direkt nach Hero ──────────────────────────────────────── */}
       <WegZurAuszeichnungSection />
 
       {/* ── QUALIFICATIONS ───────────────────────────────────────────────────── */}
@@ -141,10 +141,10 @@ const Participation: React.FC = () => {
       {/* ── CRITERIA / BEWERTUNG ─────────────────────────────────────────────── */}
       <section id="kriterien" style={{ background: NAVY, overflow: 'hidden', position: 'relative' }}>
 
-        {/* TOP: editorial split — image left (45%) / header right (55%) */}
+        {/* TOP: editorial split – image left (45%) / header right (55%) */}
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '45% 55%', minHeight: isMobile ? 'auto' : 480 }}>
 
-          {/* Left — full-bleed image with gradient blend into navy on the right (+ heading on mobile) */}
+          {/* Left – full-bleed image with gradient blend into navy on the right (+ heading on mobile) */}
           <div style={{ position: 'relative', overflow: 'hidden', minHeight: isMobile ? 280 : undefined }}>
             <img
               src="/images/buehne-gewinner.jpg"
@@ -159,7 +159,7 @@ const Participation: React.FC = () => {
             {isMobile && <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(3,9,58,0.94) 0%, rgba(3,9,58,0.55) 38%, rgba(3,9,58,0.12) 72%, transparent 100%), linear-gradient(to right, rgba(3,9,58,0.5) 0%, transparent 55%)' }} />}
             {/* Bottom blend for continuity with grid below */}
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 120, background: 'linear-gradient(to bottom, transparent, #111D55)' }} />
-            {/* Heading overlay — mobile only */}
+            {/* Heading overlay – mobile only */}
             {isMobile && (
               <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '0 24px 24px', zIndex: 2 }}>
                 <span style={{ fontFamily: FF, fontSize: 10, color: '#EFBF04', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Bewertung</span>
@@ -170,7 +170,7 @@ const Participation: React.FC = () => {
             )}
           </div>
 
-          {/* Right — overline + headline + intro */}
+          {/* Right – overline + headline + intro */}
           <div style={{ padding: isMobile ? '32px 24px 40px' : '80px 80px 72px 64px', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
             {!isMobile && (
               <>
@@ -265,7 +265,7 @@ const Participation: React.FC = () => {
       {/* ── FORM SECTION ─────────────────────────────────────────────────────── */}
       <section style={{ background: NAVY, position: 'relative', overflow: 'hidden', height: isMobile ? 'auto' : 'calc(100vh - 60px)', display: 'flex', flexDirection: 'column' }} id="bewerben">
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr', flex: 1, minHeight: 0, overflow: isMobile ? 'visible' : 'hidden' }}>
-          {/* Left — copy */}
+          {/* Left – copy */}
           <div style={{ padding: isMobile ? '32px 24px 24px' : '36px 36px 32px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: isMobile ? 'visible' : 'hidden' }}>
             <span style={{ fontFamily: FF, fontSize: 10, color: '#EFBF04', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 20 }}>Direktbewerbung</span>
             <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3.2vw, 2.8rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1.04, margin: '0 0 20px' }}>
@@ -295,7 +295,7 @@ const Participation: React.FC = () => {
           {/* Divider */}
           {!isMobile && <div style={{ background: 'rgba(255,255,255,0.07)' }} />}
 
-          {/* Right — gold form panel */}
+          {/* Right – gold form panel */}
           <div style={{ display: 'flex', flexDirection: 'column', overflow: isMobile ? 'visible' : 'hidden', minHeight: 0, position: 'relative', background: 'linear-gradient(160deg,#DDB84A 0%,#C9A227 52%,#A87800 100%)' }}>
             <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} aria-hidden="true">
               <defs>
@@ -436,7 +436,7 @@ function BewerbungswegeSection() {
         </div>
       </div>
 
-      {/* 3 Wege — premium swipe cards on mobile, 3-col grid on desktop */}
+      {/* 3 Wege – premium swipe cards on mobile, 3-col grid on desktop */}
       <div style={{ position: 'relative', zIndex: 1, display: isMobile ? 'flex' : 'grid', gridTemplateColumns: isMobile ? undefined : 'repeat(3, 1fr)', overflowX: isMobile ? 'auto' : undefined, scrollSnapType: isMobile ? 'x mandatory' : undefined, WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', gap: isMobile ? 14 : 0, padding: isMobile ? '28px 24px 36px' : 0 }}>
 
         {/* ── MOBILE: unified premium cards ── */}

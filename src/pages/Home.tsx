@@ -58,7 +58,7 @@ const STATUS_PHASES: StatusPhase[] = [
     pulse: true,
     phase: 'Bewerbungsphase 2026',
     headline: 'BEWERBEN SIE SICH JETZT.',
-    body: 'Die Bewerbungsphase 2026 ist eröffnet — es ist noch nicht zu spät. Reichen Sie Ihre Unterlagen bis zum 30. Juni kostenlos ein und zeigen Sie, was den bayerischen Mittelstand ausmacht.',
+    body: 'Die Bewerbungsphase 2026 ist eröffnet – es ist noch nicht zu spät. Reichen Sie Ihre Unterlagen bis zum 30. Juni kostenlos ein und zeigen Sie, was den bayerischen Mittelstand ausmacht.',
     cta: { label: 'Jetzt kostenlos bewerben', to: '/teilnahme' },
     accent: '#EFBF04',
     bg: '#020A1E',
@@ -84,7 +84,7 @@ const STATUS_PHASES: StatusPhase[] = [
     pulse: false,
     phase: 'Preisverleihung · Oktober 2026',
     headline: 'DER BMP 2026 WAR EIN ERFOLG.',
-    body: 'Wir danken allen 247 Bewerberinnen und Bewerbern für Mut und Exzellenz. Drei außergewöhnliche Unternehmen wurden in München ausgezeichnet — ein unvergesslicher Abend.',
+    body: 'Wir danken allen 247 Bewerberinnen und Bewerbern für Mut und Exzellenz. Drei außergewöhnliche Unternehmen wurden in München ausgezeichnet – ein unvergesslicher Abend.',
     cta: { label: 'Alle Preisträger ansehen', to: '/preistraeger' },
     accent: '#EFBF04',
     bg: '#06090F',
@@ -143,8 +143,8 @@ const Home: React.FC = () => {
         <div className="container mx-auto relative z-10" style={{ padding: isMobile ? '0 24px' : '0 24px' }}>
           <div style={{ maxWidth: isMobile ? '100%' : '48rem' }}>
             <div className="inline-flex items-center gap-3 bg-accent/20 border border-accent/30 rounded-full px-4 py-1.5 mb-8 backdrop-blur-sm animate-fade-in" style={{ marginBottom: isMobile ? 20 : undefined }}>
-              <span className="flex h-2 w-2 rounded-full bg-accent animate-pulse"></span>
-              <span className="text-accent text-[10px] uppercase tracking-[0.2em] font-bold">Bewerbungsphase 2026 Eröffnet</span>
+              <span className="flex h-2 w-2 rounded-full bg-accent"></span>
+              <span className="text-accent text-[10px] uppercase tracking-[0.2em] font-bold">Bewerbungsphase 2026 geschlossen</span>
             </div>
             
             <h1 className="font-display font-bold text-white mb-6 leading-[0.9] tracking-tight" style={{ fontSize: isMobile ? 'clamp(1.8rem, 10vw, 3rem)' : 'clamp(3.5rem, 8vw, 6rem)' }}>
@@ -192,9 +192,9 @@ const Home: React.FC = () => {
         {/* Partner Bar */}
         <div className="absolute bottom-0 left-0 w-full bg-white/5 backdrop-blur-xl border-t border-white/10 hidden lg:block">
           <div className="px-8 py-5 flex items-center justify-between opacity-60 hover:opacity-100 transition-opacity duration-500">
-            {/* Left: label — stays put */}
+            {/* Left: label – stays put */}
             <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 9, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', whiteSpace: 'nowrap', flexShrink: 0 }}>Unsere Partner</span>
-            {/* Right: ticker — fixed window, exactly 4 logos wide */}
+            {/* Right: ticker – fixed window, exactly 4 logos wide */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0 }}>
               <div style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.2)' }} />
               <div style={{ width: 560, overflow: 'hidden', flexShrink: 0 }}>
@@ -209,9 +209,9 @@ const Home: React.FC = () => {
       <section style={{ overflow: 'hidden', position: 'relative', isolation: 'isolate' }}>
         <MunichSkylineBg />
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '55% 45%', position: 'relative' }}>
-          {/* Left (desktop) / Bottom (mobile) — text block (light bg, dark text) */}
+          {/* Left (desktop) / Bottom (mobile) – text block (light bg, dark text) */}
           <div style={{ background: '#E4E2E3', padding: isMobile ? '32px 24px 44px' : '80px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center', order: isMobile ? 2 : 0 }}>
-            {/* Eyebrow + heading — desktop only (on mobile these are overlaid on the image) */}
+            {/* Eyebrow + heading – desktop only (on mobile these are overlaid on the image) */}
             {!isMobile && (
               <>
                 <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Schnell-Check</span>
@@ -257,7 +257,7 @@ const Home: React.FC = () => {
             </Link>
           </div>
 
-          {/* Right (desktop) / Top (mobile) — image; on mobile the heading is overlaid here */}
+          {/* Right (desktop) / Top (mobile) – image; on mobile the heading is overlaid here */}
           <div style={{ position: 'relative', minHeight: isMobile ? 280 : 560, overflow: 'hidden', order: isMobile ? 1 : 0 }}>
             <img
               src="/images/buehne-gewinner.jpg"
@@ -268,7 +268,7 @@ const Home: React.FC = () => {
             <div style={{ position: 'absolute', inset: 0, background: isMobile
               ? 'linear-gradient(to top, rgba(3,9,58,0.92) 0%, rgba(3,9,58,0.55) 34%, rgba(3,9,58,0.12) 68%, transparent 100%), linear-gradient(to right, rgba(3,9,58,0.55) 0%, transparent 55%)'
               : 'linear-gradient(to left, transparent 40%, #E4E2E3 100%)' }} />
-            {/* Heading overlay — mobile only */}
+            {/* Heading overlay – mobile only */}
             {isMobile && (
               <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '0 24px 26px', zIndex: 2 }}>
                 <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, color: '#8FBEEC', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Schnell-Check</span>
@@ -277,17 +277,17 @@ const Home: React.FC = () => {
                 </h2>
               </div>
             )}
-            {/* Gold accent line — bottom edge */}
+            {/* Gold accent line – bottom edge */}
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(to right, rgba(239,191,4,0.2), #EFBF04, rgba(239,191,4,0.2))', zIndex: 3 }} />
           </div>
         </div>
       </section>
 
-      {/* Intro Section — editorial split, no radius, no floating badge */}
+      {/* Intro Section – editorial split, no radius, no floating badge */}
       <section style={{ overflow: 'hidden', position: 'relative', isolation: 'isolate' }}>
         <MunichSkylineBg />
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '45% 55%' }}>
-          {/* Left — full-bleed image with stats overlay (+ heading on mobile) */}
+          {/* Left – full-bleed image with stats overlay (+ heading on mobile) */}
           <div style={{ position: 'relative', minHeight: isMobile ? 300 : 600, overflow: 'hidden' }}>
             <img
               src="/images/preistraeger-jubel.jpg"
@@ -298,7 +298,7 @@ const Home: React.FC = () => {
             <div style={{ position: 'absolute', inset: 0, background: isMobile
               ? 'linear-gradient(to top, rgba(3,9,58,0.92) 0%, rgba(3,9,58,0.5) 36%, rgba(3,9,58,0.1) 70%, transparent 100%), linear-gradient(to right, rgba(3,9,58,0.5) 0%, transparent 55%)'
               : 'linear-gradient(to right, transparent 50%, #fff 100%), linear-gradient(to top, rgba(3,9,58,0.82) 0%, rgba(3,9,58,0.50) 60%, transparent 100%)' }} />
-            {/* Heading overlay — mobile only (bottom-left) */}
+            {/* Heading overlay – mobile only (bottom-left) */}
             {isMobile && (
               <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '0 24px 26px', zIndex: 2 }}>
                 <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, color: '#8FBEEC', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Ein Gewinn für alle</span>
@@ -307,7 +307,7 @@ const Home: React.FC = () => {
                 </h2>
               </div>
             )}
-            {/* Stats bottom-left — desktop only (mobile shows them below the image) */}
+            {/* Stats bottom-left – desktop only (mobile shows them below the image) */}
             {!isMobile && (
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '32px 40px', background: 'linear-gradient(to top, rgba(3,9,58,0.88) 0%, transparent 100%)', display: 'flex', gap: 36 }}>
                 {[['20+', 'Jahre Exzellenz'], ['0 €', 'Teilnahmegebühr'], ['100%', 'Unabhängig']].map(([v, l]) => (
@@ -320,7 +320,7 @@ const Home: React.FC = () => {
             )}
           </div>
 
-          {/* Right — editorial text */}
+          {/* Right – editorial text */}
           <div style={{ background: '#fff', padding: isMobile ? '32px 24px 40px' : '80px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             {!isMobile && (
               <>
@@ -330,7 +330,7 @@ const Home: React.FC = () => {
                 </h2>
               </>
             )}
-            {/* Stats row — mobile only, below the image */}
+            {/* Stats row – mobile only, below the image */}
             {isMobile && (
               <div style={{ display: 'flex', gap: 16, marginBottom: 28, paddingBottom: 24, borderBottom: '1px solid #D0D5DD' }}>
                 {[['20+', 'Jahre Exzellenz'], ['0 €', 'Teilnahmegebühr'], ['100%', 'Unabhängig']].map(([v, l]) => (
@@ -363,7 +363,7 @@ const Home: React.FC = () => {
       {/* Status Phase Slider */}
       <StatusSlider />
 
-      {/* Winners Grid — neue Preisträger-Übersicht */}
+      {/* Winners Grid – neue Preisträger-Übersicht */}
       <section style={{ background: '#111D55' }}>
         <div style={{ padding: isMobile ? '48px 24px 32px' : '72px 80px 48px', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'flex-end', justifyContent: 'space-between', gap: isMobile ? 16 : 0 }}>
           <div>
@@ -403,12 +403,12 @@ const Home: React.FC = () => {
       <TestimonialsSection />
 
 
-      {/* Benefits Section — editorial split */}
+      {/* Benefits Section – editorial split */}
       <section style={{ overflow: 'hidden', position: 'relative', isolation: 'isolate' }}>
         <MunichSkylineBg />
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '55% 45%', minHeight: isMobile ? 'auto' : 560 }}>
 
-          {/* Left — text on cream */}
+          {/* Left – text on cream */}
           <div style={{ background: '#E4E2E3', padding: isMobile ? '32px 24px 44px' : '80px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center', order: isMobile ? 2 : 0 }}>
             {!isMobile && (
               <>
@@ -419,12 +419,12 @@ const Home: React.FC = () => {
               </>
             )}
 
-            {/* Numbered rows — no cards, no shadows */}
+            {/* Numbered rows – no cards, no shadows */}
             <div style={{ borderTop: '1px solid #D0D5DD' }}>
               {[
                 { num: '01', title: 'Netzwerk', desc: 'Direkter Zugang zu Entscheidern aus Staatsregierung, Wirtschaft und Wissenschaft.' },
                 { num: '02', title: 'Sichtbarkeit', desc: 'Breite mediale Begleitung durch TV-, Radio- und Print-Partner bayernweit.' },
-                { num: '03', title: 'Bestätigung', desc: 'Ein unabhängiger Qualitätsnachweis — das stärkste Siegel für Ihren Marktauftritt.' },
+                { num: '03', title: 'Bestätigung', desc: 'Ein unabhängiger Qualitätsnachweis – das stärkste Siegel für Ihren Marktauftritt.' },
               ].map((item, i) => (
                 <div
                   key={i}
@@ -442,7 +442,7 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          {/* Right — full-bleed photo (+ heading on mobile) */}
+          {/* Right – full-bleed photo (+ heading on mobile) */}
           <div style={{ position: 'relative', overflow: 'hidden', minHeight: isMobile ? 280 : 'auto', order: isMobile ? 1 : 0 }}>
             <img
               src="/images/networking-innenhof.jpg"
@@ -452,7 +452,7 @@ const Home: React.FC = () => {
             <div style={{ position: 'absolute', inset: 0, background: isMobile
               ? 'linear-gradient(to top, rgba(3,9,58,0.92) 0%, rgba(3,9,58,0.5) 36%, rgba(3,9,58,0.1) 70%, transparent 100%), linear-gradient(to right, rgba(3,9,58,0.5) 0%, transparent 55%)'
               : 'linear-gradient(to right, #E4E2E3 0%, transparent 30%), linear-gradient(to top, rgba(3,9,58,0.82) 0%, transparent 50%)' }} />
-            {/* Heading overlay — mobile only (bottom-left) */}
+            {/* Heading overlay – mobile only (bottom-left) */}
             {isMobile && (
               <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '0 24px 26px', zIndex: 2 }}>
                 <span style={{ fontFamily: FF, fontSize: 10, color: '#8FBEEC', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Mehr als nur ein Preis</span>
@@ -461,7 +461,7 @@ const Home: React.FC = () => {
                 </h2>
               </div>
             )}
-            {/* Bottom-left label — desktop only */}
+            {/* Bottom-left label – desktop only */}
             {!isMobile && (
               <div style={{ position: 'absolute', bottom: 40, left: 40 }}>
                 <div style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#EFBF04', marginBottom: 6 }}>BMP Gala-Netzwerk</div>
@@ -472,14 +472,14 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section — with embedded form */}
+      {/* CTA Section – with embedded form */}
       <section style={{ background: '#111D55', position: 'relative', overflow: 'hidden', height: isMobile ? 'auto' : 'calc(100vh - 60px)', display: 'flex', flexDirection: 'column' }} id="bewerben">
         {/* Subtle radial glow behind left copy */}
         <div style={{ position: 'absolute', left: -120, top: '50%', transform: 'translateY(-50%)', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(5,26,135,0.35) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr', position: 'relative', flex: isMobile ? 'none' : 1, minHeight: 0, overflow: 'hidden' }}>
 
-          {/* Left — pitch copy */}
+          {/* Left – pitch copy */}
           <div style={{ padding: isMobile ? '32px 24px 24px' : '36px 36px 32px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
             <span style={{ fontFamily: FF, fontSize: 10, color: '#EFBF04', textTransform: 'uppercase', letterSpacing: '0.36em', fontWeight: 700, display: 'block', marginBottom: 16, opacity: 0.8 }}>Chance ergreifen</span>
             <h2 style={{ fontFamily: FF, fontSize: isMobile ? 'clamp(1.8rem, 8vw, 2.6rem)' : 'clamp(1.8rem, 2.8vw, 2.6rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.03em', lineHeight: 1.0, marginBottom: 16 }}>
@@ -487,7 +487,7 @@ const Home: React.FC = () => {
             </h2>
             <div style={{ width: 32, height: 2, background: '#EFBF04', marginBottom: 20 }} />
             <p style={{ fontFamily: FF, fontSize: 15, color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, marginBottom: 32 }}>
-              Werden Sie Teil der Wall of Fame des bayerischen Mittelstands — vollständig kostenfrei.
+              Werden Sie Teil der Wall of Fame des bayerischen Mittelstands – vollständig kostenfrei.
             </p>
 
             {/* Benefit rows */}
@@ -512,7 +512,7 @@ const Home: React.FC = () => {
           {/* Divider */}
           {!isMobile && <div style={{ background: 'rgba(255,255,255,0.07)' }} />}
 
-          {/* Right — gold premium panel */}
+          {/* Right – gold premium panel */}
           <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0, position: 'relative', background: 'linear-gradient(160deg,#DDB84A 0%,#C9A227 52%,#A87800 100%)' }}>
 
             {/* Premium award crosshatch pattern */}
@@ -525,7 +525,7 @@ const Home: React.FC = () => {
               <rect width="100%" height="100%" fill="url(#bmpCross)" />
             </svg>
 
-            {/* Inner vignette — edges slightly deeper gold */}
+            {/* Inner vignette – edges slightly deeper gold */}
             <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, transparent 55%, rgba(100,70,0,0.25) 100%)', pointerEvents: 'none', zIndex: 0 }} />
 
             {/* Award ceremony photo */}
@@ -558,7 +558,7 @@ const Home: React.FC = () => {
 
         {/* Footnote row */}
         <div style={{ position: 'relative', zIndex: 1, padding: isMobile ? '16px 24px 20px' : '14px 56px 18px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
-          <span style={{ fontFamily: FF, fontSize: 15, color: 'rgba(255,255,255,0.45)', marginRight: isMobile ? 6 : 10 }}>Kostenlos und unverbindlich —</span>
+          <span style={{ fontFamily: FF, fontSize: 15, color: 'rgba(255,255,255,0.45)', marginRight: isMobile ? 6 : 10 }}>Kostenlos und unverbindlich –</span>
           <span style={{ fontFamily: FF, fontSize: 15, fontWeight: 700, color: 'rgba(239,191,4,0.8)' }}>keine Teilnahmegebühr</span>
         </div>
         <div style={{ height: 2, background: 'linear-gradient(to right, #EFBF04, rgba(239,191,4,0.25), transparent)', flexShrink: 0 }} />
@@ -788,7 +788,7 @@ function StatusSlideCard({ phase, isMobile }: { phase: StatusPhase; isMobile: bo
           </div>
         )}
 
-        {/* Membership CTA — for active phases only */}
+        {/* Membership CTA – for active phases only */}
         {phase.num !== '03' && (
           <div style={{ textAlign: 'center' }}>
             <div style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.08)', margin: '0 auto 20px' }} />

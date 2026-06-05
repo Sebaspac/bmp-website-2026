@@ -65,7 +65,7 @@ export default function Datenschutz() {
       {/* ── BODY ──────────────────────────────────────────────────────────── */}
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: isMobile ? '40px 24px' : '64px 80px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '200px 1fr', gap: isMobile ? 40 : 80, alignItems: 'start' }}>
 
-        {/* LEFT — sticky TOC */}
+        {/* LEFT – sticky TOC */}
         {!isMobile && (
           <nav style={{ position: 'sticky', top: 80 }}>
             <div style={{ fontFamily: FF, fontSize: 9, fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', color: GOLD, marginBottom: 16 }}>Inhalt</div>
@@ -89,7 +89,7 @@ export default function Datenschutz() {
           </nav>
         )}
 
-        {/* RIGHT — content */}
+        {/* RIGHT – content */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 56 }}>
 
           <Section id="verantwortlicher" title="Verantwortlicher">
@@ -204,7 +204,7 @@ export default function Datenschutz() {
               <li>Kommunikationsdaten: Browsertyp, Betriebssystem, IP-Adressen</li>
             </ul>
             <p style={body}>Mit der Verarbeitung dieser Daten wollen wir das Nutzerverhalten in zusammengefasster Form analysieren, um die Darstellung und den Inhalt unserer Website zu verbessern.</p>
-            <Legal>Rechtsgrundlage: berechtigtes Interesse gemäß Art. 6 Abs. 1 lit. f. DSGVO — insbesondere an der Durchführung von Webmessungen zur Verbesserung unserer Website.</Legal>
+            <Legal>Rechtsgrundlage: berechtigtes Interesse gemäß Art. 6 Abs. 1 lit. f. DSGVO – insbesondere an der Durchführung von Webmessungen zur Verbesserung unserer Website.</Legal>
             <p style={body}>Die erhobenen Daten werden mit unserem Website-Hosting-Anbieter geteilt und innerhalb der EU verarbeitet.</p>
           </Section>
 

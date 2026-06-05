@@ -81,11 +81,47 @@ const JuryCard: React.FC<{ member: JuryMember; idx: number }> = ({ member, idx }
         <img src={member.img} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: hovered ? 'none' : 'grayscale(100%)', transition: 'filter 0.5s', display: 'block' }} />
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(to top, rgba(3,9,58,0.65), transparent)' }} />
       </div>
-      <div style={{ padding: '28px 28px 32px' }}>
-        <div style={{ fontFamily: FF, fontSize: 17, fontWeight: 700, color: '#fff', marginBottom: 4 }}>{member.name}</div>
-        <div style={{ fontFamily: FF, fontSize: 10, color: GOLD, textTransform: 'uppercase', letterSpacing: '0.18em', fontWeight: 700, marginBottom: 12 }}>{member.role}</div>
-        <div style={{ width: hovered ? '100%' : 24, height: 1, background: GOLD, opacity: 0.4, transition: 'width 0.4s ease', marginBottom: 12 }} />
-        <div style={{ fontFamily: FB, fontSize: 18, color: 'rgba(255,255,255,0.4)', lineHeight: 1.7 }}>{member.bio}</div>
+      <div style={{ padding: isMobileCard ? '28px 28px 32px' : '32px 32px 36px' }}>
+        <div style={{ fontFamily: FF, fontSize: 20, fontWeight: 700, color: '#fff', marginBottom: 5 }}>{member.name}</div>
+        <div style={{ fontFamily: FF, fontSize: 12, color: GOLD, textTransform: 'uppercase', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 14 }}>{member.role}</div>
+        <div style={{ width: hovered ? '100%' : 24, height: 1, background: GOLD, opacity: 0.4, transition: 'width 0.4s ease', marginBottom: 14 }} />
+        <div style={{ fontFamily: FB, fontSize: 18, color: 'rgba(255,255,255,0.55)', lineHeight: 1.7 }}>{member.bio}</div>
+      </div>
+    </div>
+  );
+};
+
+// ── JuryChairCard (Vorsitz – prominent) ───────────────────────────────────────
+
+const JuryChairCard: React.FC<{ member: JuryMember }> = ({ member }) => {
+  const [hovered, setHovered] = useState(false);
+  const isMobileCard = useIsMobile();
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: isMobileCard ? '1fr' : '380px 1fr',
+        gap: 0,
+        background: 'rgba(255,255,255,0.03)',
+        border: `1px solid ${GOLD}40`,
+        borderRadius: 20,
+        overflow: 'hidden',
+      }}
+    >
+      <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: isMobileCard ? '16/10' : '3/4', minHeight: isMobileCard ? 240 : 'auto' }}>
+        <img src={member.img} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', filter: hovered ? 'none' : 'grayscale(100%)', transition: 'filter 0.5s', display: 'block' }} />
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '45%', background: 'linear-gradient(to top, rgba(3,9,58,0.7), transparent)' }} />
+      </div>
+      <div style={{ padding: isMobileCard ? '32px 28px 36px' : '56px 56px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <span style={{ alignSelf: 'flex-start', fontFamily: FF, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.18em', color: NAVY, background: GOLD, padding: '7px 16px', borderRadius: 999, marginBottom: 24 }}>
+          Jury-Vorsitz
+        </span>
+        <div style={{ fontFamily: FF, fontSize: isMobileCard ? 26 : 34, fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.05, marginBottom: 10 }}>{member.name}</div>
+        <div style={{ fontFamily: FF, fontSize: 13, color: GOLD, textTransform: 'uppercase', letterSpacing: '0.18em', fontWeight: 700, marginBottom: 24 }}>{member.role}</div>
+        <div style={{ width: 48, height: 2, background: GOLD, opacity: 0.5, marginBottom: 24 }} />
+        <div style={{ fontFamily: FB, fontSize: isMobileCard ? 18 : 21, color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, maxWidth: 620 }}>{member.bio}</div>
       </div>
     </div>
   );
@@ -212,7 +248,7 @@ function PartnerModal({ partner, onClose }: { partner: Partner; onClose: () => v
           {/* Gradient to white */}
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 35%, rgba(255,255,255,0.6) 75%, #fff 100%)' }} />
 
-          {/* Category badge — top left */}
+          {/* Category badge – top left */}
           <div style={{ position: 'absolute', top: 20, left: 24 }}>
             <span style={{
               background: 'rgba(255,255,255,0.15)',
@@ -227,7 +263,7 @@ function PartnerModal({ partner, onClose }: { partner: Partner; onClose: () => v
             </span>
           </div>
 
-          {/* Social + Close — top right */}
+          {/* Social + Close – top right */}
           <div style={{ position: 'absolute', top: 16, right: 20, display: 'flex', gap: 8, alignItems: 'center' }}>
             {partner.linkedin && (
               <a href={partner.linkedin} target="_blank" rel="noopener noreferrer" style={{
@@ -262,7 +298,7 @@ function PartnerModal({ partner, onClose }: { partner: Partner; onClose: () => v
             </button>
           </div>
 
-          {/* Logo box — bottom left (overflows hero) */}
+          {/* Logo box – bottom left (overflows hero) */}
           <div style={{
             position: 'absolute', bottom: -28, left: 28,
             width: 80, height: 80, background: '#fff',
@@ -398,8 +434,8 @@ const Netzwerk: React.FC = () => {
     },
     {
       id: 'wwk', name: 'WWK', role: 'Hauptsponsor', tier: 1,
-      desc: 'Eine starke Gemeinschaft — Lebensversicherungsgruppe mit bayerischen Wurzeln.',
-      fullDesc: 'Die WWK Lebensversicherung a. G. ist eine der leistungsstärksten deutschen Lebensversicherungsgruppen. Als Münchner Traditionsunternehmen verbindet die WWK tiefe bayerische Verwurzelung mit finanzieller Stärke — Werte, die sie mit dem Bayerischen Mittelstandspreis teilt.',
+      desc: 'Eine starke Gemeinschaft – Lebensversicherungsgruppe mit bayerischen Wurzeln.',
+      fullDesc: 'Die WWK Lebensversicherung a. G. ist eine der leistungsstärksten deutschen Lebensversicherungsgruppen. Als Münchner Traditionsunternehmen verbindet die WWK tiefe bayerische Verwurzelung mit finanzieller Stärke – Werte, die sie mit dem Bayerischen Mittelstandspreis teilt.',
       logo: (<span style={{ fontWeight: 900, fontSize: 24, letterSpacing: '-0.02em', color: '#16a34a', fontFamily: 'Arial Black, sans-serif' }}>WWK</span>),
       industry: 'Lebensversicherung', location: 'München, Bayern', website: 'wwk.de', linkedin: 'https://linkedin.com/company/wwk-versicherung',
     },
@@ -407,7 +443,7 @@ const Netzwerk: React.FC = () => {
     /* ── TIER 2 · Medienpartner ──────────────────────────────── */
     {
       id: 'radiogong', name: 'Radio Gong 96.3', role: 'Medienpartner', tier: 2,
-      desc: 'Der reichweitenstärkste Radiosender Münchens — Stimme des Mittelstands.',
+      desc: 'Der reichweitenstärkste Radiosender Münchens – Stimme des Mittelstands.',
       fullDesc: 'Radio Gong 96.3 ist der reichweitenstärkste Radiosender Münchens. Als Medienpartner des BMP sorgt er für Aufmerksamkeit für die Nominierten in Sendemitschnitten und redaktionellen Beiträgen.',
       logo: (<span style={{ background: '#e11d48', color: '#fff', fontWeight: 900, fontSize: 14, padding: '4px 10px', lineHeight: 1.25, display: 'inline-block', textAlign: 'center' as const, fontFamily: '"IBM Plex Sans", sans-serif' }}>Radio<br/>Gong <span style={{ color: '#fde047' }}>96.3</span></span>),
       industry: 'Medien', location: 'München', website: 'radiogong.com',
@@ -423,8 +459,8 @@ const Netzwerk: React.FC = () => {
     /* ── TIER 3 · Weitere Sponsoren ──────────────────────────── */
     {
       id: 'metzler', name: 'METZLER', role: 'Sponsor', tier: 3,
-      desc: 'Älteste Privatbank Deutschlands — Unabhängigkeit seit 1674.',
-      fullDesc: 'B. Metzler seel. Sohn & Co. KGaA ist die älteste deutsche Privatbank in Familienbesitz — seit über 350 Jahren unabhängig. Ihr Engagement für den BMP unterstreicht die tiefe Verbundenheit mit dem Mittelstand, dessen Werte wie Verlässlichkeit, Substanz und Langfristigkeit Metzler selbst verkörpert.',
+      desc: 'Älteste Privatbank Deutschlands – Unabhängigkeit seit 1674.',
+      fullDesc: 'B. Metzler seel. Sohn & Co. KGaA ist die älteste deutsche Privatbank in Familienbesitz – seit über 350 Jahren unabhängig. Ihr Engagement für den BMP unterstreicht die tiefe Verbundenheit mit dem Mittelstand, dessen Werte wie Verlässlichkeit, Substanz und Langfristigkeit Metzler selbst verkörpert.',
       logo: (<span style={{ fontWeight: 900, fontSize: 21, letterSpacing: '0.15em', color: '#1a1a1a', fontFamily: 'Georgia, serif' }}>METZLER</span>),
       industry: 'Privatbankwesen', location: 'Frankfurt a. M.', website: 'metzler.com', linkedin: 'https://linkedin.com/company/metzler',
     },
@@ -437,7 +473,7 @@ const Netzwerk: React.FC = () => {
     },
     {
       id: 'fristads', name: 'Fristads', role: 'Sponsor', tier: 3,
-      desc: 'Premium-Arbeitsbekleidung — Funktion, Qualität und Design.',
+      desc: 'Premium-Arbeitsbekleidung – Funktion, Qualität und Design.',
       fullDesc: 'Fristads steht für hochwertige, funktionale Arbeitsbekleidung, die Schutz, Komfort und Design vereint. Als Sponsor des Bayerischen Mittelstandspreises unterstützt das Unternehmen die Auszeichnung herausragender mittelständischer Betriebe.',
       logo: (<span style={{ fontWeight: 900, fontSize: 19, letterSpacing: '0.02em', color: '#1a1a1a', fontFamily: 'Arial Black, sans-serif' }}>FRISTADS</span>),
       industry: 'Workwear & Textil', location: 'Deutschland', website: 'fristads.com',
@@ -540,7 +576,7 @@ const Netzwerk: React.FC = () => {
           />
         </div>
 
-        {/* Grußwort — Ilse Aigner */}
+        {/* Grußwort – Ilse Aigner */}
         <div style={{ background: 'rgba(255,255,255,0.03)', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
           <div style={{ padding: isMobile ? '32px 24px' : '64px 80px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '40% 60%', gap: isMobile ? '24px 0' : '0 64px', alignItems: 'flex-start' }}>
             <div>
@@ -555,7 +591,7 @@ const Netzwerk: React.FC = () => {
                 "Der Bayerische Mittelstandspreis steht für das, was Bayern stark macht: Unternehmergeist, Verantwortung und Qualität. Mit großer Freude übernehme ich erneut die Schirmherrschaft für diesen bedeutenden Preis."
               </blockquote>
               <div style={{ fontFamily: FF, fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 20, paddingLeft: 24 }}>
-                — Ilse Aigner MdL, Präsidentin des Bayerischen Landtags
+                – Ilse Aigner MdL, Präsidentin des Bayerischen Landtags
               </div>
             </div>
           </div>
@@ -572,7 +608,7 @@ const Netzwerk: React.FC = () => {
           <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, backgroundImage: 'url(/munich-skyline.jpg)', backgroundRepeat: 'no-repeat', backgroundPosition: 'bottom center', backgroundSize: 'cover', opacity: 0.07 }} />
         )}
         {isMobile ? (
-          /* Mobile: one cohesive navy module — copy + compact stat strip */
+          /* Mobile: one cohesive navy module – copy + compact stat strip */
           <div style={{ padding: '48px 24px', position: 'relative', zIndex: 1 }}>
             <span style={{ fontFamily: FF, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, color: GOLD, display: 'block', marginBottom: 18 }}>Wer entscheidet?</span>
             <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.7rem, 8vw, 2.2rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.08, margin: '0 0 22px' }}>
@@ -580,7 +616,7 @@ const Netzwerk: React.FC = () => {
             </h2>
             <div style={{ width: 40, height: 2, background: GOLD, marginBottom: 22 }} />
             <p style={{ fontFamily: FB, fontSize: 16, color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, margin: 0 }}>
-              Die Jury des Bayerischen Mittelstandspreises besteht ausschließlich aus ehrenamtlich tätigen Expertinnen und Experten. Kein Mitglied steht in wirtschaftlicher Verbindung zu einem Bewerber — Transparenz und Unparteilichkeit sind die Grundpfeiler unseres Verfahrens.
+              Die Jury des Bayerischen Mittelstandspreises besteht ausschließlich aus ehrenamtlich tätigen Expertinnen und Experten. Kein Mitglied steht in wirtschaftlicher Verbindung zu einem Bewerber – Transparenz und Unparteilichkeit sind die Grundpfeiler unseres Verfahrens.
             </p>
             {/* Stat strip */}
             <div style={{ display: 'flex', marginTop: 32, paddingTop: 26, borderTop: '1px solid rgba(255,255,255,0.14)' }}>
@@ -598,7 +634,7 @@ const Netzwerk: React.FC = () => {
           </div>
         ) : (
           <>
-            {/* Left — Cream, stats */}
+            {/* Left – Cream, stats */}
             <div style={{ background: CREAM, padding: '72px 64px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
               <div>
                 <div style={{ fontFamily: FF, fontSize: 'clamp(5rem, 8.5vw, 7.5rem)', fontWeight: 900, color: '#101828', letterSpacing: '-0.04em', lineHeight: 1 }}>11</div>
@@ -615,7 +651,7 @@ const Netzwerk: React.FC = () => {
                 <div style={{ fontFamily: FF, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(16,24,40,0.4)', marginTop: 4 }}>Unabhängig &amp; ehrenamtlich</div>
               </div>
             </div>
-            {/* Right — Navy, editorial copy */}
+            {/* Right – Navy, editorial copy */}
             <div style={{ background: NAVY, padding: '72px 64px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
               <span style={{ fontFamily: FF, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, color: GOLD, marginBottom: 20 }}>Wer entscheidet?</span>
               <h2 style={{ fontFamily: FF, fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.08, margin: '0 0 24px' }}>
@@ -623,7 +659,7 @@ const Netzwerk: React.FC = () => {
               </h2>
               <div style={{ width: 40, height: 2, background: GOLD }} />
               <p style={{ marginTop: 24, fontFamily: FB, fontSize: 19, color: 'rgba(255,255,255,0.45)', lineHeight: 1.85 }}>
-                Die Jury des Bayerischen Mittelstandspreises besteht ausschließlich aus ehrenamtlich tätigen Expertinnen und Experten. Kein Mitglied steht in wirtschaftlicher Verbindung zu einem Bewerber — Transparenz und Unparteilichkeit sind die Grundpfeiler unseres Verfahrens.
+                Die Jury des Bayerischen Mittelstandspreises besteht ausschließlich aus ehrenamtlich tätigen Expertinnen und Experten. Kein Mitglied steht in wirtschaftlicher Verbindung zu einem Bewerber – Transparenz und Unparteilichkeit sind die Grundpfeiler unseres Verfahrens.
               </p>
             </div>
           </>
@@ -642,10 +678,24 @@ const Netzwerk: React.FC = () => {
             Unabhängige Expertinnen und Experten aus Wirtschaft, Wissenschaft und Verbänden, für einen vollständig unabhängigen Bewertungsprozess.
           </p>
         </div>
-        <div style={{ display: isMobile ? 'flex' : 'grid', gridTemplateColumns: isMobile ? undefined : 'repeat(4, 1fr)', overflowX: isMobile ? 'auto' : undefined, scrollSnapType: isMobile ? 'x mandatory' : undefined, gap: isMobile ? 14 : 0, padding: isMobile ? '24px 24px 28px' : 0, WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
-          {juryMembers.map((member, idx) => (
+        {/* ── Prominenter Vorsitz-Bereich ─────────────────────────────────── */}
+        {/* TODO: echten Jury-Vorsitzenden bestätigen (Name & Foto sind Platzhalter) */}
+        <div style={{ padding: isMobile ? '28px 24px 8px' : '64px 80px 16px' }}>
+          <JuryChairCard member={juryMembers[0]} />
+        </div>
+
+        {/* ── Übrige Jury-Mitglieder ──────────────────────────────────────── */}
+        <div style={{ display: isMobile ? 'flex' : 'grid', gridTemplateColumns: isMobile ? undefined : 'repeat(3, 1fr)', overflowX: isMobile ? 'auto' : undefined, scrollSnapType: isMobile ? 'x mandatory' : undefined, gap: isMobile ? 14 : 0, padding: isMobile ? '24px 24px 12px' : '0', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', borderTop: isMobile ? 'none' : '1px solid rgba(255,255,255,0.07)' }}>
+          {juryMembers.slice(1).map((member, idx) => (
             <JuryCard key={idx} member={member} idx={idx} />
           ))}
+        </div>
+
+        {/* ── Hinweis: Doppelrolle Jury / Partner (#179) ──────────────────── */}
+        <div style={{ padding: isMobile ? '4px 24px 36px' : '8px 80px 56px' }}>
+          <p style={{ fontFamily: FB, fontSize: isMobile ? 13 : 14, color: 'rgba(255,255,255,0.35)', lineHeight: 1.6, margin: 0, maxWidth: 720 }}>
+            Hinweis: Einzelne Persönlichkeiten engagieren sich sowohl in der Jury als auch als Partner des BMP – beide Rollen werden auf dieser Seite getrennt ausgewiesen.
+          </p>
         </div>
       </section>
 
@@ -671,7 +721,7 @@ const Netzwerk: React.FC = () => {
         <div style={{ padding: isMobile ? '48px 24px' : '80px 64px', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderLeft: isMobile ? 'none' : '1px solid rgba(255,255,255,0.07)', borderTop: isMobile ? '1px solid rgba(255,255,255,0.07)' : 'none', overflow: 'hidden', background: '#101828' }}>
           <span style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(60px, 8vw, 120px)', color: 'rgba(239,191,4,0.1)', lineHeight: 0.8, display: 'block', marginBottom: -20 }}>&ldquo;</span>
           <p style={{ fontFamily: FF, fontSize: 'clamp(1.1rem, 1.8vw, 1.4rem)', fontWeight: 300, color: 'rgba(255,255,255,0.75)', lineHeight: 1.65, margin: '0 0 40px' }}>
-            Die Jury des BMP ist vollständig von wirtschaftlichen Interessen unabhängig. Jede Entscheidung wird transparent nachvollzogen — das ist unser Versprechen an die Unternehmen Bayerns.
+            Die Jury des BMP ist vollständig von wirtschaftlichen Interessen unabhängig. Jede Entscheidung wird transparent nachvollzogen – das ist unser Versprechen an die Unternehmen Bayerns.
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <div style={{ width: 40, height: 2, background: GOLD, flexShrink: 0 }} />
@@ -687,14 +737,14 @@ const Netzwerk: React.FC = () => {
         <div style={{ padding: isMobile ? '48px 24px 32px' : '80px 80px 56px', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 0, justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'flex-end', borderBottom: '1px solid rgba(3,9,58,0.1)' }}>
           <div>
             <span style={{ fontFamily: FF, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, color: '#4A8FC9', display: 'block', marginBottom: 16 }}>Netzwerkqualität</span>
-            <h2 style={{ fontFamily: FF, fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.025em', fontSize: 'clamp(2rem, 3.5vw, 3rem)', lineHeight: 0.95, margin: 0 }}>PARTNER &amp; SPONSOREN.</h2>
+            <h2 style={{ fontFamily: FF, fontWeight: 900, color: '#101828', textTransform: 'uppercase', letterSpacing: '-0.025em', fontSize: 'clamp(2rem, 3.5vw, 3rem)', lineHeight: 0.95, margin: 0 }}>PARTNER &amp; SPONSOREN</h2>
           </div>
           <p style={{ fontFamily: FB, fontSize: 18, color: 'rgba(16,24,40,0.4)', maxWidth: isMobile ? '100%' : 220, textAlign: isMobile ? 'left' : 'right', lineHeight: 1.6, margin: 0 }}>
             Partner in drei Kategorien: Hauptsponsoren, Medienpartner und weitere Sponsoren. Klicken für Details.
           </p>
         </div>
 
-        {/* Tiered grid — continuous, ranks marked by label bars */}
+        {/* Tiered grid – continuous, ranks marked by label bars */}
         <div style={{ position: 'relative', zIndex: 1 }}>
           {([
             { tier: 1 as const, label: 'Hauptsponsoren', note: 'Premium', variant: 'lg' as const, cols: isMobile ? 1 : 2 },
@@ -721,13 +771,13 @@ const Netzwerk: React.FC = () => {
         display: 'flex', flexDirection: 'column',
       }}>
         <div style={{ flex: 1, position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr', minHeight: 0, overflow: isMobile ? 'visible' : 'visible' }}>
-          {/* Left — pitch */}
+          {/* Left – pitch */}
           <div style={{ padding: isMobile ? '32px 24px 24px' : '36px 36px 32px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'visible' }}>
             <span style={{ fontFamily: FF, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, color: GOLD, display: 'block', marginBottom: 8 }}>Wachstum durch Partnerschaft</span>
             <h2 style={{ fontFamily: FF, fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '-0.025em', fontSize: 'clamp(1.6rem, 2.4vw, 2.4rem)', lineHeight: 1.0, margin: '0 0 12px' }}>WIR FREUEN UNS ÜBER NEUE SPONSOREN.</h2>
             <div style={{ width: 36, height: 2, background: GOLD, margin: '0 0 14px', flexShrink: 0 }} />
             <p style={{ fontFamily: FB, fontSize: 'clamp(15px, 1.2vw, 17px)', color: 'rgba(255,255,255,0.75)', lineHeight: 1.65, marginBottom: 16 }}>
-              Positionieren Sie Ihre Marke im exklusivsten Netzwerk des bayerischen Mittelstands — mit maßgeschneiderten Sponsoring-Paketen.
+              Positionieren Sie Ihre Marke im exklusivsten Netzwerk des bayerischen Mittelstands – mit maßgeschneiderten Sponsoring-Paketen.
             </p>
             {[
               { num: '01', label: 'Markenpräsenz', sub: 'Bühne, Drucksachen, digitale Kanäle' },
@@ -745,7 +795,7 @@ const Netzwerk: React.FC = () => {
           </div>
           {/* Center divider */}
           {!isMobile && <div style={{ background: 'rgba(255,255,255,0.07)' }} />}
-          {/* Right — gold form panel */}
+          {/* Right – gold form panel */}
           <div style={{ display: 'flex', flexDirection: 'column', overflow: 'visible', minHeight: 0, position: 'relative', background: 'linear-gradient(160deg,#DDB84A 0%,#C9A227 52%,#A87800 100%)' }}>
             <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} aria-hidden="true">
               <defs>

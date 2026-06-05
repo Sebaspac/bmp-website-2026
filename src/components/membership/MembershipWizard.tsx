@@ -420,7 +420,7 @@ function ReviewRow({ label, value }: { label: string; value: string }) {
         {label}
       </span>
       <span style={{ color: WHITE, fontFamily: '"IBM Plex Sans", sans-serif', fontWeight: 500 }}>
-        {value || "—"}
+        {value || "–"}
       </span>
     </div>
   );
@@ -513,7 +513,7 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
         })}
       </div>
 
-      {/* Step labels — full list on desktop; on mobile only the active label
+      {/* Step labels – full list on desktop; on mobile only the active label
           (the 5-up text row would overflow / wrap on narrow screens) */}
       {isMobile ? (
         <div style={{
@@ -691,7 +691,7 @@ function NavButtons({
   );
 }
 
-// ─── STEP 1 — UNTERNEHMEN ─────────────────────────────────────────────────────
+// ─── STEP 1 – UNTERNEHMEN ─────────────────────────────────────────────────────
 
 function Step1({ data, onChange, errors }: {
   data: FormData; onChange: (k: keyof FormData, v: string | boolean) => void; errors: Errors;
@@ -742,7 +742,7 @@ function Step1({ data, onChange, errors }: {
   );
 }
 
-// ─── STEP 2 — KONTAKT ─────────────────────────────────────────────────────────
+// ─── STEP 2 – KONTAKT ─────────────────────────────────────────────────────────
 
 function Step2({ data, onChange, errors }: {
   data: FormData; onChange: (k: keyof FormData, v: string | boolean) => void; errors: Errors;
@@ -785,7 +785,7 @@ function Step2({ data, onChange, errors }: {
   );
 }
 
-// ─── STEP 3 — DETAILS ─────────────────────────────────────────────────────────
+// ─── STEP 3 – DETAILS ─────────────────────────────────────────────────────────
 
 function Step3({ data, onChange, errors }: {
   data: FormData; onChange: (k: keyof FormData, v: string | boolean) => void; errors: Errors;
@@ -857,7 +857,7 @@ function Step3({ data, onChange, errors }: {
   );
 }
 
-// ─── STEP 4 — SEPA ────────────────────────────────────────────────────────────
+// ─── STEP 4 – SEPA ────────────────────────────────────────────────────────────
 
 function Step4({ data, onChange, errors }: {
   data: FormData; onChange: (k: keyof FormData, v: string | boolean) => void; errors: Errors;
@@ -929,7 +929,7 @@ function Step4({ data, onChange, errors }: {
   );
 }
 
-// ─── STEP 5 — SUMMARY + CONSENT ───────────────────────────────────────────────
+// ─── STEP 5 – SUMMARY + CONSENT ───────────────────────────────────────────────
 
 function Step5({ data, onChange, errors }: {
   data: FormData; onChange: (k: keyof FormData, v: string | boolean) => void; errors: Errors;
@@ -943,7 +943,7 @@ function Step5({ data, onChange, errors }: {
         <ReviewRow label="Rechtsform" value={data.rechtsform} />
         <ReviewRow label="Adresse" value={`${data.strasse}, ${data.plz} ${data.ort}`} />
         <ReviewRow label="Mitarbeiter" value={data.mitarbeiter} />
-        <ReviewRow label="Website" value={data.website || "—"} />
+        <ReviewRow label="Website" value={data.website || "–"} />
       </Accordion>
 
       <Accordion title="Kontaktperson">

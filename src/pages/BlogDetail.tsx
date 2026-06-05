@@ -121,7 +121,7 @@ export default function BlogDetail() {
       <section style={{ background: CREAM, padding: isMobile ? '48px 0 0' : '80px 0 0' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', padding: isMobile ? '0 24px' : '0 80px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 320px', gap: isMobile ? 40 : 80 }}>
 
-          {/* LEFT — article text */}
+          {/* LEFT – article text */}
           <article>
             {/* Lead */}
             <p style={{
@@ -178,7 +178,7 @@ export default function BlogDetail() {
             </div>
           </article>
 
-          {/* RIGHT — sticky sidebar */}
+          {/* RIGHT – sticky sidebar */}
           <aside>
             <div style={{ position: isMobile ? 'static' : 'sticky', top: isMobile ? undefined : 100 }}>
 

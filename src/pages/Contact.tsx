@@ -61,7 +61,7 @@ const Contact: React.FC = () => {
             Wir sind<br />für Sie da.
           </h1>
           <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.72)', maxWidth: 480, lineHeight: 1.65, fontWeight: 400 }}>
-            Fragen zur Bewerbung, zur Gala oder zu Partnermöglichkeiten — unser Team begleitet Sie persönlich.
+            Fragen zur Bewerbung, zur Gala oder zu Partnermöglichkeiten – unser Team begleitet Sie persönlich.
           </p>
         </div>
       </section>
@@ -73,7 +73,7 @@ const Contact: React.FC = () => {
 
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '4fr 1px 8fr' }}>
 
-          {/* Left — info panel */}
+          {/* Left – info panel */}
           <div style={{ padding: isMobile ? '48px 24px' : '88px 56px 88px 64px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
             <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 20 }}>
               Direktkontakt
@@ -112,7 +112,7 @@ const Contact: React.FC = () => {
           {/* Divider */}
           {!isMobile && <div style={{ background: 'rgba(255,255,255,0.07)' }} />}
 
-          {/* Right — gold form panel */}
+          {/* Right – gold form panel */}
           <div style={{ display: 'flex', flexDirection: 'column', overflow: isMobile ? 'visible' : 'hidden', height: isMobile ? 'auto' : undefined, minHeight: 0, position: 'relative', background: 'linear-gradient(160deg,#DDB84A 0%,#C9A227 52%,#A87800 100%)' }}>
             <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} aria-hidden="true">
               <defs>
@@ -197,7 +197,7 @@ const Contact: React.FC = () => {
         <div className="container mx-auto px-6">
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 2fr', gap: isMobile ? 40 : 80 }}>
 
-            {/* Left — sticky label */}
+            {/* Left – sticky label */}
             <div style={isMobile ? undefined : { position: 'sticky', top: 96, alignSelf: 'start' }}>
               <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.28em', textTransform: 'uppercase', color: '#4A8FC9', marginBottom: 20 }}>
                 Antworten
@@ -208,7 +208,7 @@ const Contact: React.FC = () => {
               </h2>
             </div>
 
-            {/* Right — accordion */}
+            {/* Right – accordion */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               {faqs.map((faq, idx) => {
                 const isOpen = openFaq === idx;

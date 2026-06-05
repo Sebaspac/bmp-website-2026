@@ -72,7 +72,7 @@ export default function TestimonialsSection() {
       {/* ── DESKTOP ── */}
       {!isMobile && (
       <div style={{ display: 'grid', gridTemplateColumns: '42% 58%', height: 560, position: 'relative', zIndex: 1 }}>
-        {/* Left — portrait photo */}
+        {/* Left – portrait photo */}
         <div style={{ position: 'relative', overflow: 'hidden', height: isMobile ? 280 : 'auto' }}>
           <img
             key={t.img}
@@ -83,7 +83,7 @@ export default function TestimonialsSection() {
           <div style={{ position: 'absolute', inset: 0, background: isMobile ? 'linear-gradient(to bottom, transparent 70%, #fff 100%)' : 'linear-gradient(to right, transparent 60%, #fff 100%)' }} />
         </div>
 
-        {/* Right — quote */}
+        {/* Right – quote */}
         <div style={{ padding: isMobile ? '40px 22px 56px' : '80px 72px 80px 56px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.3em', fontWeight: 700, display: 'block', marginBottom: 14 }}>Stimmen der Preisträger</span>
 

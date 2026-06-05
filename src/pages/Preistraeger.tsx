@@ -49,7 +49,7 @@ export default function Preistraeger() {
 
       {/* Filter Section */}
       <div style={{ background: '#fff', padding: isMobile ? '32px 24px 24px' : '48px 80px 32px' }}>
-        {/* #93: Headline entfernt — Seitenname steht bereits oben im Breadcrumb. */}
+        {/* #93: Headline entfernt – Seitenname steht bereits oben im Breadcrumb. */}
 
         {/* Year Tabs */}
         <div style={{ display: 'flex', flexWrap: isMobile ? 'nowrap' : 'wrap', gap: 0, marginBottom: 32, borderBottom: `2px solid ${BORDER}`, overflowX: isMobile ? 'auto' : 'visible', WebkitOverflowScrolling: 'touch', maxWidth: '100%' }}>
@@ -127,7 +127,7 @@ export default function Preistraeger() {
       <div style={{ padding: isMobile ? '12px 24px' : '12px 80px', background: BG_ALT, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, display: 'flex', alignItems: 'center', gap: 12 }}>
         <Trophy size={13} style={{ color: GOLD }} fill={GOLD} />
         <span style={{ fontFamily: FF, fontSize: 15, color: GRAY }}>
-          <strong style={{ color: '#101828' }}>{activeYear}</strong> — {filtered.length} Preisträger:innen
+          <strong style={{ color: '#101828' }}>{activeYear}</strong> – {filtered.length} Preisträger:innen
         </span>
       </div>
 

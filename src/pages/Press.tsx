@@ -369,7 +369,7 @@ const Press: React.FC = () => {
                 margin: 0,
               }}
             >
-              Von der Jurysitzung bis zur festlichen Gala — alle Veranstaltungen auf einen Blick.
+              Von der Jurysitzung bis zur festlichen Gala – alle Veranstaltungen auf einen Blick.
             </p>
           </div>
         </div>
@@ -389,7 +389,7 @@ const Press: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            {/* Left — image cell */}
+            {/* Left – image cell */}
             <div style={{ position: 'relative', overflow: 'hidden', height: isMobile ? 200 : 240 }}>
               <img src={event.img} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               <div style={{ position: 'absolute', top: 20, left: 20, padding: '5px 12px', fontFamily: FF, fontSize: 9, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.18em', background: event.status === 'Anmeldung offen' ? GOLD : 'rgba(3,9,58,0.85)', color: event.status === 'Anmeldung offen' ? NAVY : 'rgba(255,255,255,0.6)' }}>
@@ -397,7 +397,7 @@ const Press: React.FC = () => {
               </div>
             </div>
 
-            {/* Right — copy cell */}
+            {/* Right – copy cell */}
             <div style={{ padding: isMobile ? '24px 24px 32px' : '40px 56px 40px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div style={{ fontFamily: FF, fontSize: 9, color: '#4A8FC9', textTransform: 'uppercase' as const, letterSpacing: '0.22em', fontWeight: 700, marginBottom: 10 }}>{event.cat}</div>
               <h3 style={{ fontFamily: FF, fontSize: 'clamp(1.3rem, 2vw, 1.7rem)', fontWeight: 900, color: '#101828', textTransform: 'uppercase' as const, letterSpacing: '-0.02em', margin: '0 0 14px' }}>{event.title}</h3>
@@ -588,7 +588,7 @@ const Press: React.FC = () => {
                   Download Presse-Kit
                 </div>
                 <div style={{ fontFamily: FB, fontSize: 17, color: 'rgba(16,24,40,0.4)' }}>
-                  Print_BMP.zip — 1,5 MB
+                  Print_BMP.zip – 1,5 MB
                 </div>
               </div>
             </a>

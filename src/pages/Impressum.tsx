@@ -66,7 +66,7 @@ export default function Impressum() {
       {/* ── BODY ──────────────────────────────────────────────────────────── */}
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: isMobile ? '40px 24px' : '64px 80px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '200px 1fr', gap: isMobile ? 40 : 80, alignItems: 'start' }}>
 
-        {/* LEFT — sticky TOC */}
+        {/* LEFT – sticky TOC */}
         {!isMobile && (
           <nav style={{ position: 'sticky', top: 80 }}>
             <div style={{ fontFamily: FF, fontSize: 9, fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', color: GOLD, marginBottom: 16 }}>Inhalt</div>
@@ -90,7 +90,7 @@ export default function Impressum() {
           </nav>
         )}
 
-        {/* RIGHT — content */}
+        {/* RIGHT – content */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 56 }}>
 
           <Section id="betreiber" title="Angaben gemäß §5 TMG">
@@ -167,7 +167,7 @@ export default function Impressum() {
             </SubSection>
 
             <SubSection num="4" title="Recht auf Widerruf">
-              <p style={body}>Wenn Sie uns personenbezogene Daten überlassen haben, können Sie diese jederzeit im Benutzerprofil wieder ändern und löschen. Für eine vollständige Löschung des Accounts bitte an den Webmaster wenden. Bis zu diesem Zeitpunkt erfolgte Beiträge in Foren, Kommentaren, Terminankündigungen und Artikeln bleiben allerdings unter Umständen erhalten — Informationen dazu auch bei den allgemeinen Nutzungsbedingungen.</p>
+              <p style={body}>Wenn Sie uns personenbezogene Daten überlassen haben, können Sie diese jederzeit im Benutzerprofil wieder ändern und löschen. Für eine vollständige Löschung des Accounts bitte an den Webmaster wenden. Bis zu diesem Zeitpunkt erfolgte Beiträge in Foren, Kommentaren, Terminankündigungen und Artikeln bleiben allerdings unter Umständen erhalten – Informationen dazu auch bei den allgemeinen Nutzungsbedingungen.</p>
             </SubSection>
 
             <SubSection num="5" title="Links zu anderen Websites">

@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 /**
  * MunichSkylineBg
  * Drop inside any light section (position: relative required on parent).
- * Uses backgroundPositionY for parallax — no transform, no GPU compositing layer.
+ * Uses backgroundPositionY for parallax – no transform, no GPU compositing layer.
  * No mixBlendMode to avoid Safari compositing bleed into sibling elements.
  */
 const MunichSkylineBg: React.FC = () => {

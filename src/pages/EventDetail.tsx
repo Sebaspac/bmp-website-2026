@@ -135,7 +135,7 @@ export default function EventDetail() {
             </p>
           </div>
 
-          {/* Right — key facts */}
+          {/* Right – key facts */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, flexShrink: 0, background: 'rgba(3,9,58,0.55)', backdropFilter: 'blur(12px)', borderRadius: 16, padding: isMobile ? '16px 20px' : '24px 28px', border: '1px solid rgba(255,255,255,0.1)', width: isMobile ? '100%' : undefined, boxSizing: 'border-box' }}>
             {[
               { icon: Calendar, label: event.date },
@@ -158,7 +158,7 @@ export default function EventDetail() {
       <section style={{ padding: isMobile ? '48px 24px' : '64px 80px', maxWidth: 1400, margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 400px', gap: isMobile ? 48 : 64, alignItems: 'start' }}>
 
-          {/* Left — Description + Eckdaten */}
+          {/* Left – Description + Eckdaten */}
           <div>
             {/* Description */}
             <div style={{ marginBottom: 56 }}>
@@ -223,7 +223,7 @@ export default function EventDetail() {
             </div>
           </div>
 
-          {/* Right — Live Updates Feed (sticky on desktop, static on mobile) */}
+          {/* Right – Live Updates Feed (sticky on desktop, static on mobile) */}
           <div style={isMobile ? undefined : { position: 'sticky', top: 80 }}>
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>

@@ -74,7 +74,7 @@ function saveElementEdits(e: Record<string, ElementEdit>) {
   try { localStorage.setItem(LS_ELEMENT, JSON.stringify(e)); } catch {}
 }
 
-// Archived = set of storage keys the user has "binned" — CSS stays active
+// Archived = set of storage keys the user has "binned" – CSS stays active
 function loadArchived(): Set<string> {
   try { return new Set(JSON.parse(localStorage.getItem(LS_ARCHIVED) || '[]')); } catch { return new Set(); }
 }
@@ -108,7 +108,7 @@ function saveSaveCount(n: number) {
 }
 
 // ---------------------------------------------------------------------------
-// CSS builders  (backup stylesheet — primary persistence is via setProperty)
+// CSS builders  (backup stylesheet – primary persistence is via setProperty)
 // ---------------------------------------------------------------------------
 
 /** Build CSS only for edits that belong to `forPathname` */
@@ -159,7 +159,7 @@ function injectCSS(id: string, css: string) {
 }
 
 // ---------------------------------------------------------------------------
-// Apply element edit directly via setProperty — survives React re-renders
+// Apply element edit directly via setProperty – survives React re-renders
 // because inline !important beats React's non-!important inline style updates
 // ---------------------------------------------------------------------------
 
@@ -209,7 +209,7 @@ function reapplyAllElementEdits(edits: Record<string, ElementEdit>, pathname: st
 }
 
 // ---------------------------------------------------------------------------
-// Selectors  — always include the current route so edits are page-isolated
+// Selectors  – always include the current route so edits are page-isolated
 // ---------------------------------------------------------------------------
 
 function getSectionSelector(section: HTMLElement, pathname: string): string {
@@ -383,7 +383,7 @@ function SmallInput({ label, value, onChange, placeholder }: { label: string; va
 }
 
 // ---------------------------------------------------------------------------
-// Element popup — full editor with live preview
+// Element popup – full editor with live preview
 // ---------------------------------------------------------------------------
 
 const FONT_WEIGHTS = [
@@ -419,7 +419,7 @@ function ElementPopup({
   const set = <K extends keyof ElementEdit>(key: K, val: ElementEdit[K]) =>
     setProps(p => ({ ...p, [key]: val }));
 
-  // ── LIVE PREVIEW — apply every prop change directly to the element ──────
+  // ── LIVE PREVIEW – apply every prop change directly to the element ──────
   useEffect(() => {
     applyEditToElement(popup.el, props);
     if (props.text !== undefined) popup.el.innerText = props.text;
@@ -502,7 +502,7 @@ function ElementPopup({
                 onChange={e => set('fontFamily', e.target.value)}
                 style={{ fontFamily: FONT, fontSize: 11, color: '#fff', background: '#0D1540', border: '1px solid rgba(255,255,255,0.12)', padding: '7px 8px', width: '100%', outline: 'none', cursor: 'pointer' }}
               >
-                <option value="">— unverändert —</option>
+                <option value="">– unverändert –</option>
                 {FONT_FAMILIES.map(f => (
                   <option key={f.value} value={f.value}>{f.label}</option>
                 ))}
@@ -619,20 +619,20 @@ export default function LayoutEditor() {
   const [editMode,   setEditMode]   = useState(false);
   const [editTarget, setEditTarget] = useState<EditTarget>('section');
 
-  // — Module state —
+  // – Module state –
   const [savedModules, setSavedModules] = useState<ModuleEdits>(() => loadModuleEdits());
   const [selSel,  setSelSel]  = useState('');
   const [preview, setPreview] = useState<ModuleEdit>({});
 
-  // — Element state —
+  // – Element state –
   const [savedElements, setSavedElements] = useState<Record<string, ElementEdit>>(() => loadElementEdits());
   const [popup, setPopup] = useState<PopupState | null>(null);
 
-  // — Bin (archived keys — CSS still active, hidden from main list) —
+  // – Bin (archived keys – CSS still active, hidden from main list) –
   const [archived, setArchived] = useState<Set<string>>(() => loadArchived());
   const [binOpen,  setBinOpen]  = useState(false);
 
-  // — Batch / archive state —
+  // – Batch / archive state –
   const [batches, setBatches]       = useState<Batch[]>(() => loadBatches());
   const [saveCount, setSaveCount]   = useState<number>(() => loadSaveCount());
   const [expandedBatch, setExpandedBatch] = useState<number | null>(null);
@@ -705,7 +705,7 @@ export default function LayoutEditor() {
       return;
     }
 
-    // Element mode — open popup for the clicked element
+    // Element mode – open popup for the clicked element
     const sel           = getElementSelector(target, location.pathname);
     const originalStyle = target.getAttribute('style') || '';
     setPopup({ x: e.clientX + 14, y: e.clientY + 14, el: target, sel, originalStyle });
@@ -964,7 +964,7 @@ export default function LayoutEditor() {
             </div>
           )}
 
-          {/* Saved modules list — active (not binned) */}
+          {/* Saved modules list – active (not binned) */}
           {activeModuleKeys.length > 0 && (
             <div style={{ padding: '12px 18px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
@@ -987,7 +987,7 @@ export default function LayoutEditor() {
             </div>
           )}
 
-          {/* Saved elements list — active (not binned) */}
+          {/* Saved elements list – active (not binned) */}
           {activeElementKeys.length > 0 && (
             <div style={{ padding: '12px 18px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
@@ -1032,7 +1032,7 @@ export default function LayoutEditor() {
               {binOpen && (
                 <div style={{ padding: '0 18px 12px' }}>
                   <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.2)', marginBottom: 8, lineHeight: 1.5 }}>
-                    Änderungen sind weiterhin aktiv — nur aus der Hauptliste ausgeblendet.
+                    Änderungen sind weiterhin aktiv – nur aus der Hauptliste ausgeblendet.
                   </div>
                   {binKeys.map(key => {
                     const isMod = key in savedModules;
@@ -1130,7 +1130,7 @@ export default function LayoutEditor() {
 
           {/* Footer */}
           <div style={{ marginTop: 'auto', padding: '10px 18px', borderTop: '1px solid rgba(255,255,255,0.06)', fontSize: 9, color: 'rgba(255,255,255,0.12)', textAlign: 'center' }}>
-            BMP Layout Editor — Dev Only
+            BMP Layout Editor – Dev Only
           </div>
         </div>
       )}

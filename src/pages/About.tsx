@@ -86,7 +86,7 @@ const About: React.FC = () => {
         <MunichSkylineBg />
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '55% 45%', minHeight: isMobile ? 'auto' : 580 }}>
 
-          {/* Left — text on cream */}
+          {/* Left – text on cream */}
           <div style={{ background: CREAM, padding: isMobile ? '32px 24px 44px' : '88px 80px', display: 'flex', flexDirection: 'column', justifyContent: 'center', order: isMobile ? 2 : 0 }}>
             {!isMobile && (
               <>
@@ -103,7 +103,7 @@ const About: React.FC = () => {
             <p style={{ fontFamily: FB, fontSize: 19, color: 'rgba(16,24,40,0.8)', lineHeight: 1.8, maxWidth: 440, marginBottom: isMobile ? 0 : 44 }}>
               Entstanden aus einer Initiative bayerischer Wirtschaftsvertreter, ehrt der Preis heute jährlich die Leuchttürme unserer Wirtschaft.
             </p>
-            {/* Key facts — moved above the copy on mobile */}
+            {/* Key facts – moved above the copy on mobile */}
             <div style={{ display: 'flex', order: isMobile ? -1 : 0, borderTop: isMobile ? 'none' : '1px solid #D0D5DD', borderBottom: isMobile ? '1px solid #D0D5DD' : 'none', marginBottom: isMobile ? 26 : 0 }}>
               {[
                 { val: '2005', label: 'Gegründet' },
@@ -118,7 +118,7 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          {/* Right — full-bleed image (+ heading on mobile) */}
+          {/* Right – full-bleed image (+ heading on mobile) */}
           <div style={{ position: 'relative', overflow: 'hidden', minHeight: isMobile ? 280 : undefined, order: isMobile ? 1 : 0 }}>
             <img
               src="/images/preistraeger-gruppe.jpg"
@@ -128,7 +128,7 @@ const About: React.FC = () => {
             <div style={{ position: 'absolute', inset: 0, background: isMobile
               ? 'linear-gradient(to top, rgba(3,9,58,0.94) 0%, rgba(3,9,58,0.55) 38%, rgba(3,9,58,0.12) 72%, transparent 100%), linear-gradient(to right, rgba(3,9,58,0.5) 0%, transparent 55%)'
               : `linear-gradient(to right, ${CREAM} 0%, transparent 25%), linear-gradient(to top, rgba(3,9,58,0.75) 0%, transparent 60%)` }} />
-            {/* Heading overlay — mobile only */}
+            {/* Heading overlay – mobile only */}
             {isMobile && (
               <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '0 24px 24px', zIndex: 2 }}>
                 <span style={{ fontFamily: FF, fontSize: 10, color: '#8FBEEC', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Was ist der Preis?</span>
@@ -137,7 +137,7 @@ const About: React.FC = () => {
                 </h2>
               </div>
             )}
-            {/* Decorative label — desktop only */}
+            {/* Decorative label – desktop only */}
             {!isMobile && (
               <div style={{ position: 'absolute', bottom: 36, left: 36 }}>
                 <div style={{ fontFamily: FF, fontSize: 10, fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD, marginBottom: 6 }}>BMP Preisverleihung · München</div>
@@ -152,7 +152,7 @@ const About: React.FC = () => {
       <section id="mittelstand" style={{ overflow: 'hidden' }}>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '45% 55%', minHeight: isMobile ? 'auto' : 580 }}>
 
-          {/* Left — full-bleed image (+ heading on mobile) */}
+          {/* Left – full-bleed image (+ heading on mobile) */}
           <div style={{ position: 'relative', overflow: 'hidden', minHeight: isMobile ? 280 : undefined }}>
             <img
               src="/images/networking-innenhof.jpg"
@@ -167,7 +167,7 @@ const About: React.FC = () => {
                 <div style={{ width: 2, height: 40, background: GOLD }} />
               </div>
             )}
-            {/* Heading overlay — mobile only */}
+            {/* Heading overlay – mobile only */}
             {isMobile && (
               <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '0 24px 24px', zIndex: 2 }}>
                 <span style={{ fontFamily: FF, fontSize: 10, color: '#EFBF04', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 12 }}>Relevanz &amp; Zielsetzung</span>
@@ -178,7 +178,7 @@ const About: React.FC = () => {
             )}
           </div>
 
-          {/* Right — text on navy */}
+          {/* Right – text on navy */}
           <div style={{ background: NAVY, padding: isMobile ? '32px 24px 40px' : '88px 80px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             {!isMobile && (
               <>
@@ -245,9 +245,9 @@ const About: React.FC = () => {
       <section id="geschichte" style={{ overflow: 'hidden' }}>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', minHeight: isMobile ? 'auto' : 700 }}>
 
-          {/* LEFT — navy, timeline */}
+          {/* LEFT – navy, timeline */}
           <div style={{ background: NAVY, padding: isMobile ? '56px 24px' : '88px 80px', position: 'relative', overflow: 'hidden' }}>
-            {/* Ghost "20" watermark — desktop only */}
+            {/* Ghost "20" watermark – desktop only */}
             {!isMobile && <div style={{ position: 'absolute', right: -24, bottom: -40, fontFamily: FF, fontSize: 'clamp(160px, 20vw, 240px)', fontWeight: 900, color: 'rgba(239,191,4,0.04)', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.04em' }}>20</div>}
 
             <span style={{ fontFamily: FF, fontSize: 10, color: GOLD, textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Geschichte &amp; Meilensteine</span>
@@ -279,7 +279,7 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          {/* RIGHT — cream, Zielsetzung */}
+          {/* RIGHT – cream, Zielsetzung */}
           <div style={{ background: '#EFE5E3', padding: isMobile ? '56px 24px' : '88px 80px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <span style={{ fontFamily: FF, fontSize: 10, color: '#4A8FC9', textTransform: 'uppercase', letterSpacing: '0.32em', fontWeight: 700, display: 'block', marginBottom: 16 }}>Zielsetzung</span>
             <h2 style={{ fontFamily: FF, fontSize: 'clamp(2rem, 3vw, 2.8rem)', fontWeight: 900, color: NAVY, textTransform: 'uppercase', letterSpacing: '-0.03em', lineHeight: 1.0, margin: '0 0 40px' }}>
@@ -326,7 +326,7 @@ const About: React.FC = () => {
           </p>
         </div>
 
-        {/* Editorial rows — no cards, pure typography */}
+        {/* Editorial rows – no cards, pure typography */}
         {[
           {
             num: '01',

@@ -545,7 +545,7 @@ export default function BewerbungsForm({ theme = 'dark' }: { theme?: 'dark' | 'g
                   {[
                     { label: 'Unternehmen',  value: data.nomFirma },
                     { label: 'Branche',      value: data.nomBranche },
-                    { label: 'Standort',     value: data.nomStandort || '—' },
+                    { label: 'Standort',     value: data.nomStandort || '–' },
                     { label: 'Nominiert von',value: `${data.nomName} · ${data.nomEmail}` },
                   ].map(row => (
                     <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: 12, padding: '10px 0', borderBottom: `1px solid ${c.border}`, alignItems: 'baseline' }}>
